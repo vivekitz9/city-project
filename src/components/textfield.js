@@ -10,7 +10,8 @@ const InputTextField = ({
   outlineColor,
   maxLength,
   style,
-  keyboardType
+  keyboardType,
+  onFocus
 }) => {
 
   return (
@@ -27,6 +28,7 @@ const InputTextField = ({
       maxLength={maxLength}
       style={style}
       keyboardType={keyboardType}
+      onFocus={onFocus}
     />
   );
 };

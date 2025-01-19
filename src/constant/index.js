@@ -16,8 +16,8 @@ export const METRICS = {
 };
 
 export const COLORS = {
-  Primary: '#FCF4E1',
-  Primary_2: '#800000',
+  Primary: '#D0D5DD',
+  Primary_2: '#F83758',
   Secondary: '#31b56a',
   white: '#ffffff',
   black: '#000000',
@@ -40,6 +40,7 @@ export const COLORS = {
   BORDER_GREY: '#504343',
   DESC_TEXT: '#515152',
   RED: '#FF0000',
+  GREEN: '#3DEC55'
 };
 
 // Colors definations

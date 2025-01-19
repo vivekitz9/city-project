@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     logoContainer: {
       justifyContent: 'center', 
       alignItems: 'center', 
-      height: hp('45%')
+      height: hp('40%')
     },
     inputContainer: {
       marginHorizontal: 24

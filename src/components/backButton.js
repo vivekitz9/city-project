@@ -1,42 +1,42 @@
 import * as React from 'react';
 import { COLORS, FONT, FONTS_SIZE, hp, wp } from '../constant';
 import { Alert, StyleSheet, Text, TouchableOpacity, View, Image, ImageBackground } from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
 
-const Button = ({
-    title,
+const BackHeader = ({
     onPress,
-    style,
-    enable = false,
-    disabled = false
+    disabled
 }) => {
-    console.log('title--->', title);
     return (
         <TouchableOpacity
             onPress={onPress}
             activeOpacity={0.6}
             disabled={disabled}
-            style={[styles.container, { backgroundColor: enable ? COLORS.gray : COLORS.Primary_2  }]}
+            style={[styles.container]}
         >
-            <Text style={[styles.buttonText, style]}>{title}</Text>
+             <Icon 
+              name='left'
+              size={20}
+              color={COLORS.black}
+            />
+            <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
     );
 };
 const styles = StyleSheet.create({
     container: {
-        width: wp('88'),
-        height: hp('8'),
-        backgroundColor: COLORS.Primary_2,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 5,
+        marginLeft: 20, 
+        marginVertical: 20, 
+        flexDirection: 'row', 
+        alignItems: 'center'
     },
     buttonText: {
         textAlign: 'center',
-        fontFamily: FONT.Regular,
+        fontFamily: FONT.Medium,
         fontSize: FONTS_SIZE.xsmall2,
-        color: COLORS.white,
+        color: COLORS.Primary_2,
         textTransform: "uppercase",
     }
 });
 
-export default Button;
+export default BackHeader;
