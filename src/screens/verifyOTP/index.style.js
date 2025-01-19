@@ -1,31 +1,41 @@
 import { COLORS, FONT, FONTS_SIZE, METRICS, hp, wp } from '../../constant';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     container: {
-      flex: 1
+      flex: 1,
+    },
+    subContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     logoContainer: {
       justifyContent: 'center', 
       alignItems: 'center', 
-      height: hp('45%')
+      // height: hp('45%')
     },
-    inputContainer: {
-      marginHorizontal: 24
+    OTPcontainer:{
+      width: wp('85'),
+      height: hp('30'),
+      alignItems: 'center'
     },
-    inputText: {
-      width: wp('88'),
-      height: hp('8'),
-      fontSize: FONTS_SIZE.xsmall2,
-      fontFamily: FONT.Regular
+    activePinCodeContainer:{
+      color: COLORS.Primary_2,
+      borderWidth: 2,
     },
-    registerContainer:{ 
-        height: hp('21'), 
-        justifyContent: 'flex-end', 
-        alignItems: 'center' 
+    pinCodeContainer:{
+      width: 60,
+      height: 70,
+      borderColor: COLORS.Primary_2,
+      borderWidth: 2,
     },
-    registerText:{ 
-        fontFamily: FONT.Semibold, 
-        fontSize: FONTS_SIZE.xsmall, 
-        color: COLORS.black 
+    pinCodeText:{
+      color: COLORS.black,
+      fontFamily: FONT.Bold,
+      fontWeight: '400'
     },
+    focusStick:{
+      color: COLORS.Primary_2
+    }
   });
