@@ -53,7 +53,7 @@ const Login = () => {
 
           <View style={styles.logoContainer}>
             <Image source={Logo} />
-            <Text style={{ fontFamily: FONT.Bold, fontSize: FONTS_SIZE.regular, paddingTop: 10, color: COLORS.Primary_2 }}>{t('WelcomeToLogin')}</Text>
+            <Text style={{ fontFamily: FONT.Bold, fontSize: FONTS_SIZE.regular, paddingTop: 10, color: COLORS.Secondary }}>{t('WelcomeToLogin')}</Text>
           </View>
 
           <View style={styles.inputContainer}>

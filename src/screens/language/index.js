@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         fontFamily: FONT.Bold,
         fontSize: FONTS_SIZE.regular,
         paddingTop: 15,
-        color: COLORS.Primary_2
+        color: COLORS.Secondary
 
     }
 });
