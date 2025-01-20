@@ -11,17 +11,19 @@ export const styles = StyleSheet.create({
       height: hp('40%')
     },
     inputContainer: {
-      marginHorizontal: 24
+      marginHorizontal: 24,
+      justifyContent: 'center', 
+      alignItems: 'center', 
     },
     inputText: {
-      width: wp('88'),
+      width: wp('85'),
       height: hp('8'),
       fontSize: FONTS_SIZE.xsmall2,
       fontFamily: FONT.Regular
     },
     registerContainer:{ 
-        height: hp('21'), 
-        justifyContent: 'flex-end', 
+        height: hp('10'), 
+        justifyContent: 'center', 
         alignItems: 'center' 
     },
     registerText:{ 

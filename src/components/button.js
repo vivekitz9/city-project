@@ -23,7 +23,7 @@ const Button = ({
 };
 const styles = StyleSheet.create({
     container: {
-        width: wp('88'),
+        width: wp('85'),
         height: hp('8'),
         backgroundColor: COLORS.Primary_2,
         justifyContent: 'center',

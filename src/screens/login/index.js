@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Text, SafeAreaView, View, Image, ImageBackground, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, SafeAreaView, View, Image, ImageBackground, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import { COLORS, FONT, FONTS_SIZE, hp, wp } from '../../constant';
-import { Logo, BackgroundImage } from './../../assets/icons/index';
+import { Logo, BackgroundImage, FacebookIcon, GoogleIcon, AppleIcon } from './../../assets/icons/index';
 import InputTextField from '../../components/textfield';
 import Button from '../../components/button';
 import { useTranslation } from 'react-i18next';
@@ -52,7 +52,7 @@ const Login = () => {
           <BackHeader onPress={() => navigation.goBack()} />
 
           <View style={styles.logoContainer}>
-            <Image source={Logo} />
+            <Image source={Logo} style={{ width: 100, height: 100 }} />
             <Text style={{ fontFamily: FONT.Bold, fontSize: FONTS_SIZE.regular, paddingTop: 10, color: COLORS.Secondary }}>{t('WelcomeToLogin')}</Text>
           </View>
 
@@ -68,6 +68,21 @@ const Login = () => {
 
             <View style={{ paddingTop: hp('8') }}>
               <Button enable={!isFormValid} disabled={!isFormValid} onPress={() => handleSubmit()} title={t('LOGIN')} />
+            </View>
+            <View style={{ flexDirection: 'row', height: hp('08'), width: wp('85'), justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={{ fontFamily: FONT.Regular, fontSize: FONTS_SIZE.regular, color: COLORS }}>OR</Text>
+            </View>
+
+            <View style={{ flexDirection: 'row', width: wp('60'), justifyContent: 'space-evenly', alignItems: 'center' }}>
+              <TouchableOpacity activeOpacity={0.6}>
+                <Image source={GoogleIcon} style={{ width: 50, height: 50 }} />
+              </TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.6}>
+                <Image source={AppleIcon} style={{ width: 50, height: 50 }} />
+              </TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.6}>
+                <Image source={FacebookIcon} style={{ width: 50, height: 50 }} />
+              </TouchableOpacity>
             </View>
 
           </View>
