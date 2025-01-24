@@ -23,7 +23,7 @@ const LanguageScreen = () => {
 
                 <View style={styles.logoContainer}>
                     <Image source={Logo} style={{ width: 100, height: 100 }}/>
-                    <Text style={styles.welcomeText}>Welcome to Shivdeep Family</Text>
+                    <Text style={styles.welcomeText}>Welcome to connect with shivdeep</Text>
 
                     <View style={{ paddingTop: hp('10') }}>
                         <Button onPress={() => {
