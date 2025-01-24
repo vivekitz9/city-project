@@ -15,21 +15,18 @@ const VerifyOtpScreen = () => {
     const navigation = useNavigation();
 
     const handleChange = (value) =>{
-        console.log('value----->', value.length);
-
         if(value.length === 4){
             navigation.navigate("VerifyOtp")
         }
-
     }
 
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground source={BackgroundImage} resizeMode="cover" style={styles.container}>
-                <BackHeader onPress={() => navigation.goBack()} />
+                <BackHeader onPress={() => navigation.navigate("Login")} />
                 <View style={styles.subContainer}>
                     <View style={styles.logoContainer}>
-                        <Image source={Logo} />
+                        <Image source={Logo} style={{ width: 100, height: 100 }}/>
                         <Text style={{ fontFamily: FONT.Bold, fontSize: FONTS_SIZE.regular, paddingTop: 10, color: COLORS.Primary_2 }}>{t('WelcomeToLogin')}</Text>
                     </View>
 

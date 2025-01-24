@@ -86,7 +86,7 @@ const Login = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground source={BackgroundImage} resizeMode="cover" style={styles.container}>
-        <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={keyboardVerticalOffset}>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={keyboardVerticalOffset}>
 
           <BackHeader onPress={() => navigation.goBack()} />
 
