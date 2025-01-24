@@ -40,7 +40,7 @@ export const COLORS = {
   BORDER_GREY: '#504343',
   DESC_TEXT: '#515152',
   RED: '#FF0000',
-  GREEN: '#3DEC55'
+  GREEN: '#3DEC55',
 };
 
 // Colors definations
@@ -71,3 +71,9 @@ export const FONT = {
 export const wp = val => widthPercentageToDP(val);
 
 export const hp = val => heightPercentageToDP(val);
+
+export const genderItem = [
+  {id: 0, genderValue: 'Male'},
+  {id: 1, genderValue: 'Female'},
+  {id: 2, genderValue: 'Other'},
+];

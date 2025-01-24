@@ -1,22 +1,21 @@
 import * as React from 'react';
-import { TextInput } from 'react-native-paper';
-import { COLORS } from '../constant';
+import {TextInput} from 'react-native-paper';
+import {COLORS} from '../constant';
 
 const InputTextField = ({
-  placeholder, 
-  value, 
+  placeholder,
+  value,
   label,
   onChangeText,
   outlineColor,
   maxLength,
   style,
   keyboardType,
-  onFocus
+  onFocus,
 }) => {
-
   return (
     <TextInput
-      mode={"outlined"}
+      mode={'outlined'}
       label={label}
       value={value}
       placeholder={placeholder}
