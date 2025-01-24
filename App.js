@@ -13,6 +13,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // import RegisterScreen from './src/screens/signUp';
 import DashboardScreen from './src/screens/Dashboard';
 import RegisterScreen from './src/screens/Register';
+import {store} from './src/Redux/store';
+import {Provider} from 'react-redux';
 
 const RootStack = createNativeStackNavigator({
   initialRouteName: 'Splash',
@@ -34,10 +36,8 @@ const Navigation = createStaticNavigation(RootStack);
 const App = () => {
   const [IsLogin, setIsLogin] = useState(true);
 
-  useEffect(() => {}, []);
-
   return (
-    <>
+    <Provider store={store}>
       <ToastProvider
         placement="top"
         duration={5000}
@@ -70,7 +70,7 @@ const App = () => {
         <StatusBar animated={true} backgroundColor={COLORS.Primary} />
         <Navigation />
       </ToastProvider>
-    </>
+    </Provider>
   );
 };
 export default App;

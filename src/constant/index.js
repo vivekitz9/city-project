@@ -17,7 +17,7 @@ export const METRICS = {
 
 export const COLORS = {
   Primary: '#D0D5DD',
-  Primary_2: '#F83758',
+  Primary_2: '#84764F',
   Secondary: '#010000',
   white: '#ffffff',
   black: '#000000',
