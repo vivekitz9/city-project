@@ -20,7 +20,7 @@ const SplashScreen = () => {
             <ImageBackground source={BackgroundImage} style={styles.container}>
 
                 <View style={styles.logoContainer}>
-                    <Image source={Logo} />
+                    <Image source={Logo} style={{ width: 100, height: 100 }}/>
                     <Text style={styles.welcomeText}>Welcome to Shivdeep Family</Text>
                 </View>
 
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         fontFamily: FONT.Bold,
         fontSize: FONTS_SIZE.regular,
         paddingTop: 15,
-        color: COLORS.Primary_2
+        color: COLORS.Secondary
 
     }
 });

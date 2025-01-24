@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Text, SafeAreaView, View, Image, ImageBackground, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, SafeAreaView, View, Image, ImageBackground, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import { COLORS, FONT, FONTS_SIZE, hp, wp } from '../../constant';
-import { Logo, BackgroundImage } from './../../assets/icons/index';
+import { Logo, BackgroundImage, FacebookIcon, GoogleIcon, AppleIcon } from './../../assets/icons/index';
 import InputTextField from '../../components/textfield';
 import Button from '../../components/button';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,21 @@ import {
 } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import BackHeader from '../../components/backButton';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
+
+GoogleSignin.configure({
+  // webClientId: "855427964750-fh3k8drvc8urfgov7ganig08jblhh5kg.apps.googleusercontent.com",
+  androidClientId: '855427964750-fh3k8drvc8urfgov7ganig08jblhh5kg.apps.googleusercontent.com',
+  // iosClientId: GOOGLE_IOS_CLIENT_ID,
+  scopes: ['profile', 'email'],
+});
+
+const GoogleLogin = async () => {
+  await GoogleSignin.hasPlayServices();
+  const userInfo = await GoogleSignin.signIn();
+  return userInfo;
+};
 
 const Login = () => {
   const navigation = useNavigation();
@@ -19,6 +34,30 @@ const Login = () => {
   const [mobileNumber, setMobileNumber] = useState('')
   const toast = useToast();
   const [isFormValid, setIsFormValid] = useState(false)
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    try {
+      const response = await GoogleLogin();
+      const { idToken, user } = response;
+
+      if (idToken) {
+        const resp = await authAPI.validateToken({
+          token: idToken,
+          email: user.email,
+        });
+        await handlePostLoginData(resp.data);
+      }
+    } catch (apiError) {
+      setError(
+        apiError?.response?.data?.error?.message || 'Something went wrong'
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleRegister = () => {
     navigation.navigate("Register")
@@ -52,8 +91,8 @@ const Login = () => {
           <BackHeader onPress={() => navigation.goBack()} />
 
           <View style={styles.logoContainer}>
-            <Image source={Logo} />
-            <Text style={{ fontFamily: FONT.Bold, fontSize: FONTS_SIZE.regular, paddingTop: 10, color: COLORS.Primary_2 }}>{t('WelcomeToLogin')}</Text>
+            <Image source={Logo} style={{ width: 100, height: 100 }} />
+            <Text style={{ fontFamily: FONT.Bold, fontSize: FONTS_SIZE.regular, paddingTop: 10, color: COLORS.Secondary }}>{t('WelcomeToLogin')}</Text>
           </View>
 
           <View style={styles.inputContainer}>
@@ -68,6 +107,21 @@ const Login = () => {
 
             <View style={{ paddingTop: hp('8') }}>
               <Button enable={!isFormValid} disabled={!isFormValid} onPress={() => handleSubmit()} title={t('LOGIN')} />
+            </View>
+            <View style={{ flexDirection: 'row', height: hp('08'), width: wp('85'), justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={{ fontFamily: FONT.Regular, fontSize: FONTS_SIZE.regular, color: COLORS }}>OR</Text>
+            </View>
+
+            <View style={{ flexDirection: 'row', width: wp('60'), justifyContent: 'space-evenly', alignItems: 'center' }}>
+              <TouchableOpacity activeOpacity={0.6} onPress={handleGoogleLogin}>
+                <Image source={GoogleIcon} style={{ width: 50, height: 50 }} />
+              </TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.6}>
+                <Image source={AppleIcon} style={{ width: 50, height: 50 }} />
+              </TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.6}>
+                <Image source={FacebookIcon} style={{ width: 50, height: 50 }} />
+              </TouchableOpacity>
             </View>
 
           </View>

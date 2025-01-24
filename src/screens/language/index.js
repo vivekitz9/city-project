@@ -22,8 +22,8 @@ const LanguageScreen = () => {
             <ImageBackground source={BackgroundImage} style={styles.container}>
 
                 <View style={styles.logoContainer}>
-                    <Image source={Logo} />
-                    <Text style={styles.welcomeText}>Welcome to Shivdeep Family</Text>
+                    <Image source={Logo} style={{ width: 100, height: 100 }}/>
+                    <Text style={styles.welcomeText}>Welcome to connect with shivdeep</Text>
 
                     <View style={{ paddingTop: hp('10') }}>
                         <Button onPress={() => {
@@ -31,13 +31,13 @@ const LanguageScreen = () => {
                             setTimeout(() => {
                                 navigation.navigate("Login")
                             }, 100);
-                        }} title={"ENGLISH"} style={{ fontSize: FONTS_SIZE.xlarge, fontFamily: FONT.Semibold, fontWeight: '600' }} />
+                        }} title={"ENGLISH"} style={{ fontSize: FONTS_SIZE.xsmall2, fontFamily: FONT.Semibold, fontWeight: '600' }} />
                         <View style={{ paddingTop: 30 }}>
                             <Button onPress={() => {
                                 i18next.changeLanguage("hi"); setTimeout(() => {
                                     navigation.navigate("Login")
                                 }, 100);
-                            }} title={"हिंदी"} style={{ fontSize: FONTS_SIZE.xlarge, fontFamily: FONT.Semibold, fontWeight: '600' }} />
+                            }} title={"हिंदी"} style={{ fontSize: FONTS_SIZE.xsmall2, fontFamily: FONT.Semibold, fontWeight: '600' }} />
                         </View>
                     </View>
                 </View>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         fontFamily: FONT.Bold,
         fontSize: FONTS_SIZE.regular,
         paddingTop: 15,
-        color: COLORS.Primary_2
+        color: COLORS.Secondary
 
     }
 });
