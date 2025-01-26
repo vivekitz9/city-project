@@ -1,10 +1,18 @@
 {
-    "LOGIN": "LOGIN",
-    "SELECT": "ENGLISH",
-    "WelcomeToLogin": "Welcome to login",
-    "MOBILENUMBER": "Mobile number",
-    "Donthaveaccount": "Don’t have an account?",
-    "RegisterNow": "Register Now",
-    "Verification": "VERIFICATION",
-    "VerificationSubTitle": "Enter A 4 Digit Number That Was Sent to"
+  "LOGIN": "LOGIN",
+  "SELECT": "ENGLISH",
+  "WelcomeToLogin": "Welcome to login",
+  "MOBILENUMBER": "Mobile number",
+  "Donthaveaccount": "Don’t have an account?",
+  "RegisterNow": "Register Now",
+  "Verification": "VERIFICATION",
+  "VerificationSubTitle": "Enter A 4 Digit Number That Was Sent to",
+  "Register": "REGISTER",
+  "CREATEANACCOUNT": "CREATE AN ACCOUNT",
+  "CREATEANACCOUNTSUBHEADING": "Register now and unlock exclusive access!",
+  "FULLNAME": "Full Name",
+  "EMAILADDRESS": "Email Address",
+  "DATEOFBIRTH": "Date of Birth",
+  "DOYOUHAVEANACCOUNT": "Do you have an account?",
+  "GENDER": "Gender"
 }
