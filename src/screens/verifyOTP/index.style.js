@@ -1,4 +1,4 @@
-import { COLORS, FONT, FONTS_SIZE, METRICS, hp, wp } from '../../constant';
+import { COLORS, FONT, FONTS_SIZE, hp, wp } from '../../constant';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -12,8 +12,7 @@ export const styles = StyleSheet.create({
     },
     logoContainer: {
       justifyContent: 'center', 
-      alignItems: 'center', 
-      // height: hp('45%')
+      alignItems: 'center'
     },
     OTPcontainer:{
       width: wp('85'),
@@ -37,5 +36,17 @@ export const styles = StyleSheet.create({
     },
     focusStick:{
       color: COLORS.Primary_2
+    },
+    title:{ 
+      fontFamily: FONT.Bold, 
+      fontSize: FONTS_SIZE.regular, 
+      paddingTop: 10, 
+      color: COLORS.Primary_2 
+    },
+    subTitle:{
+      fontFamily: FONT.RegularRoboto, 
+      fontSize: FONTS_SIZE.xsmall2, 
+      color: "#413739",
+      paddingTop: 10, 
     }
   });

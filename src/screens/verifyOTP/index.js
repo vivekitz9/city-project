@@ -10,7 +10,7 @@ import { styles } from './index.style';
 import { OtpInput } from "react-native-otp-entry";
 import BackHeader from '../../components/backButton';
 
-const VerifyOtpScreen = () => {
+const VerifyOtpScreen = ({ route }) => {
     const [t] = useTranslation('translation');
     const navigation = useNavigation();
 
@@ -27,7 +27,8 @@ const VerifyOtpScreen = () => {
                 <View style={styles.subContainer}>
                     <View style={styles.logoContainer}>
                         <Image source={Logo} style={{ width: 100, height: 100 }}/>
-                        <Text style={{ fontFamily: FONT.Bold, fontSize: FONTS_SIZE.regular, paddingTop: 10, color: COLORS.Primary_2 }}>{t('WelcomeToLogin')}</Text>
+                        <Text style={styles.title}>{t('Verification')}</Text>
+                        <Text style={styles.subTitle}>{t('VerificationSubTitle')}</Text>
                     </View>
 
                     <OtpInput

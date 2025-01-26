@@ -4,6 +4,8 @@
   "WelcomeToLogin": "आपका स्वागत है",
   "MOBILENUMBER": "मोबाइल नंबर",
   "Donthaveaccount": "कोई खाता नहीं है?",
+  "Verification": "सत्यापन",
+  "VerificationSubTitle": "वह 4 अंकीय नंबर दर्ज करें जिसे भेजा गया था",
   "RegisterNow": "अभी पंजीकरण करें",
   "Register": "पंजीकरण",
   "CREATEANACCOUNT": "खाता बनाएं",
