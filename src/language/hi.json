@@ -1,8 +1,19 @@
 {
-    "LOGIN": "लॉग इन",
-    "SELECT": "हिंदी",
-    "WelcomeToLogin": "आपका स्वागत है",
-    "MOBILENUMBER": "मोबाइल नंबर",
-    "Donthaveaccount": "कोई खाता नहीं है?",
-    "RegisterNow": "अभी पंजीकरण करें"
+  "LOGIN": "लॉग इन",
+  "SELECT": "हिंदी",
+  "WelcomeToLogin": "आपका स्वागत है",
+  "MOBILENUMBER": "मोबाइल नंबर",
+  "Donthaveaccount": "कोई खाता नहीं है?",
+  "RegisterNow": "अभी पंजीकरण करें",
+  "Register": "पंजीकरण",
+  "CREATEANACCOUNT": "खाता बनाएं",
+  "CREATEANACCOUNTSUBHEADING": "अभी पंजीकरण करें और विशेष पहुंच अनलॉक करें!",
+  "FULLNAME": "पूरा नाम",
+  "EMAILADDRESS": "ईमेल आईडी",
+  "DATEOFBIRTH": "जन्म तिथि",
+  "DOYOUHAVEANACCOUNT": "क्या आपके पास एक खाता है?",
+  "GENDER": "लिंग चुनें",
+  "Male": "पुरुष",
+  "Female": "महिला",
+  "Other": "अन्य"
 }
