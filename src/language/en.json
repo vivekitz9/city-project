@@ -4,5 +4,7 @@
     "WelcomeToLogin": "Welcome to login",
     "MOBILENUMBER": "Mobile number",
     "Donthaveaccount": "Don’t have an account?",
-    "RegisterNow": "Register Now"
+    "RegisterNow": "Register Now",
+    "Verification": "VERIFICATION",
+    "VerificationSubTitle": "Enter A 4 Digit Number That Was Sent to"
 }
