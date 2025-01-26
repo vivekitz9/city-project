@@ -9,6 +9,7 @@ import {
   Platform,
   TouchableOpacity,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import {COLORS, FONT, FONTS_SIZE, hp, wp, genderItem} from '../../constant';
 import {
@@ -35,7 +36,7 @@ const RegisterScreen = () => {
   const [t] = useTranslation('translation');
   const [formData, setFromData] = useState({
     userName: '',
-    emailAddress: '',
+    email: '',
     mobileNumber: '',
     dateOfBirth: '',
     gender: '',
@@ -53,26 +54,36 @@ const RegisterScreen = () => {
     setFromData(prevData => ({...prevData, [key]: value}));
   };
 
-  // form validation
-  //   useEffect(() => {
-  //     if (mobileNumber.length === 0) {
-  //       setIsFormValid(false);
-  //     } else if (!mobileNumber.match('[0-9]{10}')) {
-  //       setIsFormValid(false);
-  //     } else {
-  //       setIsFormValid(true);
-  //     }
-  //   }, [mobileNumber]);
-
   const handleSubmit = () => {
     console.log(formData);
 
-    // if (isFormValid) {
-    //   navigation.navigate('VerifyOtp');
-    // }
+    if (isFormValid) {
+      navigation.navigate('VerifyOtp');
+    }
   };
 
-  //   const {userName, emailAddress, mobileNumber, dateOfBirth} = formData;
+  const {userName, email, mobileNumber, dateOfBirth, gender} = formData;
+  // form validation
+  useEffect(() => {
+    if (
+      mobileNumber.length === 0 ||
+      userName.length === 0 ||
+      email.length === 0 ||
+      dateOfBirth.length === 0 ||
+      gender.length === 0
+    ) {
+      setIsFormValid(false);
+    } else if (
+      !mobileNumber.match('[0-9]{10}') ||
+      !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) ||
+      !userName.match(/^[a-zA-Z]+$/)
+    ) {
+      setIsFormValid(false);
+    } else {
+      setIsFormValid(true);
+    }
+  }, [mobileNumber, email, dateOfBirth, gender, userName]);
+
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 30;
 
   return (
@@ -84,152 +95,166 @@ const RegisterScreen = () => {
         <KeyboardAvoidingView
           behavior="padding"
           keyboardVerticalOffset={keyboardVerticalOffset}>
-          <BackHeader onPress={() => navigation.goBack()} />
+          <ScrollView
+            contentContainerStyle={{flexGrow: 1}}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled">
+            <BackHeader onPress={() => navigation.goBack()} />
 
-          <View style={styles.logoContainer}>
-            <Image source={Logo} style={{width: 78, height: 78}} />
-            <Text
-              style={{
-                fontFamily: FONT.Bold,
-                fontSize: FONTS_SIZE.regular,
-                paddingTop: 10,
-                color: COLORS.Secondary,
-              }}>
-              {t('CREATEANACCOUNT')}
-            </Text>
-            <Text
-              style={{
-                color: COLORS.Secondary,
-              }}>
-              {t('CREATEANACCOUNTSUBHEADING')}
-            </Text>
-          </View>
-          <View style={styles.formContainer}>
-            <View style={styles.inputContainer}>
-              <InputTextField
-                label={t('FULLNAME')}
-                style={styles.inputText}
-                keyboardType="default"
-                value={formData.userName}
-                onChangeText={value => handleInputChange('userName', value)}
-              />
-              <InputTextField
-                label={t('EMAILADDRESS')}
-                style={styles.inputText}
-                keyboardType="default"
-                value={formData.emailAddress}
-                onChangeText={value => handleInputChange('emailAddress', value)}
-              />
-              <InputTextField
-                label={t('MOBILENUMBER')}
-                maxLength={10}
-                style={styles.inputText}
-                keyboardType="number-pad"
-                value={formData.mobileNumber}
-                onChangeText={value => handleInputChange('mobileNumber', value)}
-              />
-              <InputTextField
-                label={t('DATEOFBIRTH')}
-                style={styles.inputText}
-                // keyboardType="default"
-                value={formData.dateOfBirth}
-                onFocus={() => setOpen(true)}
-                // onChangeText={value => {
-                //   handleInputChange('dateOfBirth', value);
-                // }}
-                editable={false}
-              />
-              <DatePicker
-                modal={true}
-                open={open}
-                date={date}
-                mode="date"
-                onConfirm={toDate => {
-                  setOpen(false);
-                  setDate(toDate);
-                  handleInputChange('dateOfBirth', toDate.toLocaleDateString());
-                }}
-                onCancel={() => {
-                  setOpen(false);
-                }}
-              />
+            <View style={styles.logoContainer}>
+              <Image source={Logo} style={{width: 78, height: 78}} />
+              <Text
+                style={{
+                  fontFamily: FONT.Bold,
+                  fontSize: FONTS_SIZE.regular,
+                  paddingTop: 10,
+                  color: COLORS.Secondary,
+                }}>
+                {t('CREATEANACCOUNT')}
+              </Text>
+              <Text
+                style={{
+                  color: COLORS.Secondary,
+                }}>
+                {t('CREATEANACCOUNTSUBHEADING')}
+              </Text>
+            </View>
+            <View style={styles.formContainer}>
+              <View style={styles.inputContainer}>
+                <InputTextField
+                  label={t('FULLNAME')}
+                  style={styles.inputText}
+                  keyboardType="default"
+                  value={userName}
+                  onChangeText={value => handleInputChange('userName', value)}
+                />
+                <InputTextField
+                  label={t('EMAILADDRESS')}
+                  style={styles.inputText}
+                  keyboardType="default"
+                  value={email}
+                  onChangeText={value => handleInputChange('email', value)}
+                />
+                <InputTextField
+                  label={t('MOBILENUMBER')}
+                  maxLength={10}
+                  style={styles.inputText}
+                  keyboardType="number-pad"
+                  value={mobileNumber}
+                  onChangeText={value =>
+                    handleInputChange('mobileNumber', value)
+                  }
+                />
+                <InputTextField
+                  label={t('DATEOFBIRTH')}
+                  style={styles.inputText}
+                  // keyboardType="default"
+                  value={dateOfBirth}
+                  onFocus={() => setOpen(true)}
+                  // onChangeText={value => {
+                  //   handleInputChange('dateOfBirth', value);
+                  // }}
+                  editable={false}
+                />
+                <DatePicker
+                  modal={true}
+                  open={open}
+                  date={date}
+                  mode="date"
+                  onConfirm={toDate => {
+                    setOpen(false);
+                    setDate(toDate);
+                    handleInputChange(
+                      'dateOfBirth',
+                      toDate.toLocaleDateString(),
+                    );
+                  }}
+                  onCancel={() => {
+                    setOpen(false);
+                  }}
+                />
 
-              <View style={styles.genderContainer}>
-                <Text style={styles.label}>{t('GENDER')}</Text>
-                <View style={styles.radioContainer}>
-                  {genderItem.map(item => (
-                    <RadioButton
-                      key={item.id}
-                      {...item}
-                      gender={formData.gender}
-                      onPress={value => handleInputChange('gender', value)}
+                <View style={styles.genderContainer}>
+                  <Text style={styles.label}>{t('GENDER')}</Text>
+                  <View style={styles.radioContainer}>
+                    {genderItem.map(item => (
+                      <RadioButton
+                        key={item.id}
+                        {...item}
+                        gender={gender}
+                        onPress={value => handleInputChange('gender', value)}
+                      />
+                    ))}
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.inputContainer}>
+                <View style={{paddingTop: hp('2.4')}}>
+                  <Button
+                    // enable={!isFormValid}
+                    // disabled={!isFormValid}
+                    onPress={() => handleSubmit()}
+                    title={t('Register')}
+                  />
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    height: hp('4'),
+                    width: wp('85'),
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: FONT.Regular,
+                      fontSize: FONTS_SIZE.regular,
+                      color: COLORS.black,
+                    }}>
+                    OR
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    width: wp('60'),
+                    justifyContent: 'space-evenly',
+                    alignItems: 'center',
+                  }}>
+                  <TouchableOpacity activeOpacity={0.6}>
+                    <Image
+                      source={GoogleIcon}
+                      style={{width: 50, height: 50}}
                     />
-                  ))}
+                  </TouchableOpacity>
+                  <TouchableOpacity activeOpacity={0.6}>
+                    <Image source={AppleIcon} style={{width: 50, height: 50}} />
+                  </TouchableOpacity>
+                  <TouchableOpacity activeOpacity={0.6}>
+                    <Image
+                      source={FacebookIcon}
+                      style={{width: 50, height: 50}}
+                    />
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
-
-            <View style={styles.inputContainer}>
-              <View style={{paddingTop: hp('2.4')}}>
-                <Button
-                  // enable={!isFormValid}
-                  // disabled={!isFormValid}
-                  onPress={() => handleSubmit()}
-                  title={t('Register')}
-                />
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  height: hp('4'),
-                  width: wp('85'),
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
+            {/* <View> */}
+            <View style={styles.registerContainer}>
+              <Text style={styles.registerText}>
+                {t('DOYOUHAVEANACCOUNT')}
+                {'  '}
                 <Text
-                  style={{
-                    fontFamily: FONT.Regular,
-                    fontSize: FONTS_SIZE.regular,
-                    color: COLORS.black,
-                  }}>
-                  OR
+                  onPress={() => handleLoginToRedirect()}
+                  style={{color: COLORS.Primary_2}}>
+                  {t('LOGIN')}
                 </Text>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  width: wp('60'),
-                  justifyContent: 'space-evenly',
-                  alignItems: 'center',
-                }}>
-                <TouchableOpacity activeOpacity={0.6}>
-                  <Image source={GoogleIcon} style={{width: 50, height: 50}} />
-                </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.6}>
-                  <Image source={AppleIcon} style={{width: 50, height: 50}} />
-                </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.6}>
-                  <Image
-                    source={FacebookIcon}
-                    style={{width: 50, height: 50}}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.registerContainer}>
-            <Text style={styles.registerText}>
-              {t('DOYOUHAVEANACCOUNT')}
-              {'  '}
-              <Text
-                onPress={() => handleLoginToRedirect()}
-                style={{color: COLORS.Primary_2}}>
-                {t('LOGIN')}
               </Text>
-            </Text>
-          </View>
+            </View>
+            {/* </View> */}
+          </ScrollView>
         </KeyboardAvoidingView>
       </ImageBackground>
     </SafeAreaView>

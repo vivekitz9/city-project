@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     display: 'flex',
     flexWrap: 'nowrap',
     flexDirection: 'column',
-    gap: 9,
+    gap: 12,
     // marginHorizontal: 24,
     justifyContent: 'center',
     alignItems: 'center',
@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
   },
   /*************Radio Button Container*/
   genderContainer: {
-    marginVertical: 4,
+    marginVertical: 5,
     width: wp('85'),
     height: 'auto',
   },
@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
     gap: 20,
   },
   label: {
-    paddingBottom: 4,
+    paddingBottom: 6,
     fontFamily: FONT.Bold,
     fontSize: FONTS_SIZE.xsmall2,
     color: COLORS.Primary_2,
