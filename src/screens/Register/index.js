@@ -8,7 +8,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
-  TextInput,
   ScrollView,
 } from 'react-native';
 import {COLORS, FONT, FONTS_SIZE, hp, wp, genderItem} from '../../constant';
@@ -25,11 +24,12 @@ import {useTranslation} from 'react-i18next';
 import {styles} from './index.style';
 import {useToast} from 'react-native-toast-notifications';
 import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/AntDesign';
 import BackHeader from '../../components/backButton';
 import DatePicker from 'react-native-date-picker';
+import {TextInput} from 'react-native-paper';
 
 import RadioButton from '../../components/radioButton';
+import GoogleLoginConfig from './GoogleLoginConfig';
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -45,6 +45,22 @@ const RegisterScreen = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
+
+  const HandleGoogleLogin = async () => {
+    try {
+      const response = await GoogleLoginConfig();
+      const {idToken, user} = response;
+      if (idToken) {
+        const resp = await authAPI.validateToken({
+          token: idToken,
+          email: user.email,
+        });
+        await handlePostLoginData(resp.data);
+      }
+    } catch (error) {
+    } finally {
+    }
+  };
 
   const handleLoginToRedirect = () => {
     navigation.navigate('Login');
@@ -148,19 +164,26 @@ const RegisterScreen = () => {
                 <InputTextField
                   label={t('DATEOFBIRTH')}
                   style={styles.inputText}
-                  // keyboardType="default"
                   value={dateOfBirth}
                   onFocus={() => setOpen(true)}
-                  // onChangeText={value => {
-                  //   handleInputChange('dateOfBirth', value);
-                  // }}
                   editable={false}
+                  right={
+                    <TextInput.Icon
+                      icon="calendar"
+                      onPress={() => setOpen(true)}
+                      color={COLORS.Primary_2}
+                    />
+                  }
                 />
+
                 <DatePicker
                   modal={true}
                   open={open}
                   date={date}
                   mode="date"
+                  buttonColor={COLORS.Primary_2}
+                  dividerColor={COLORS.Primary_2}
+                  confirmText={'Set'}
                   onConfirm={toDate => {
                     setOpen(false);
                     setDate(toDate);
@@ -223,7 +246,9 @@ const RegisterScreen = () => {
                     justifyContent: 'space-evenly',
                     alignItems: 'center',
                   }}>
-                  <TouchableOpacity activeOpacity={0.6}>
+                  <TouchableOpacity
+                    activeOpacity={0.6}
+                    onPress={HandleGoogleLogin}>
                     <Image
                       source={GoogleIcon}
                       style={{width: 50, height: 50}}
@@ -241,7 +266,7 @@ const RegisterScreen = () => {
                 </View>
               </View>
             </View>
-            {/* <View> */}
+
             <View style={styles.registerContainer}>
               <Text style={styles.registerText}>
                 {t('DOYOUHAVEANACCOUNT')}
@@ -253,7 +278,6 @@ const RegisterScreen = () => {
                 </Text>
               </Text>
             </View>
-            {/* </View> */}
           </ScrollView>
         </KeyboardAvoidingView>
       </ImageBackground>

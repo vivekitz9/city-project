@@ -12,6 +12,7 @@ const InputTextField = ({
   style,
   keyboardType,
   onFocus,
+  right,
 }) => {
   return (
     <TextInput
@@ -28,6 +29,7 @@ const InputTextField = ({
       style={style}
       keyboardType={keyboardType}
       onFocus={onFocus}
+      right={right}
     />
   );
 };
