@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
   },
   inputText: {
     width: wp('85'),
-    height: hp('7'),
+    height: 55,
     fontSize: FONTS_SIZE.xsmall2,
     fontFamily: FONT.Regular,
   },

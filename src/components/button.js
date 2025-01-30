@@ -28,7 +28,7 @@ const Button = ({title, onPress, style, enable = false, disabled = false}) => {
 const styles = StyleSheet.create({
   container: {
     width: wp('85'),
-    height: hp('7.5'),
+    height: 55,
     backgroundColor: COLORS.Primary_2,
     justifyContent: 'center',
     alignItems: 'center',

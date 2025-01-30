@@ -10,10 +10,11 @@ import { useToast } from "react-native-toast-notifications";
 import {
   useNavigation,
 } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/AntDesign';
 import BackHeader from '../../components/backButton';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-
+import ApiService from '../../api/ApiService';
+import { useSelector, useDispatch } from 'react-redux';
+import { loginFailure, loginSuccess, loginRequest } from '../../Redux/Actions/loginActions';
 
 GoogleSignin.configure({
   // webClientId: "855427964750-fh3k8drvc8urfgov7ganig08jblhh5kg.apps.googleusercontent.com",
@@ -36,6 +37,17 @@ const Login = () => {
   const [isFormValid, setIsFormValid] = useState(false)
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { auth } = useSelector((state) => state); // Access state
+
+
+  useEffect(()=>{
+    if(auth?.user?.data?.success){
+      navigation.navigate("VerifyOtpScreen")
+    }
+  }, [auth])
+  console.log('count----->', auth);
+
 
   const handleGoogleLogin = async () => {
     setLoading(true);
@@ -75,9 +87,20 @@ const Login = () => {
   }, [mobileNumber])
 
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (isFormValid) {
-      navigation.navigate("VerifyOtp")
+      try {
+        dispatch(loginRequest())
+        const payload = { "mobile": mobileNumber }
+        const response = await ApiService.postData('v1/login', payload)
+        if (response?.data?.success) {
+          dispatch(loginSuccess(response?.data))
+        } else {
+          dispatch(loginFailure(response))
+        }
+      } catch (error) {
+        console.log('error----->', error);
+      }
     }
   }
 

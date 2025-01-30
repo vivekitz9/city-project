@@ -24,15 +24,16 @@ export const styles = StyleSheet.create({
       borderWidth: 2,
     },
     pinCodeContainer:{
-      width: 65,
-      height: 65,
+      width: 60,
+      height: 60,
       borderColor: COLORS.Primary_2,
       borderWidth: 2,
     },
     pinCodeText:{
       color: COLORS.black,
       fontFamily: FONT.Bold,
-      fontWeight: '400'
+      fontWeight: '400',
+      fontSize: FONTS_SIZE.large
     },
     focusStick:{
       color: COLORS.Primary_2
