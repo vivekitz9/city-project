@@ -11,7 +11,7 @@ const SplashScreen = () => {
 
     useEffect(()=>{
         setTimeout(() => {
-            navigation.navigate("Language")
+            navigation.push("Language")
         }, 3000);
     }, [])
 
@@ -20,7 +20,7 @@ const SplashScreen = () => {
             <ImageBackground source={BackgroundImage} style={styles.container}>
 
                 <View style={styles.logoContainer}>
-                    <Image source={Logo} style={{ width: 100, height: 100 }}/>
+                    <Image source={Logo} style={{ width: 110, height: 110 }}/>
                     <Text style={styles.welcomeText}>Welcome to Shivdeep Family</Text>
                 </View>
 

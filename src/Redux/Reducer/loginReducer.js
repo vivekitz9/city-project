@@ -9,6 +9,7 @@ const initialState = {
 };
 
 const authReducer = (state = initialState, action) => {
+  console.log('action---->', action);
   switch (action.type) {
     case LOGIN_REQUEST:
       return {
@@ -26,7 +27,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        // error: action.payload,
       };
     default:
       return state;
