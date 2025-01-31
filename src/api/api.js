@@ -1,7 +1,7 @@
 import axios from 'axios';
 import NetInfo from '@react-native-community/netinfo';
 
-const baseURL = "http://51.20.150.90:8001/api/"
+const baseURL = "http://shivdeeplande.com:8001/api/"
 
 const api = axios.create({
     baseURL: baseURL,
