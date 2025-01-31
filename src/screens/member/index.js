@@ -73,9 +73,6 @@ const MemberScreen = () => {
         source={BackgroundImage}
         resizeMode="cover"
         style={styles.container}>
-        <View style={{height: hp('7')}}>
-          <Text>This Is For HaderS content</Text>
-        </View>
         <KeyboardAvoidingView
           behavior="padding"
           keyboardVerticalOffset={keyboardVerticalOffset}>

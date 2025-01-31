@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
   logoContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: hp('15'),
+    height: hp('23'),
   },
   avatarContainer: {
     position: 'relative',
