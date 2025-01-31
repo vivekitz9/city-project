@@ -46,8 +46,6 @@ const Login = () => {
       navigation.navigate("VerifyOtpScreen")
     }
   }, [auth])
-  console.log('count----->', auth);
-
 
   const handleGoogleLogin = async () => {
     setLoading(true);
