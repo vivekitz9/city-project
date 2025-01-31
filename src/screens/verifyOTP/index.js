@@ -9,10 +9,14 @@ import { useTranslation } from 'react-i18next';
 import { styles } from './index.style';
 import { OtpInput } from "react-native-otp-entry";
 import BackHeader from '../../components/backButton';
+import { useSelector, useDispatch } from 'react-redux';
 
-const VerifyOtpScreen = () => {
+const VerifyOtpScreen = ({ route }) => {
     const [t] = useTranslation('translation');
     const navigation = useNavigation();
+    const { auth } = useSelector((state) => state?.auth?.user?.data); // Access state
+
+console.log('auth----->', auth);
 
     const handleChange = (value) =>{
         if(value.length === 4){
@@ -23,11 +27,12 @@ const VerifyOtpScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground source={BackgroundImage} resizeMode="cover" style={styles.container}>
-                <BackHeader onPress={() => navigation.navigate("Login")} />
+                <BackHeader onPress={() => navigation.goBack()} />
                 <View style={styles.subContainer}>
                     <View style={styles.logoContainer}>
                         <Image source={Logo} style={{ width: 100, height: 100 }}/>
-                        <Text style={{ fontFamily: FONT.Bold, fontSize: FONTS_SIZE.regular, paddingTop: 10, color: COLORS.Primary_2 }}>{t('WelcomeToLogin')}</Text>
+                        <Text style={styles.title}>{t('Verification')}</Text>
+                        <Text style={styles.subTitle}>{t('VerificationSubTitle')}</Text>
                     </View>
 
                     <OtpInput
@@ -55,6 +60,10 @@ const VerifyOtpScreen = () => {
                             focusedPinCodeContainerStyle: styles.activePinCodeContainer,
                         }}
                     />
+
+                    <View>
+                        <Text style={{ fontFamily: FONT.Regular, fontSize: FONTS_SIZE.xsmall2, color: COLORS.black }}>Re-send code in 0:30</Text>
+                    </View>
                 </View>
 
             </ImageBackground>

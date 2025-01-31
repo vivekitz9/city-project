@@ -13,9 +13,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // import RegisterScreen from './src/screens/signUp';
 import DashboardScreen from './src/screens/Dashboard';
 import RegisterScreen from './src/screens/Register';
+import MemberScreen from './src/screens/member';
 import {store} from './src/Redux/store';
 import {Provider} from 'react-redux';
-import MemberScreen from './src/screens/member';
+import {NetworkProvider} from './src/api/NetInfo';
 
 const RootStack = createNativeStackNavigator({
   initialRouteName: 'Splash',
@@ -70,7 +71,9 @@ const App = () => {
           ),
         }}>
         <StatusBar animated={true} backgroundColor={COLORS.Primary} />
-        <Navigation />
+        <NetworkProvider>
+          <Navigation />
+        </NetworkProvider>
       </ToastProvider>
     </Provider>
   );
