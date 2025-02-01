@@ -185,6 +185,10 @@ const RegisterScreen = () => {
     }
     return null;
   };
+  const redirect_to_member = () => {
+    console.log('redirect to member');
+    navigation.navigate('Member');
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -405,6 +409,12 @@ const RegisterScreen = () => {
                 </Text>
               </View>
               {/* </View> */}
+            </View>
+            <View style={{paddingTop: hp('2.4')}}>
+              <Button
+                onPress={() => redirect_to_member()}
+                title={t('Register')}
+              />
             </View>
           </ScrollView>
         </KeyboardAvoidingView>

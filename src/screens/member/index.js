@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import {COLORS, FONT, FONTS_SIZE, hp, wp} from '../../constant';
 import {BackgroundImage, UserAvatar, PenIcon} from './../../assets/icons/index';
@@ -19,6 +20,7 @@ import {useToast} from 'react-native-toast-notifications';
 import {useNavigation} from '@react-navigation/native';
 import DatePicker from 'react-native-date-picker';
 import {TextInput} from 'react-native-paper';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 const MemberScreen = () => {
   const navigation = useNavigation();
@@ -33,6 +35,7 @@ const MemberScreen = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
+  const [imageUri, setImageUri] = useState(null);
 
   const handleInputChange = (key, value) => {
     setFromData(prevData => ({...prevData, [key]: value}));
@@ -64,7 +67,23 @@ const MemberScreen = () => {
       navigation.navigate('MemberShipCard');
     }
   };
+  useEffect(() => {
+    console.log('Updated Image URI:', imageUri);
+  }, [imageUri]);
 
+  const handleImagePicker = () => {
+    console.log('image pcker');
+    launchImageLibrary({mediaType: 'photo'}, response => {
+      if (!response.didCancel && !response.error) {
+        setImageUri(response.assets[0].uri);
+      }
+    });
+    console.log(imageUri);
+  };
+
+  const go_to_membership_card = () => {
+    navigation.navigate('MemberShipCard');
+  };
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 30;
 
   return (
@@ -85,16 +104,18 @@ const MemberScreen = () => {
               <View style={styles.avatarContainer}>
                 <View style={styles.userAvatar}>
                   <Image
-                    source={UserAvatar}
+                    source={imageUri != null ? imageUri : UserAvatar}
                     style={{width: '100%', height: '100%'}}
                   />
                 </View>
-                <View style={styles.penIcon}>
-                  <Image
-                    source={PenIcon}
-                    style={{width: '100%', height: '100%'}}
-                  />
-                </View>
+                <TouchableOpacity onPress={handleImagePicker}>
+                  <View style={styles.penIcon}>
+                    <Image
+                      source={PenIcon}
+                      style={{width: '100%', height: '100%'}}
+                    />
+                  </View>
+                </TouchableOpacity>
               </View>
             </View>
             <View style={{alignItems: 'center', marginBottom: 10}}>
@@ -177,6 +198,16 @@ const MemberScreen = () => {
                     // disabled={!isFormValid}
                     onPress={() => handleSubmit()}
                     title={t('SUBMIT')}
+                  />
+                </View>
+              </View>
+              <View style={styles.inputContainer}>
+                <View style={{paddingTop: hp('10')}}>
+                  <Button
+                    // enable={!isFormValid}
+                    // disabled={!isFormValid}
+                    onPress={go_to_membership_card}
+                    title={t('go to membership card')}
                   />
                 </View>
               </View>
