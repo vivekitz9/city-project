@@ -6,3 +6,4 @@ export const GoogleIcon = require('./google.png');
 export const AppleIcon = require('./apple.png');
 export const UserAvatar = require('./userAvatar.png');
 export const PenIcon = require('./penIcon.png');
+export const QRCodeImg = require('./QRCode.png');

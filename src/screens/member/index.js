@@ -67,18 +67,23 @@ const MemberScreen = () => {
       navigation.navigate('MemberShipCard');
     }
   };
-  useEffect(() => {
-    console.log('Updated Image URI:', imageUri);
-  }, [imageUri]);
 
-  const handleImagePicker = () => {
-    console.log('image pcker');
-    launchImageLibrary({mediaType: 'photo'}, response => {
-      if (!response.didCancel && !response.error) {
-        setImageUri(response.assets[0].uri);
+  const handleImagePicker = async () => {
+    console.log('Opening Image Picker...');
+
+    try {
+      const result = await launchImageLibrary({mediaType: 'photo'});
+      if (result.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (result.errorMessage) {
+        console.log(result.errorMessage);
+      } else {
+        console.log(result);
       }
-    });
-    console.log(imageUri);
+      console.log('Image Picker Response:', result);
+    } catch (error) {
+      console.error('Image Picker Error:', error);
+    }
   };
 
   const go_to_membership_card = () => {

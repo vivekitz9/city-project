@@ -14,6 +14,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DashboardScreen from './src/screens/Dashboard';
 import RegisterScreen from './src/screens/Register';
 import MemberScreen from './src/screens/member';
+import MemberShipCardScreen from './src/screens/MemberShipCard';
 import {store} from './src/Redux/store';
 import {Provider} from 'react-redux';
 import {NetworkProvider} from './src/api/NetInfo';
@@ -30,6 +31,7 @@ const RootStack = createNativeStackNavigator({
     Language: LanguageScreen,
     Register: RegisterScreen,
     Member: MemberScreen,
+    MemberShipCard: MemberShipCardScreen,
     Dashboard: DashboardScreen,
   },
 });
