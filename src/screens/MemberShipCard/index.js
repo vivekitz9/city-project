@@ -20,8 +20,11 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useTranslation} from 'react-i18next';
 import {styles} from './index.style';
+import BackHeader from '../../components/backButton';
+import {useNavigation} from '@react-navigation/native';
 
 const MemberShipCardScreen = () => {
+  const navigation = useNavigation();
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 30;
 
   return (
@@ -36,6 +39,8 @@ const MemberShipCardScreen = () => {
           }}
           showsHorizontalScrollIndicator={false}
           keyboardShouldPersistTaps="handled">
+          <BackHeader onPress={() => navigation.goBack()} />
+
           <View style={styles.mainContainer}>
             <View style={styles.headingContainer}>
               <Text style={styles.mainHeading}>Membership Card</Text>

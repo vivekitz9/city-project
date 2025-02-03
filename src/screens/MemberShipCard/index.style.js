@@ -6,11 +6,13 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   mainContainer: {
-    marginHorizontal: 10,
-    marginTop: 60,
+    // marginHorizontal: 10,
+    marginHorizontal: 'auto',
+    marginTop: 40,
     flex: 1,
     flexDirection: 'column',
     position: 'relative',
+    width: wp(90),
   },
   headingContainer: {
     flex: 0.2,
@@ -72,7 +74,7 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     elevation: 5,
     gap: 10,
-    height: 90,
+    height: hp(11),
   },
   logoMainContainer: {
     position: 'relative',

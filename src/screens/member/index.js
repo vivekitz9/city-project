@@ -21,6 +21,9 @@ import {useNavigation} from '@react-navigation/native';
 import DatePicker from 'react-native-date-picker';
 import {TextInput} from 'react-native-paper';
 import {launchImageLibrary} from 'react-native-image-picker';
+import BackHeader from '../../components/backButton';
+import moment from 'moment';
+import Icon from 'react-native-vector-icons/EvilIcons';
 
 const MemberScreen = () => {
   const navigation = useNavigation();
@@ -105,6 +108,7 @@ const MemberScreen = () => {
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled">
+            <BackHeader onPress={() => navigation.goBack()} />
             <View style={styles.logoContainer}>
               <View style={styles.avatarContainer}>
                 <View style={styles.userAvatar}>
@@ -159,7 +163,7 @@ const MemberScreen = () => {
                     handleInputChange('mobileNumber', value)
                   }
                 />
-                <InputTextField
+                {/* <InputTextField
                   label={t('DATEOFBIRTH')}
                   style={styles.inputText}
                   value={dateOfBirth}
@@ -172,7 +176,20 @@ const MemberScreen = () => {
                       color={COLORS.Primary_2}
                     />
                   }
-                />
+                /> */}
+                <View style={{paddingTop: 10}}>
+                  <TouchableOpacity
+                    activeOpacity={0.6}
+                    onPress={() => setOpen(true)}
+                    style={[styles.dateContainer, open && styles.activeBorder]}>
+                    <Text style={styles.textdate}>
+                      {date
+                        ? moment(date).format('DD/MM/YYYY')
+                        : t('DATEOFBIRTH')}
+                    </Text>
+                    <Icon name="calendar" size={25} color={COLORS.Primary_2} />
+                  </TouchableOpacity>
+                </View>
 
                 <DatePicker
                   modal={true}

@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
   logoContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: hp('23'),
+    height: hp('15'),
   },
   avatarContainer: {
     position: 'relative',
@@ -47,5 +47,27 @@ export const styles = StyleSheet.create({
     height: hp('7'),
     fontSize: FONTS_SIZE.xsmall2,
     fontFamily: FONT.Regular,
+  },
+  dateContainer: {
+    width: wp('85'),
+    backgroundColor: COLORS.white,
+    flexDirection: 'row',
+    height: 55,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 5,
+    borderWidth: 1.2,
+    borderColor: COLORS.gray,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  textdate: {
+    fontSize: FONTS_SIZE.xsmall2,
+    fontFamily: FONT.RegularRoboto,
+    color: COLORS.gray,
+  },
+  activeBorder: {
+    borderColor: COLORS.Primary_2,
+    borderWidth: 2,
   },
 });
