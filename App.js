@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { StatusBar, View, Text } from 'react-native';
 import { createStaticNavigation } from '@react-navigation/native';
@@ -10,16 +11,28 @@ import VerifyOtpScreen from './src/screens/verifyOTP';
 import { ToastProvider } from 'react-native-toast-notifications';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-// import RegisterScreen from './src/screens/signUp';
-import DashboardScreen from './src/screens/Dashboard';
 import RegisterScreen from './src/screens/Register';
 import { store } from './src/Redux/store';
 import { Provider } from 'react-redux';
 import { NetworkProvider } from './src/api/NetInfo';
+// import {LoginStackNavigator} from './src/navigation';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import DashboardScreen from './src/screens/Dashboard';
 
 
-const RootStack = createNativeStackNavigator({
-  initialRouteName: 'Splash',
+const LoginStackNavigator = createDrawerNavigator({
+  initialRouteName: 'Home',
+  screenOptions: {
+    headerShown: false,
+  },
+  screens: {
+    Home: DashboardScreen,
+    // Notifications: NotificationsScreen,
+  },
+});
+
+const MainStackNavigator = createNativeStackNavigator({
+  initialRouteName: 'Home',
   screenOptions: {
     headerShown: false,
   },
@@ -29,14 +42,15 @@ const RootStack = createNativeStackNavigator({
     Splash: SplashScreen,
     Language: LanguageScreen,
     Register: RegisterScreen,
-    Dashboard: DashboardScreen,
+    Home: DashboardScreen,
   },
 });
 
-const Navigation = createStaticNavigation(RootStack);
 
 const App = () => {
   const [IsLogin, setIsLogin] = useState(true);
+
+const Navigation = createStaticNavigation(MainStackNavigator) 
 
   return (
     <Provider store={store}>

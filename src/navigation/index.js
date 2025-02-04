@@ -1,12 +1,15 @@
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import DashboardScreen from '../screens/Dashboard';
 
-const Drawer = createDrawerNavigator();
+export const LoginStackNavigator = createDrawerNavigator({
+  initialRouteName: 'Home',
+  screenOptions: {
+    headerShown: false,
+  },
+  screens: {
+    Home: DashboardScreen,
+    // Notifications: NotificationsScreen,
+  },
+});
 
-function MyDrawer() {
-  return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Profile" component={ProfileScreen} />
-    </Drawer.Navigator>
-  );
-}
+// export { LoginStackNavigator };
