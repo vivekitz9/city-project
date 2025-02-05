@@ -53,7 +53,7 @@ const DashboardScreen = () => {
         <SafeAreaView style={styles.container}>
             <ImageBackground source={BackgroundImage} resizeMode="cover" style={styles.container}>
                 <HeaderComponent />
-                <ScrollView style={{ flex: 1 }}>
+                <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
                     <View style={{ margin: 20, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
 
                         {/* Swiper */}
@@ -77,11 +77,24 @@ const DashboardScreen = () => {
                         </View>
                         {/* Swiper End */}
 
-                        <View style={{ width: wp('90'), marginTop: 20, borderColor: COLORS.gray, borderRadius: 20, elevation: 10, backgroundColor: '#fff' }}>
-                            
+                        <View style={{ width: wp('90'), marginTop: 16, borderColor: COLORS.gray, borderRadius: 20, elevation: 10, backgroundColor: '#fff' }}>
+
                             <View>
                                 <Text style={{ paddingHorizontal: 20, paddingVertical: 15, fontFamily: FONT.BoldRoboto, fontSize: FONTS_SIZE.xsmall2 }}>UPCOMING EVENTS</Text>
-                                <Image source={BannerOne} style={{ width: wp('90'), height: hp('30'), borderRadius: 20 }}/>
+                                <Image source={BannerOne} style={{ width: wp('90'), height: hp('30'), borderRadius: 20 }} />
+                            </View>
+
+                        </View>
+
+                        <View style={{ width: wp('90'), marginTop: 16, borderColor: COLORS.gray, borderRadius: 20, elevation: 10, backgroundColor: '#fff' }}>
+
+                            <View>
+                                <Text style={{ paddingHorizontal: 20, paddingTop: 15, paddingBottom: 10, fontFamily: FONT.BoldRoboto, fontSize: FONTS_SIZE.xsmall2 }}>Television news screen layout</Text>
+                                <Text style={{ paddingHorizontal: 20, paddingBottom: 15, fontFamily: FONT.Regular, fontSize: FONTS_SIZE.xsmall }}>Television news screen layout</Text>
+
+
+                                <Image source={BannerOne} style={{ width: wp('90'), height: hp('30'), borderRadius: 20 }} />
+
                             </View>
 
                         </View>
