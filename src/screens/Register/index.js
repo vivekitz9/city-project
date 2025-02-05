@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   SafeAreaView,
@@ -8,10 +8,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
-  TextInput,
   ScrollView,
 } from 'react-native';
-import { COLORS, FONT, FONTS_SIZE, hp, wp, genderItem } from '../../constant';
+import {COLORS, FONT, FONTS_SIZE, hp, wp, genderItem} from '../../constant';
 import {
   Logo,
   BackgroundImage,
@@ -21,34 +20,34 @@ import {
 } from './../../assets/icons/index';
 import InputTextField from '../../components/textfield';
 import Button from '../../components/button';
-import { useTranslation } from 'react-i18next';
-import { styles } from './index.style';
-import { useToast } from 'react-native-toast-notifications';
-import { useNavigation } from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
+import {styles} from './index.style';
+import {useToast} from 'react-native-toast-notifications';
+import {useNavigation} from '@react-navigation/native';
 import BackHeader from '../../components/backButton';
 import DatePicker from 'react-native-date-picker';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import RadioButton from '../../components/radioButton';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import moment from 'moment';
-import { Dropdown } from 'react-native-element-dropdown';
+import {Dropdown} from 'react-native-element-dropdown';
 import ApiService from '../../api/ApiService';
 
-
 const data = [
-  { label: 'Item 1', value: '1' },
-  { label: 'Item 2', value: '2' },
-  { label: 'Item 3', value: '3' },
-  { label: 'Item 4', value: '4' },
-  { label: 'Item 5', value: '5' },
-  { label: 'Item 6', value: '6' },
-  { label: 'Item 7', value: '7' },
-  { label: 'Item 8', value: '8' },
+  {label: 'Item 1', value: '1'},
+  {label: 'Item 2', value: '2'},
+  {label: 'Item 3', value: '3'},
+  {label: 'Item 4', value: '4'},
+  {label: 'Item 5', value: '5'},
+  {label: 'Item 6', value: '6'},
+  {label: 'Item 7', value: '7'},
+  {label: 'Item 8', value: '8'},
 ];
 
 GoogleSignin.configure({
   // webClientId: "855427964750-fh3k8drvc8urfgov7ganig08jblhh5kg.apps.googleusercontent.com",
-  androidClientId: '855427964750-fh3k8drvc8urfgov7ganig08jblhh5kg.apps.googleusercontent.com',
+  androidClientId:
+    '855427964750-fh3k8drvc8urfgov7ganig08jblhh5kg.apps.googleusercontent.com',
   // iosClientId: GOOGLE_IOS_CLIENT_ID,
   scopes: ['profile', 'email'],
 });
@@ -68,7 +67,7 @@ const RegisterScreen = () => {
     mobileNumber: '',
     dateOfBirth: '',
     gender: '',
-    dist: ''
+    dist: '',
   });
   const toast = useToast();
   const [isFormValid, setIsFormValid] = useState(false);
@@ -76,51 +75,65 @@ const RegisterScreen = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  const [districtsData, setDistrictsData] = useState([])
+  const [districtsData, setDistrictsData] = useState([]);
 
   useEffect(() => {
-    fetchDistrictsApi()
-  }, [])
-
+    fetchDistrictsApi();
+  }, []);
 
   console.log('formData---->', formData);
 
   const fetchDistrictsApi = async () => {
-
     try {
       const response = await ApiService.fetchData('v1/districts');
 
       if (response?.data?.code === 200) {
-        const data = response?.data?.data.map((item) => {
-          return { label: item.district, value: item.id }
-        })
-        setDistrictsData(data)
+        const data = response?.data?.data.map(item => {
+          return {label: item.district, value: item.id};
+        });
+        setDistrictsData(data);
       }
     } catch (error) {
       console.log('error--->', error);
     }
-  }
+  };
+
+  const HandleGoogleLogin = async () => {
+    try {
+      const response = await GoogleLoginConfig();
+      const {idToken, user} = response;
+      if (idToken) {
+        const resp = await authAPI.validateToken({
+          token: idToken,
+          email: user.email,
+        });
+        await handlePostLoginData(resp.data);
+      }
+    } catch (error) {
+    } finally {
+    }
+  };
 
   const handleLoginToRedirect = () => {
     navigation.navigate('Login');
   };
 
   const handleInputChange = (key, value) => {
-    setFromData(prevData => ({ ...prevData, [key]: value }));
+    setFromData(prevData => ({...prevData, [key]: value}));
   };
 
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     console.log(formData);
 
     if (isFormValid) {
-      const payload = { "mobile": mobileNumber }
-      const response = await ApiService.postData('v1/login', payload)
+      const payload = {mobile: mobileNumber};
+      const response = await ApiService.postData('v1/login', payload);
 
       // navigation.navigate('VerifyOtp');
     }
   };
 
-  const { userName, email, mobileNumber, dateOfBirth, gender, dist } = formData;
+  const {userName, email, mobileNumber, dateOfBirth, gender, dist} = formData;
   // form validation
   useEffect(() => {
     if (
@@ -131,9 +144,7 @@ const RegisterScreen = () => {
       dist.length === 0
     ) {
       setIsFormValid(false);
-    } else if (
-      !(mobileNumber.match('[0-9]{10}'))
-    ) {
+    } else if (!mobileNumber.match('[0-9]{10}')) {
       setIsFormValid(false);
     } else {
       setIsFormValid(true);
@@ -146,7 +157,7 @@ const RegisterScreen = () => {
     setLoading(true);
     try {
       const response = await GoogleLogin();
-      const { idToken, user } = response;
+      const {idToken, user} = response;
 
       if (idToken) {
         const resp = await authAPI.validateToken({
@@ -157,7 +168,7 @@ const RegisterScreen = () => {
       }
     } catch (apiError) {
       setError(
-        apiError?.response?.data?.error?.message || 'Something went wrong'
+        apiError?.response?.data?.error?.message || 'Something went wrong',
       );
     } finally {
       setLoading(false);
@@ -167,12 +178,16 @@ const RegisterScreen = () => {
   const renderLabel = () => {
     if (value || isFocus) {
       return (
-        <Text style={[styles.droplabel, isFocus && { color: COLORS.Primary }]}>
+        <Text style={[styles.droplabel, isFocus && {color: COLORS.Primary}]}>
           Select Districts
         </Text>
       );
     }
     return null;
+  };
+  const redirect_to_member = () => {
+    console.log('redirect to member');
+    navigation.navigate('Member');
   };
 
   return (
@@ -184,18 +199,17 @@ const RegisterScreen = () => {
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           keyboardVerticalOffset={keyboardVerticalOffset}
-        // style={{ flex: 1 }}
+          // style={{ flex: 1 }}
         >
           <ScrollView
-            contentContainerStyle={{ flexGrow: 1 }}
+            contentContainerStyle={{flexGrow: 1}}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled">
-
             <View>
               <BackHeader onPress={() => navigation.goBack()} />
 
               <View style={styles.logoContainer}>
-                <Image source={Logo} style={{ width: 78, height: 78 }} />
+                <Image source={Logo} style={{width: 78, height: 78}} />
                 <Text
                   style={{
                     fontFamily: FONT.Bold,
@@ -239,13 +253,24 @@ const RegisterScreen = () => {
                     }
                   />
 
-                  <View style={{ width: wp('85'), paddingTop: 10 }}>
-
-                    <TouchableOpacity activeOpacity={0.6} onPress={() => setOpen(true)} style={styles.dateContainer}>
-                      <Text style={{ fontSize: FONTS_SIZE.xsmall2, fontFamily: FONT.RegularRoboto, color: COLORS.gray }}>{date ? moment(date).format("DD/MM/YYYY") : t('DATEOFBIRTH')}</Text>
+                  <View style={{width: wp('85'), paddingTop: 10}}>
+                    <TouchableOpacity
+                      activeOpacity={0.6}
+                      onPress={() => setOpen(true)}
+                      style={styles.dateContainer}>
+                      <Text
+                        style={{
+                          fontSize: FONTS_SIZE.xsmall2,
+                          fontFamily: FONT.RegularRoboto,
+                          color: COLORS.gray,
+                        }}>
+                        {date
+                          ? moment(date).format('DD/MM/YYYY')
+                          : t('DATEOFBIRTH')}
+                      </Text>
 
                       <Icon
-                        name='calendar'
+                        name="calendar"
                         size={25}
                         color={COLORS.Primary_2}
                       />
@@ -272,7 +297,10 @@ const RegisterScreen = () => {
                   <View style={styles.dropcontainer}>
                     {renderLabel()}
                     <Dropdown
-                      style={[styles.dropdown, isFocus && { borderColor: COLORS.Primary }]}
+                      style={[
+                        styles.dropdown,
+                        isFocus && {borderColor: COLORS.Primary},
+                      ]}
                       placeholderStyle={styles.placeholderStyle}
                       selectedTextStyle={styles.selectedTextStyle}
                       inputSearchStyle={styles.inputSearchStyle}
@@ -291,10 +319,7 @@ const RegisterScreen = () => {
                       onChange={item => {
                         setValue(item.value);
                         setIsFocus(false);
-                        handleInputChange(
-                          'dist',
-                          item.value
-                        );
+                        handleInputChange('dist', item.value);
                       }}
                     />
                   </View>
@@ -315,7 +340,7 @@ const RegisterScreen = () => {
                 </View>
 
                 <View style={styles.inputContainer}>
-                  <View style={{ paddingTop: hp('2.4') }}>
+                  <View style={{paddingTop: hp('2.4')}}>
                     <Button
                       enable={!isFormValid}
                       disabled={!isFormValid}
@@ -348,19 +373,24 @@ const RegisterScreen = () => {
                       justifyContent: 'space-evenly',
                       alignItems: 'center',
                     }}>
-                    <TouchableOpacity activeOpacity={0.6} onPress={handleGoogleLogin}>
+                    <TouchableOpacity
+                      activeOpacity={0.6}
+                      onPress={handleGoogleLogin}>
                       <Image
                         source={GoogleIcon}
-                        style={{ width: 50, height: 50 }}
+                        style={{width: 50, height: 50}}
                       />
                     </TouchableOpacity>
                     <TouchableOpacity activeOpacity={0.6}>
-                      <Image source={AppleIcon} style={{ width: 50, height: 50 }} />
+                      <Image
+                        source={AppleIcon}
+                        style={{width: 50, height: 50}}
+                      />
                     </TouchableOpacity>
                     <TouchableOpacity activeOpacity={0.6}>
                       <Image
                         source={FacebookIcon}
-                        style={{ width: 50, height: 50 }}
+                        style={{width: 50, height: 50}}
                       />
                     </TouchableOpacity>
                   </View>
@@ -373,14 +403,19 @@ const RegisterScreen = () => {
                   {'  '}
                   <Text
                     onPress={() => handleLoginToRedirect()}
-                    style={{ color: COLORS.Primary_2 }}>
+                    style={{color: COLORS.Primary_2}}>
                     {t('LOGIN')}
                   </Text>
                 </Text>
               </View>
               {/* </View> */}
             </View>
-
+            <View style={{paddingTop: hp('2.4')}}>
+              <Button
+                onPress={() => redirect_to_member()}
+                title={t('Register')}
+              />
+            </View>
           </ScrollView>
         </KeyboardAvoidingView>
       </ImageBackground>
