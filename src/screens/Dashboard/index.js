@@ -40,19 +40,11 @@ const DashboardScreen = () => {
         }
     }
 
-    _renderItem = ({ item, index }) => {
-        return (
-            <View >
-                <Text>{item.title}</Text>
-            </View>
-        );
-    }
-
 
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground source={BackgroundImage} resizeMode="cover" style={styles.container}>
-                <HeaderComponent />
+                <HeaderComponent navigation={navigation} />
                 <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
                     <View style={{ margin: 20, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
 

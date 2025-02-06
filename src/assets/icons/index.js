@@ -8,3 +8,6 @@ export const Notification = require('./notification.png')
 export const LanguageIcon = require('./language.png')
 export const Banner = require('./banner.png')
 export const BannerOne = require('./banner2.jpeg')
+export const Profile = require('./Profile.JPG')
+
+

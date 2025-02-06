@@ -15,21 +15,9 @@ import RegisterScreen from './src/screens/Register';
 import { store } from './src/Redux/store';
 import { Provider } from 'react-redux';
 import { NetworkProvider } from './src/api/NetInfo';
-// import {LoginStackNavigator} from './src/navigation';
+import {LoginStackNavigator} from './src/navigation';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import DashboardScreen from './src/screens/Dashboard';
-
-
-const LoginStackNavigator = createDrawerNavigator({
-  initialRouteName: 'Home',
-  screenOptions: {
-    headerShown: false,
-  },
-  screens: {
-    Home: DashboardScreen,
-    // Notifications: NotificationsScreen,
-  },
-});
 
 const MainStackNavigator = createNativeStackNavigator({
   initialRouteName: 'Home',
@@ -50,7 +38,7 @@ const MainStackNavigator = createNativeStackNavigator({
 const App = () => {
   const [IsLogin, setIsLogin] = useState(true);
 
-const Navigation = createStaticNavigation(MainStackNavigator) 
+const Navigation = createStaticNavigation(LoginStackNavigator) 
 
   return (
     <Provider store={store}>

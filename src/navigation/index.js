@@ -1,15 +1,16 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import DashboardScreen from '../screens/Dashboard';
+import CustomDrawerContent from '../screens/Drower';
 
-export const LoginStackNavigator = createDrawerNavigator({
-  initialRouteName: 'Home',
+const LoginStackNavigator = createDrawerNavigator({
+  drawerContent: (props) => <CustomDrawerContent {...props} />,
+  initialRouteName: 'Dashboard',
   screenOptions: {
     headerShown: false,
   },
   screens: {
-    Home: DashboardScreen,
-    // Notifications: NotificationsScreen,
+    Dashboard: DashboardScreen,
   },
 });
 
-// export { LoginStackNavigator };
+export { LoginStackNavigator };

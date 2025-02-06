@@ -3,22 +3,27 @@ import { COLORS, FONT, FONTS_SIZE, hp, wp } from '../constant';
 import { Alert, StyleSheet, Text, TouchableOpacity, View, Image, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { Notification, LanguageIcon } from '../assets/icons';
+import {
+    useNavigation,
+} from '@react-navigation/native';
 
 const HeaderComponent = ({
+   
     onPress,
     disabled
 }) => {
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <View style={styles.subContainer}>
 
-                <View style={{ height: 55, justifyContent: 'center', paddingLeft: 15 }}>
+                <TouchableOpacity onPress={()=>navigation.toggleDrawer()} style={{ height: 55, justifyContent: 'center', paddingLeft: 15 }}>
                     <Icon
                         size={20}
                         name='menu'
                         color={COLORS.black}
                     />
-                </View>
+                </TouchableOpacity>
 
                 <View style={{ height: 55, flexDirection: 'row', alignItems: 'center' }} >
                     <Image source={LanguageIcon} style={{ marginRight: 10 }} resizeMode='contain' />
