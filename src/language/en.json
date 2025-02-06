@@ -14,5 +14,7 @@
   "EMAILADDRESS": "Email Address",
   "DATEOFBIRTH": "Date of Birth",
   "DOYOUHAVEANACCOUNT": "Do you have an account?",
-  "GENDER": "Gender"
+  "GENDER": "Gender",
+  "SUBMIT": "SUBMIT",
+  "MEMBER": "MEMBER"
 }
