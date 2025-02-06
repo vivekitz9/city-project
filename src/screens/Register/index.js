@@ -311,8 +311,8 @@ const RegisterScreen = () => {
                       dropdownPosition="top"
                       labelField="label"
                       valueField="value"
-                      placeholder={!isFocus ? 'Select item' : '...'}
-                      searchPlaceholder="Search city"
+                      placeholder={!isFocus ? 'Select Districts' : ''}
+                      searchPlaceholder="Search Districts"
                       value={value}
                       onFocus={() => setIsFocus(true)}
                       onBlur={() => setIsFocus(false)}

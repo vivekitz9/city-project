@@ -1,25 +1,26 @@
-import React, {useEffect, useState} from 'react';
-import {StatusBar, View, Text} from 'react-native';
-import {createStaticNavigation} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {COLORS} from './src/constant';
+import 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
+import { StatusBar, View, Text } from 'react-native';
+import { createStaticNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { COLORS } from './src/constant';
 import Login from './src/screens/login';
 import SplashScreen from './src/screens/splash';
 import LanguageScreen from './src/screens/language';
 import VerifyOtpScreen from './src/screens/verifyOTP';
-import {ToastProvider} from 'react-native-toast-notifications';
+import { ToastProvider } from 'react-native-toast-notifications';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-// import RegisterScreen from './src/screens/signUp';
-import DashboardScreen from './src/screens/Dashboard';
 import RegisterScreen from './src/screens/Register';
+import { store } from './src/Redux/store';
+import { Provider } from 'react-redux';
+import { NetworkProvider } from './src/api/NetInfo';
+import { LoginStackNavigator } from './src/navigation';
+import DashboardScreen from './src/screens/Dashboard';
 import MemberScreen from './src/screens/member';
 import MemberShipCardScreen from './src/screens/MemberShipCard';
-import {store} from './src/Redux/store';
-import {Provider} from 'react-redux';
-import {NetworkProvider} from './src/api/NetInfo';
 
-const RootStack = createNativeStackNavigator({
+const MainStackNavigator = createNativeStackNavigator({
   initialRouteName: 'Splash',
   screenOptions: {
     headerShown: false,
@@ -36,10 +37,11 @@ const RootStack = createNativeStackNavigator({
   },
 });
 
-const Navigation = createStaticNavigation(RootStack);
 
 const App = () => {
   const [IsLogin, setIsLogin] = useState(true);
+
+  const Navigation = createStaticNavigation(LoginStackNavigator)
 
   return (
     <Provider store={store}>
@@ -60,14 +62,14 @@ const App = () => {
         warningIcon={
           <MaterialIcons name="warning" color={'orange'} size={20} />
         }
-        textStyle={{fontSize: 20}}
+        textStyle={{ fontSize: 20 }}
         offset={50} // offset for both top and bottom toasts
         offsetTop={30}
         offsetBottom={40}
         swipeEnabled={true}
         renderType={{
           custom_type: toast => (
-            <View style={{padding: 15, backgroundColor: 'grey'}}>
+            <View style={{ padding: 15, backgroundColor: 'grey' }}>
               <Text>{toast.message}</Text>
             </View>
           ),
