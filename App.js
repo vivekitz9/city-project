@@ -16,9 +16,6 @@ import { store } from './src/Redux/store';
 import { Provider } from 'react-redux';
 import { NetworkProvider } from './src/api/NetInfo';
 import { LoginStackNavigator } from './src/navigation';
-import DashboardScreen from './src/screens/Dashboard';
-import MemberScreen from './src/screens/member';
-import MemberShipCardScreen from './src/screens/MemberShipCard';
 
 const MainStackNavigator = createNativeStackNavigator({
   initialRouteName: 'Splash',
@@ -31,9 +28,6 @@ const MainStackNavigator = createNativeStackNavigator({
     Splash: SplashScreen,
     Language: LanguageScreen,
     Register: RegisterScreen,
-    Member: MemberScreen,
-    MemberShipCard: MemberShipCardScreen,
-    Dashboard: DashboardScreen,
   },
 });
 
@@ -41,7 +35,7 @@ const MainStackNavigator = createNativeStackNavigator({
 const App = () => {
   const [IsLogin, setIsLogin] = useState(true);
 
-  const Navigation = createStaticNavigation(LoginStackNavigator)
+  const Navigation = createStaticNavigation(MainStackNavigator)
 
   return (
     <Provider store={store}>
@@ -54,7 +48,7 @@ const App = () => {
         dangerColor="red"
         warningColor="orange"
         normalColor="gray"
-        // icon={<Icon name="checkmark-done-circle" color={"green"} size={20} />}
+        icon={<Icon name="checkmark-done-circle" color={"green"} size={20} />}
         successIcon={
           <Icon name="checkmark-done-circle" color={'green'} size={20} />
         }
@@ -69,7 +63,7 @@ const App = () => {
         swipeEnabled={true}
         renderType={{
           custom_type: toast => (
-            <View style={{ padding: 15, backgroundColor: 'grey' }}>
+            <View style={{ padding: 15, backgroundColor: COLORS.Primary_2 }}>
               <Text>{toast.message}</Text>
             </View>
           ),
