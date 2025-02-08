@@ -9,6 +9,7 @@ import {
   Platform,
   ScrollView,
   TouchableOpacity,
+  PermissionsAndroid,
 } from 'react-native';
 import {COLORS, FONT, FONTS_SIZE, hp, wp} from '../../constant';
 import {BackgroundImage, UserAvatar, PenIcon} from './../../assets/icons/index';
@@ -72,20 +73,19 @@ const MemberScreen = () => {
   };
 
   const handleImagePicker = async () => {
-    console.log('Opening Image Picker...');
-
     try {
       const result = await launchImageLibrary({mediaType: 'photo'});
       if (result.didCancel) {
-        console.log('User cancelled image picker');
+        console.log('cancelled image picker ---------->', result.didCancel);
       } else if (result.errorMessage) {
         console.log(result.errorMessage);
       } else {
-        console.log(result);
+        const imgUri = result?.assets[0]?.uri;
+        setImageUri(imgUri);
+        console.log('image data --------->', result?.assets[0]);
       }
-      console.log('Image Picker Response:', result);
     } catch (error) {
-      console.error('Image Picker Error:', error);
+      console.error('Image Picker Error---------->', error);
     }
   };
 
