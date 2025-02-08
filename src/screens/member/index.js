@@ -54,23 +54,26 @@ const MemberScreen = () => {
       email.length === 0 ||
       dateOfBirth.length === 0
     ) {
+      console.log('----------->1');
       setIsFormValid(false);
     } else if (
       !mobileNumber.match('[0-9]{10}') ||
       !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) ||
       !userName.match(/^[a-zA-Z]+$/)
     ) {
+      console.log('----------->2');
       setIsFormValid(false);
     } else {
+      console.log('----------->3');
       setIsFormValid(true);
     }
   }, [mobileNumber, email, dateOfBirth, userName]);
   const handleSubmit = () => {
     console.log(formData);
 
-    if (isFormValid) {
-      navigation.navigate('MemberShipCard');
-    }
+    // if (isFormValid) {
+    navigation.navigate('MemberShipCard');
+    // }
   };
 
   const handleImagePicker = async () => {
@@ -266,16 +269,16 @@ const MemberScreen = () => {
                     />
                   </View>
                 </View>
-                {/* <View style={styles.inputContainer}>
-                <View style={{paddingTop: hp('10')}}>
-                  <Button
-                    // enable={!isFormValid}
-                    // disabled={!isFormValid}
-                    onPress={go_to_membership_card}
-                    title={t('go to membership card')}
-                  />
+                <View style={styles.inputContainer}>
+                  <View style={{paddingTop: hp('10')}}>
+                    <Button
+                      // enable={!isFormValid}
+                      // disabled={!isFormValid}
+                      onPress={go_to_membership_card}
+                      title={t('go to membership card')}
+                    />
+                  </View>
                 </View>
-              </View> */}
               </View>
             </View>
           </ScrollView>
