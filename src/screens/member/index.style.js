@@ -8,14 +8,15 @@ export const styles = StyleSheet.create({
   logoContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: hp('15'),
+    height: hp('20'),
+    width: '100%',
   },
   avatarContainer: {
     position: 'relative',
-    alignContent: 'center',
-    justifyContent: 'center',
-    width: 60,
-    height: 56,
+    // alignContent: 'center',
+    // justifyContent: 'center',
+    // width: 60,
+    // height: 56,
   },
   userAvatar: {
     backgroundColor: COLORS.Primary_2,
@@ -26,7 +27,7 @@ export const styles = StyleSheet.create({
   },
   penIcon: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 5,
     right: 0,
     width: 25,
     height: 25,

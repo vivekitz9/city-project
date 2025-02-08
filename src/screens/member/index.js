@@ -25,6 +25,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import BackHeader from '../../components/backButton';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/EvilIcons';
+import HeaderComponent from '../../components/header';
 
 const MemberScreen = () => {
   const navigation = useNavigation();
@@ -39,7 +40,7 @@ const MemberScreen = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
-  const [imageUri, setImageUri] = useState(null);
+  const [imageUri, setImageUri] = useState('');
 
   const handleInputChange = (key, value) => {
     setFromData(prevData => ({...prevData, [key]: value}));
@@ -80,9 +81,7 @@ const MemberScreen = () => {
       } else if (result.errorMessage) {
         console.log(result.errorMessage);
       } else {
-        const imgUri = result?.assets[0]?.uri;
-        setImageUri(imgUri);
-        console.log('image data --------->', result?.assets[0]);
+        setImageUri(result?.assets[0]?.uri);
       }
     } catch (error) {
       console.error('Image Picker Error---------->', error);
@@ -92,7 +91,10 @@ const MemberScreen = () => {
   const go_to_membership_card = () => {
     navigation.navigate('MemberShipCard');
   };
+
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 30;
+
+  console.log('imageUri----->', imageUri);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -108,62 +110,96 @@ const MemberScreen = () => {
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled">
-            <BackHeader onPress={() => navigation.goBack()} />
-            <View style={styles.logoContainer}>
-              <View style={styles.avatarContainer}>
-                <View style={styles.userAvatar}>
-                  <Image
-                    source={imageUri != null ? imageUri : UserAvatar}
-                    style={{width: '100%', height: '100%'}}
-                  />
-                </View>
-                <TouchableOpacity onPress={handleImagePicker}>
-                  <View style={styles.penIcon}>
-                    <Image
-                      source={PenIcon}
-                      style={{width: '100%', height: '100%'}}
-                    />
+            <View>
+              <HeaderComponent />
+
+              {imageUri == '' ? (
+                <View style={styles.logoContainer}>
+                  <View style={styles.avatarContainer}>
+                    <View
+                      style={{
+                        backgroundColor: COLORS.Primary,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: 90,
+                        height: 90,
+                        borderRadius: 45,
+                      }}>
+                      <Image
+                        source={UserAvatar}
+                        style={{width: 60, height: 60}}
+                      />
+                    </View>
+                    <TouchableOpacity
+                      activeOpacity={0.6}
+                      onPress={handleImagePicker}
+                      style={styles.penIcon}>
+                      <Image
+                        source={PenIcon}
+                        style={{width: '100%', height: '100%'}}
+                      />
+                    </TouchableOpacity>
                   </View>
-                </TouchableOpacity>
+                </View>
+              ) : (
+                <View style={styles.logoContainer}>
+                  <View style={styles.avatarContainer}>
+                    <Image
+                      source={{uri: String(imageUri)}}
+                      style={{width: 90, height: 90, borderRadius: 50}}
+                    />
+
+                    <TouchableOpacity
+                      activeOpacity={0.6}
+                      onPress={handleImagePicker}
+                      style={styles.penIcon}>
+                      <Image
+                        source={PenIcon}
+                        style={{width: '100%', height: '100%'}}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
+
+              <View style={{alignItems: 'center', marginBottom: 10, top: -15}}>
+                <Text
+                  style={{
+                    fontFamily: FONT.Bold,
+                    fontSize: FONTS_SIZE.xsmall2,
+                    color: COLORS.Secondary,
+                  }}>
+                  {t('MEMBER')}
+                </Text>
               </View>
-            </View>
-            <View style={{alignItems: 'center', marginBottom: 10}}>
-              <Text
-                style={{
-                  fontFamily: FONT.Bold,
-                  fontSize: FONTS_SIZE.regular,
-                  color: COLORS.Secondary,
-                }}>
-                {t('MEMBER')}
-              </Text>
-            </View>
-            <View style={styles.formContainer}>
-              <View style={styles.inputContainer}>
-                <InputTextField
-                  label={t('FULLNAME')}
-                  style={styles.inputText}
-                  keyboardType="default"
-                  value={userName}
-                  onChangeText={value => handleInputChange('userName', value)}
-                />
-                <InputTextField
-                  label={t('EMAILADDRESS')}
-                  style={styles.inputText}
-                  keyboardType="default"
-                  value={email}
-                  onChangeText={value => handleInputChange('email', value)}
-                />
-                <InputTextField
-                  label={t('MOBILENUMBER')}
-                  maxLength={10}
-                  style={styles.inputText}
-                  keyboardType="number-pad"
-                  value={mobileNumber}
-                  onChangeText={value =>
-                    handleInputChange('mobileNumber', value)
-                  }
-                />
-                {/* <InputTextField
+
+              <View style={styles.formContainer}>
+                <View style={styles.inputContainer}>
+                  <InputTextField
+                    label={t('FULLNAME')}
+                    style={styles.inputText}
+                    keyboardType="default"
+                    value={userName}
+                    onChangeText={value => handleInputChange('userName', value)}
+                  />
+                  <InputTextField
+                    label={t('EMAILADDRESS')}
+                    style={styles.inputText}
+                    keyboardType="default"
+                    value={email}
+                    onChangeText={value => handleInputChange('email', value)}
+                  />
+                  <InputTextField
+                    label={t('MOBILENUMBER')}
+                    maxLength={10}
+                    style={styles.inputText}
+                    keyboardType="number-pad"
+                    value={mobileNumber}
+                    onChangeText={value =>
+                      handleInputChange('mobileNumber', value)
+                    }
+                  />
+                  {/* <InputTextField
                   label={t('DATEOFBIRTH')}
                   style={styles.inputText}
                   value={dateOfBirth}
@@ -177,53 +213,60 @@ const MemberScreen = () => {
                     />
                   }
                 /> */}
-                <View style={{paddingTop: 10}}>
-                  <TouchableOpacity
-                    activeOpacity={0.6}
-                    onPress={() => setOpen(true)}
-                    style={[styles.dateContainer, open && styles.activeBorder]}>
-                    <Text style={styles.textdate}>
-                      {date
-                        ? moment(date).format('DD/MM/YYYY')
-                        : t('DATEOFBIRTH')}
-                    </Text>
-                    <Icon name="calendar" size={25} color={COLORS.Primary_2} />
-                  </TouchableOpacity>
-                </View>
+                  <View style={{paddingTop: 10}}>
+                    <TouchableOpacity
+                      activeOpacity={0.6}
+                      onPress={() => setOpen(true)}
+                      style={[
+                        styles.dateContainer,
+                        open && styles.activeBorder,
+                      ]}>
+                      <Text style={styles.textdate}>
+                        {date
+                          ? moment(date).format('DD/MM/YYYY')
+                          : t('DATEOFBIRTH')}
+                      </Text>
+                      <Icon
+                        name="calendar"
+                        size={25}
+                        color={COLORS.Primary_2}
+                      />
+                    </TouchableOpacity>
+                  </View>
 
-                <DatePicker
-                  modal={true}
-                  open={open}
-                  date={date}
-                  mode="date"
-                  buttonColor={COLORS.Primary_2}
-                  dividerColor={COLORS.Primary_2}
-                  confirmText={'Set'}
-                  onConfirm={toDate => {
-                    setOpen(false);
-                    setDate(toDate);
-                    handleInputChange(
-                      'dateOfBirth',
-                      toDate.toLocaleDateString(),
-                    );
-                  }}
-                  onCancel={() => {
-                    setOpen(false);
-                  }}
-                />
-              </View>
-
-              <View style={styles.inputContainer}>
-                <View style={{paddingTop: hp('10')}}>
-                  <Button
-                    // enable={!isFormValid}
-                    // disabled={!isFormValid}
-                    onPress={() => handleSubmit()}
-                    title={t('SUBMIT')}
+                  <DatePicker
+                    modal={true}
+                    open={open}
+                    date={date}
+                    mode="date"
+                    buttonColor={COLORS.Primary_2}
+                    dividerColor={COLORS.Primary_2}
+                    confirmText={'Set'}
+                    onConfirm={toDate => {
+                      setOpen(false);
+                      setDate(toDate);
+                      handleInputChange(
+                        'dateOfBirth',
+                        toDate.toLocaleDateString(),
+                      );
+                    }}
+                    onCancel={() => {
+                      setOpen(false);
+                    }}
                   />
                 </View>
-              </View>
-              <View style={styles.inputContainer}>
+
+                <View style={styles.inputContainer}>
+                  <View style={{paddingTop: hp('10')}}>
+                    <Button
+                      // enable={!isFormValid}
+                      // disabled={!isFormValid}
+                      onPress={() => handleSubmit()}
+                      title={t('SUBMIT')}
+                    />
+                  </View>
+                </View>
+                {/* <View style={styles.inputContainer}>
                 <View style={{paddingTop: hp('10')}}>
                   <Button
                     // enable={!isFormValid}
@@ -232,6 +275,7 @@ const MemberScreen = () => {
                     title={t('go to membership card')}
                   />
                 </View>
+              </View> */}
               </View>
             </View>
           </ScrollView>

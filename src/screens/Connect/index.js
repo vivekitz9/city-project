@@ -27,7 +27,7 @@ const data = [
         imgUrl: "https://picsum.photos/id/12/200/300",
     },
 ];
-const DashboardScreen = () => {
+const ConnectScreen = () => {
     const [t] = useTranslation('translation');
     const navigation = useNavigation();
     const isCarousel = React.useRef(null)
@@ -98,4 +98,4 @@ const DashboardScreen = () => {
         </SafeAreaView>
     );
 };
-export default DashboardScreen;
+export default ConnectScreen;
