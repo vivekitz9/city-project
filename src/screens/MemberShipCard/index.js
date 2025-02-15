@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   SafeAreaView,
@@ -9,7 +9,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {COLORS, FONT, FONTS_SIZE, hp, wp} from '../../constant';
+import { COLORS, FONT, FONTS_SIZE, hp, wp } from '../../constant';
 import {
   BackgroundImage,
   UserAvatar,
@@ -18,10 +18,10 @@ import {
   QRCodeImg,
 } from './../../assets/icons/index';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useTranslation} from 'react-i18next';
-import {styles} from './index.style';
-import BackHeader from '../../components/backButton';
-import {useNavigation} from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+import { styles } from './index.style';
+import { useNavigation } from '@react-navigation/native';
+import HeaderComponent from '../../components/header';
 
 const MemberShipCardScreen = () => {
   const navigation = useNavigation();
@@ -39,26 +39,26 @@ const MemberShipCardScreen = () => {
           }}
           showsHorizontalScrollIndicator={false}
           keyboardShouldPersistTaps="handled">
-          <BackHeader onPress={() => navigation.goBack()} />
+          <HeaderComponent backButton={true} />
 
           <View style={styles.mainContainer}>
             <View style={styles.headingContainer}>
               <Text style={styles.mainHeading}>Membership Card</Text>
               <Text style={styles.subHeading}>
-                <Text style={{color: COLORS.Primary_2}}>
+                <Text style={{ color: COLORS.Primary_2 }}>
                   Membership Number :
                 </Text>
-                <Text style={{color: COLORS.black}}> 7015XX27XX</Text>
+                <Text style={{ color: COLORS.black }}> 7015XX27XX</Text>
               </Text>
               <Text style={styles.subHeading}>
-                <Text style={{color: COLORS.Primary_2}}>Date of Joining :</Text>
-                <Text style={{color: COLORS.black}}> 09 Dec, 2024</Text>
+                <Text style={{ color: COLORS.Primary_2 }}>Date of Joining :</Text>
+                <Text style={{ color: COLORS.black }}> 09 Dec, 2024</Text>
               </Text>
             </View>
             <View style={styles.editButtonContainer}>
               <TouchableOpacity style={styles.editButton}>
                 <View style={styles.edit}>
-                  <Image source={PenIcon} style={{width: 25, height: 25}} />
+                  <Image source={PenIcon} style={{ width: 25, height: 25 }} />
                   <Text style={styles.editText}>Edit</Text>
                 </View>
               </TouchableOpacity>
@@ -67,12 +67,12 @@ const MemberShipCardScreen = () => {
               <View style={styles.cardHeadingContainer}>
                 <View style={styles.logoMainContainer}>
                   <View style={styles.logoContainer}>
-                    <Image source={Logo} style={{width: 70, height: 70}} />
+                    <Image source={Logo} style={{ width: 70, height: 70 }} />
                   </View>
                   <View style={styles.penIcon}>
                     <Image
                       source={PenIcon}
-                      style={{width: '100%', height: '100%'}}
+                      style={{ width: '100%', height: '100%' }}
                     />
                   </View>
                 </View>
@@ -112,14 +112,14 @@ const MemberShipCardScreen = () => {
                 <View style={styles.avatarContainer}>
                   <Image
                     source={UserAvatar}
-                    style={{width: 66, height: 66}}
+                    style={{ width: 66, height: 66 }}
                     resizeMode="cover"
                   />
                 </View>
                 <View style={styles.QRContainer}>
                   <Image
                     source={QRCodeImg}
-                    style={{width: '100%', height: '100%'}}
+                    style={{ width: '100%', height: '100%' }}
                     resizeMode="cover"
                   />
                 </View>
@@ -139,10 +139,10 @@ const MemberShipCardScreen = () => {
             </View>
             <View style={styles.buttomContainer}>
               <Text style={styles.referralText}>
-                <Text style={{color: COLORS.Primary_2}}>
+                <Text style={{ color: COLORS.Primary_2 }}>
                   Your Referral Code :
                 </Text>
-                <Text style={{color: COLORS.black}}> 76XCDZD</Text>
+                <Text style={{ color: COLORS.black }}> 76XCDZD</Text>
               </Text>
               <TouchableOpacity style={styles.Button}>
                 <View style={styles.iconContainer}>

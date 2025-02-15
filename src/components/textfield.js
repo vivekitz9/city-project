@@ -13,6 +13,7 @@ const InputTextField = ({
   keyboardType,
   onFocus,
   right,
+  disabled
 }) => {
   return (
     <TextInput
@@ -25,6 +26,7 @@ const InputTextField = ({
       activeOutlineColor={COLORS.Primary_2}
       numberOfLines={1}
       textColor="#000"
+      disabled={disabled}
       maxLength={maxLength}
       style={style}
       keyboardType={keyboardType}

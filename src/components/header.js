@@ -8,25 +8,51 @@ import {
 } from '@react-navigation/native';
 
 const HeaderComponent = ({
-   
     onPress,
-    disabled
+    disabled,
+    title
 }) => {
     const navigation = useNavigation();
+    const [visible, setVisible] = React.useState(true)
+
     return (
         <View style={styles.container}>
             <View style={styles.subContainer}>
-
-                <TouchableOpacity onPress={()=>navigation.toggleDrawer()} style={{ height: 55, justifyContent: 'center', paddingLeft: 15 }}>
+                <TouchableOpacity onPress={() => navigation.toggleDrawer()} style={{ height: 55, alignItems: 'center', paddingLeft: 15, flexDirection: 'row' }}>
                     <Icon
                         size={20}
                         name='menu'
                         color={COLORS.black}
                     />
+
+                    {title && <View style={{ paddingLeft: 10 }}>
+                        <Text style={{ fontFamily: FONT.Medium, fontSize: FONTS_SIZE.regular, color: COLORS.black, fontWeight: '600' }}>{title}</Text>
+                    </View>}
                 </TouchableOpacity>
 
+
+
                 <View style={{ height: 55, flexDirection: 'row', alignItems: 'center' }} >
-                    <Image source={LanguageIcon} style={{ marginRight: 10 }} resizeMode='contain' />
+                    <View>
+                        <TouchableOpacity activeOpacity={0.6}>
+                            <Image source={LanguageIcon} style={{ marginRight: 10 }} resizeMode='contain' />
+                        </TouchableOpacity>
+                        {/* <View style={{ flexDirection: 'row',  zIndex: 1, backgroundColor: COLORS.white }}>
+                            <Text>Hindi</Text>
+                        </View> */}
+                        {/*                         
+                            <View style={{ position: 'absolute', backgroundColor: 'red', top: 50, bottom: 0, left: 0, right: 0, zIndex: 2 }}>
+
+                                <TouchableOpacity style={{ padding: 40 }} activeOpacity={0.6}>
+                                    <Text>Hindi</Text>
+                                </TouchableOpacity>
+                                
+                                <TouchableOpacity style={{ padding: 40 }} activeOpacity={0.6}>
+                                    <Text>Hindi</Text>
+                                </TouchableOpacity>
+
+                        </View> */}
+                    </View>
                     <Image source={Notification} style={{ width: 35, height: 35 }} />
                 </View>
 
@@ -40,10 +66,10 @@ const styles = StyleSheet.create({
         height: 55,
         width: '100%'
     },
-    subContainer:{ 
-        flexDirection: 'row', 
-        justifyContent: 'space-between', 
-        width: wp('95') 
+    subContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: wp('95')
     },
     leftIcon: { height: 55, justifyContent: 'center', paddingLeft: 15 },
     buttonText: {

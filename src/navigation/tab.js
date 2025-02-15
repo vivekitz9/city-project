@@ -9,7 +9,12 @@ import DashboardScreen from '../screens/Dashboard';
 import NewsScreen from '../screens/News';
 import EventsScreen from '../screens/Events';
 import ConnectScreen from '../screens/Connect';
-
+import GalleryScreen from '../screens/Gallery';
+import BlogsScreen from '../screens/Blogs';
+import PrivacyPolicyScreen from '../screens/PrivacyPolicy';
+import TermConditionScreen from '../screens/TermCondition';
+import MemberShipCardScreen from '../screens/MemberShipCard';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 function MyTabBar({ state, descriptors, navigation }) {
     const { colors } = useTheme();
@@ -57,26 +62,26 @@ function MyTabBar({ state, descriptors, navigation }) {
                         onLongPress={onLongPress}
                         style={{ width: 70, height: 60, borderRadius: 10, justifyContent: 'center', alignItems: 'center', backgroundColor: isFocused ? "#55471F" : COLORS.Primary_2, marginHorizontal: 2 }}
                     >
-                        <View style={{  width: 70, height: 60, justifyContent: 'center', alignItems: 'center' }}>
-                            <View style={{ borderRadius: 35/2, width: 35, height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: COLORS.white }}>
-                                {label=="Home" &&
+                        <View style={{ width: 70, height: 60, justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={{ borderRadius: 35 / 2, width: 35, height: 35, justifyContent: 'center', alignItems: 'center', backgroundColor: COLORS.white }}>
+                                {label == "Home" &&
                                     <Image source={HomeIcon} style={{ width: 20, height: 20 }} />
-                                    }
-                                    {label=="Member" &&
+                                }
+                                {label == "Member" &&
                                     <Image source={MemberIcon} style={{ width: 20, height: 20 }} />
-                                    }
-                                    {label=="News" &&
+                                }
+                                {label == "News" &&
                                     <Image source={NewsIcon} style={{ width: 20, height: 20 }} />
-                                    }
-                                    {label=="Connect" &&
+                                }
+                                {label == "Connect" &&
                                     <Image source={ConnectIcon} style={{ width: 20, height: 20 }} />
-                                    }
-                                    {label=="Events" &&
+                                }
+                                {label == "Events" &&
                                     <Image source={EventsIcon} style={{ width: 20, height: 20 }} />
-                                    }
+                                }
                             </View>
 
-                            <Text style={{ color: COLORS.white, fontSize: FONTS_SIZE.smaller, paddingTop: 2, fontFamily: FONT.MediumRoboto,  textTransform:'uppercase'}}>{label}</Text>
+                            <Text style={{ color: COLORS.white, fontSize: FONTS_SIZE.smaller, paddingTop: 2, fontFamily: FONT.MediumRoboto, textTransform: 'uppercase' }}>{label}</Text>
                         </View>
                     </PlatformPressable>
                 );
@@ -84,6 +89,19 @@ function MyTabBar({ state, descriptors, navigation }) {
         </View>
     );
 }
+
+const MemberStack = createNativeStackNavigator({
+    initialRouteName: 'Member',
+    screenOptions: {
+        headerShown: false,
+    },
+    screens: {
+        Member: MemberScreen,
+        MemberCard: MemberShipCardScreen,
+    },
+});
+
+
 
 export const MyTabs = createBottomTabNavigator({
     tabBar: (props) => <MyTabBar {...props} />,
@@ -94,8 +112,14 @@ export const MyTabs = createBottomTabNavigator({
     screens: {
         Home: DashboardScreen,
         News: NewsScreen,
-        Member: MemberScreen,
+        Member: MemberStack,
         Events: EventsScreen,
-        Connect: ConnectScreen
+        Connect: ConnectScreen,
+        Gallery: GalleryScreen,
+        Blogs: BlogsScreen,
+        PrivacyPolicy: PrivacyPolicyScreen,
+        TermCondition: TermConditionScreen,
+
+
     },
 });

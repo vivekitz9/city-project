@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Text, SafeAreaView, View, Image, ImageBackground, ScrollView } from 'react-native';
+import { Text, SafeAreaView, View, Image, ImageBackground, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 import { COLORS, FONT, FONTS_SIZE, hp, wp } from '../../constant';
-import { Logo, BackgroundImage, BannerOne } from './../../assets/icons/index';
+import { Logo, BackgroundImage, EventsBanner } from './../../assets/icons/index';
 import {
     useNavigation,
 } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { styles } from './index.style';
 import HeaderComponent from '../../components/header';
-import Swiper from 'react-native-swiper'
+import TabViewScreen from './TabView';
 
 const data = [
     {
@@ -27,72 +27,69 @@ const data = [
         imgUrl: "https://picsum.photos/id/12/200/300",
     },
 ];
+
 const EventsScreen = () => {
     const [t] = useTranslation('translation');
     const navigation = useNavigation();
-    const isCarousel = React.useRef(null)
+    const [tabviewValue, setTabviewValue] = useState('')
 
-    const handleChange = (value) => {
-        console.log('value----->', value.length);
+    const ListItem = ({ item, index }) => {
+        return (
+            <>
+                <View style={{ flexDirection: 'row', width: wp('90'), backgroundColor: '#fff', padding: 10, borderRadius: 10, marginTop: 20 }}>
+                    <View style={{ width: '32%', justifyContent: 'center' }}>
+                        <Text style={{ color: COLORS.Primary_2, fontFamily: FONT.Regular, fontWeight: '400' }}>05 Dec 2024</Text>
+                        <Text style={{ color: COLORS.Primary_2, fontFamily: FONT.Regular, fontWeight: '400', paddingTop: 2 }}>02 PM - 03 PM</Text>
+                    </View>
+                    <View style={{ width: '68%', justifyContent: 'center' }}>
+                        <Text style={{ color: COLORS.Primary_2, fontFamily: FONT.MediumRoboto, fontWeight: '600' }}>Where can I get some.</Text>
+                        <Text style={{ color: COLORS.Primary_2, fontFamily: FONT.MediumRoboto, fontWeight: '400', fontSize: 12, paddingTop: 2 }}>It is a long established fact that a reader will be distracted.</Text>
+                    </View>
+                </View>
+                <View key={index} style={{ width: wp('90'), borderRadius: 10, height: hp('36'), alignItems: 'center', backgroundColor: COLORS.white, marginTop: 10 }}>
+                    <View style={{ padding: 5 }}>
+                        <Image source={EventsBanner} />
+                    </View>
 
-        if (value.length === 4) {
-            navigation.navigate("VerifyOtp")
-        }
+
+                    <View style={{ flexDirection: 'row', width: wp('90'), alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, paddingVertical: 15 }}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ fontFamily: FONT.Medium, fontSize: FONTS_SIZE.regular, color: COLORS.Primary_2 }}>Joined</Text>
+                            <View style={{ backgroundColor: COLORS.Primary_2, borderRadius: 5, marginLeft: 10 }}>
+                                <Text style={{ color: COLORS.white, padding: 5 }}>10K</Text>
+                            </View>
+                        </View>
+
+                        <TouchableOpacity activeOpacity={0.6} style={{ backgroundColor: COLORS.Primary_2, borderRadius: 5 }}>
+                            <Text style={{ color: COLORS.white, padding: 5 }}>Register Now</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </>
+        )
     }
-
 
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground source={BackgroundImage} resizeMode="cover" style={styles.container}>
                 <HeaderComponent navigation={navigation} />
-                <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-                    <View style={{ margin: 20, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                <ScrollView showsVerticalScrollIndicator={false}>
 
-                        {/* Swiper */}
-                        <View style={{ height: hp('40'), width: wp('90'), borderColor: COLORS.gray, borderRadius: 20, elevation: 10, backgroundColor: '#fff' }} >
-                            <Swiper
-                                autoplay={true}
-                                showsButtons={true}
-                                nextButton={<Text style={{ fontSize: 40, color: COLORS.Primary_2 }}>›</Text>}
-                                prevButton={<Text style={{ fontSize: 40, color: COLORS.Primary_2 }}>‹</Text>}
-                                activeDot={<View style={{ backgroundColor: COLORS.Primary_2, width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3, }} />}
-                            >
-                                {data?.map((item) => {
-                                    return (
-                                        <>
-                                            <Image source={BannerOne} style={{ height: 250, width: wp('90'), borderTopLeftRadius: 20, borderTopRightRadius: 20 }} />
-                                            <Text style={styles.text}>Beautiful</Text>
-                                        </>
-                                    )
-                                })}
-                            </Swiper>
-                        </View>
-                        {/* Swiper End */}
+                    <View style={{ marginHorizontal: 20, marginVertical: 20, flex: 1, alignItems: 'center' }}>
 
-                        <View style={{ width: wp('90'), marginTop: 16, borderColor: COLORS.gray, borderRadius: 20, elevation: 10, backgroundColor: '#fff' }}>
-
-                            <View>
-                                <Text style={{ paddingHorizontal: 20, paddingVertical: 15, fontFamily: FONT.BoldRoboto, fontSize: FONTS_SIZE.xsmall2 }}>UPCOMING EVENTS</Text>
-                                <Image source={BannerOne} style={{ width: wp('90'), height: hp('30'), borderRadius: 20 }} />
-                            </View>
-
-                        </View>
-
-                        <View style={{ width: wp('90'), marginTop: 16, borderColor: COLORS.gray, borderRadius: 20, elevation: 10, backgroundColor: '#fff' }}>
-
-                            <View>
-                                <Text style={{ paddingHorizontal: 20, paddingTop: 15, paddingBottom: 10, fontFamily: FONT.BoldRoboto, fontSize: FONTS_SIZE.xsmall2 }}>Television news screen layout</Text>
-                                <Text style={{ paddingHorizontal: 20, paddingBottom: 15, fontFamily: FONT.Regular, fontSize: FONTS_SIZE.xsmall }}>Television news screen layout</Text>
+                        <TabViewScreen onPress={(value) => setTabviewValue(value)} />
 
 
-                                <Image source={BannerOne} style={{ width: wp('90'), height: hp('30'), borderRadius: 20 }} />
 
-                            </View>
+                        <FlatList
+                            data={data}
+                            keyExtractor={(item, index) => String(index)}
+                            renderItem={ListItem}
+                        />
 
-                        </View>
 
                     </View>
-                    <Text>Dashboard</Text>
+
                 </ScrollView>
             </ImageBackground>
         </SafeAreaView>

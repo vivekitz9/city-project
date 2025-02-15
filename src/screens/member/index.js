@@ -25,6 +25,12 @@ import BackHeader from '../../components/backButton';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import HeaderComponent from '../../components/header';
+import ApiService from '../../api/ApiService';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import { jwtDecode } from "jwt-decode";
+import { ActivityIndicator } from 'react-native-paper';
+import { Dropdown } from 'react-native-element-dropdown';
+
 
 const MemberScreen = () => {
   const navigation = useNavigation();
@@ -34,47 +40,121 @@ const MemberScreen = () => {
     email: '',
     mobileNumber: '',
     dateOfBirth: '',
+    district: ''
   });
   const toast = useToast();
   const [isFormValid, setIsFormValid] = useState(false);
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [imageUri, setImageUri] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
+  const [isFocus, setIsFocus] = useState(false);
+  const [districtsData, setDistrictsData] = useState([]);
 
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const data = await EncryptedStorage.getItem('token')
+        const userData = JSON.parse(data)
+        const token = userData?.data?.token;
+        const decoded = jwtDecode(token)
+        const response = await ApiService.fetchData('v1/users/' + decoded?.id);
+        console.log('response?.data?.data?.item===?', response);
+        if (response?.data?.success) {
+          setFromData({
+            userName: response?.data?.data?.Item?.userName,
+            email: response?.data?.data?.Item?.email,
+            mobileNumber: response?.data?.data?.Item?.mobile,
+            dateOfBirth: response?.data?.data?.Item?.dob,
+            district: response?.data?.data?.Item?.district,
+          })
+        }
+        setIsLoading(false)
+        console.log('response----->', JSON.stringify(response));
+      } catch (error) {
+        setIsLoading(false)
+        console.log('error user get====>', error);
+      }
+    }
+    fetchUser()
+    fetchDistrictsApi();
+  }, [])
+
+  //This useEffect for districts
+  const fetchDistrictsApi = async () => {
+    try {
+      const response = await ApiService.fetchData('v1/districts');
+      if (response?.data?.code === 200) {
+        const data = response?.data?.data.map(item => {
+          return { label: item.district, value: item.id };
+        });
+        setDistrictsData(data);
+      }
+    } catch (error) {
+      console.log('error--->', error);
+    }
+  };
 
   const handleInputChange = (key, value) => {
     setFromData(prevData => ({ ...prevData, [key]: value }));
   };
-  const { userName, email, mobileNumber, dateOfBirth } = formData;
+  const { userName, email, mobileNumber, dateOfBirth, district } = formData;
+
   // form validation
   useEffect(() => {
     if (
       mobileNumber.length === 0 ||
       userName.length === 0 ||
-      email.length === 0 ||
       dateOfBirth.length === 0
     ) {
       setIsFormValid(false);
     } else if (
-      !mobileNumber.match('[0-9]{10}') ||
-      !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) ||
-      !userName.match(/^[a-zA-Z]+$/)
+      !mobileNumber.match('[0-9]{10}')
+      // !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) ||
+      // !userName.match(/^[a-zA-Z]+$/)
     ) {
       setIsFormValid(false);
     } else {
       setIsFormValid(true);
     }
-  }, [mobileNumber, email, dateOfBirth, userName]);
-  const handleSubmit = () => {
-    console.log(formData);
+  }, [mobileNumber, email, dateOfBirth, userName])
 
+
+  //Submit.........
+  const handleSubmit = async () => {
+
+    console.log('isFormValid---->', isFormValid);
     if (isFormValid) {
-      navigation.navigate('MemberShipCard');
+      try {
+        console.log("Submit");
+        const data = await EncryptedStorage.getItem('token')
+        const userData = JSON.parse(data)
+        const token = userData?.data?.token;
+        const decoded = jwtDecode(token)
+
+        const newDate = moment(date).format('YYYY-MM-DD')
+        const payload = {
+          fullName: userName,
+          mobile: mobileNumber,
+          email: email,
+          dob: newDate,
+          district: district,
+          state: "Bihar",
+          file: imageUri
+        }
+        const response = await ApiService.updateData('v1/users/' + decoded?.id, payload);
+        console.log('response user update----->', response);
+        if (response?.data?.success) {
+          navigation.navigate("MemberCard")
+        }
+      } catch (error) {
+        console.log('error----->', error);
+      }
+
     }
   };
 
   const handleImagePicker = async () => {
-    console.log('Opening Image Picker...');
 
     try {
       const result = await launchImageLibrary({ mediaType: 'photo' });
@@ -90,13 +170,18 @@ const MemberScreen = () => {
     }
   };
 
-  const go_to_membership_card = () => {
-    navigation.navigate('MemberShipCard');
-  }
-
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 30;
 
-  console.log('imageUri----->', imageUri);
+  const renderLabel = () => {
+    if (formData?.district || isFocus) {
+      return (
+        <Text style={[styles.droplabel, isFocus && { color: COLORS.Primary }]}>
+          Select Districts
+        </Text>
+      );
+    }
+    return null;
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -112,7 +197,7 @@ const MemberScreen = () => {
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled">
-            <View>
+            <View style={{ marginBottom: hp('5') }}>
               <HeaderComponent />
 
               {imageUri == "" ?
@@ -124,7 +209,7 @@ const MemberScreen = () => {
                         style={{ width: 60, height: 60 }}
                       />
                     </View>
-                    <TouchableOpacity activeOpacity={0.6} onPress={handleImagePicker}  style={styles.penIcon}>
+                    <TouchableOpacity activeOpacity={0.6} onPress={handleImagePicker} style={styles.penIcon}>
                       <Image
                         source={PenIcon}
                         style={{ width: '100%', height: '100%' }}
@@ -149,7 +234,7 @@ const MemberScreen = () => {
                   </View>
                 </View>
               }
-              
+
               <View style={{ alignItems: 'center', marginBottom: 10, top: -15 }}>
                 <Text
                   style={{
@@ -183,24 +268,12 @@ const MemberScreen = () => {
                     style={styles.inputText}
                     keyboardType="number-pad"
                     value={mobileNumber}
+                    disabled={true}
                     onChangeText={value =>
                       handleInputChange('mobileNumber', value)
                     }
                   />
-                  {/* <InputTextField
-                  label={t('DATEOFBIRTH')}
-                  style={styles.inputText}
-                  value={dateOfBirth}
-                  onFocus={() => setOpen(true)}
-                  editable={false}
-                  right={
-                    <TextInput.Icon
-                      icon="calendar"
-                      onPress={() => setOpen(true)}
-                      color={COLORS.Primary_2}
-                    />
-                  }
-                /> */}
+
                   <View style={{ paddingTop: 10 }}>
                     <TouchableOpacity
                       activeOpacity={0.6}
@@ -208,11 +281,40 @@ const MemberScreen = () => {
                       style={[styles.dateContainer, open && styles.activeBorder]}>
                       <Text style={styles.textdate}>
                         {date
-                          ? moment(date).format('DD/MM/YYYY')
+                          ? moment(formData?.dateOfBirth).format('DD/MM/YYYY')
                           : t('DATEOFBIRTH')}
                       </Text>
                       <Icon name="calendar" size={25} color={COLORS.Primary_2} />
                     </TouchableOpacity>
+                  </View>
+
+                  <View style={styles.dropcontainer}>
+                    {renderLabel()}
+                    <Dropdown
+                      style={[
+                        styles.dropdown,
+                        isFocus && { borderColor: COLORS.Primary },
+                      ]}
+                      placeholderStyle={styles.placeholderStyle}
+                      selectedTextStyle={styles.selectedTextStyle}
+                      inputSearchStyle={styles.inputSearchStyle}
+                      iconStyle={styles.iconStyle}
+                      data={districtsData}
+                      search
+                      maxHeight={300}
+                      dropdownPosition="top"
+                      labelField="label"
+                      valueField="label"
+                      placeholder={!isFocus ? 'Select Districts' : ''}
+                      searchPlaceholder="Search Districts"
+                      value={formData?.district}
+                      onFocus={() => setIsFocus(true)}
+                      onBlur={() => setIsFocus(false)}
+                      onChange={item => {
+                        setIsFocus(false);
+                        handleInputChange('district', item.label);
+                      }}
+                    />
                   </View>
 
                   <DatePicker
@@ -223,6 +325,7 @@ const MemberScreen = () => {
                     buttonColor={COLORS.Primary_2}
                     dividerColor={COLORS.Primary_2}
                     confirmText={'Set'}
+                    value={new Date(formData?.dateOfBirth)}
                     onConfirm={toDate => {
                       setOpen(false);
                       setDate(toDate);
@@ -238,7 +341,7 @@ const MemberScreen = () => {
                 </View>
 
                 <View style={styles.inputContainer}>
-                  <View style={{ paddingTop: hp('10') }}>
+                  <View style={{ paddingTop: hp('5') }}>
                     <Button
                       // enable={!isFormValid}
                       // disabled={!isFormValid}
@@ -247,18 +350,20 @@ const MemberScreen = () => {
                     />
                   </View>
                 </View>
-                {/* <View style={styles.inputContainer}>
-                <View style={{paddingTop: hp('10')}}>
-                  <Button
-                    // enable={!isFormValid}
-                    // disabled={!isFormValid}
-                    onPress={go_to_membership_card}
-                    title={t('go to membership card')}
-                  />
-                </View>
-              </View> */}
               </View>
             </View>
+
+            {isLoading && <View style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <ActivityIndicator animating={true} size={50} color={COLORS.Primary_2} />
+            </View>}
           </ScrollView>
         </KeyboardAvoidingView>
       </ImageBackground>

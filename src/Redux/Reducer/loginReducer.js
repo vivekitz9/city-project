@@ -27,6 +27,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        // isAuthenticated: false,
         // error: action.payload,
       };
     default:
