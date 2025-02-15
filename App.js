@@ -16,7 +16,6 @@ import {store} from './src/Redux/store';
 import {Provider} from 'react-redux';
 import {NetworkProvider} from './src/api/NetInfo';
 import {LoginStackNavigator} from './src/navigation';
-import MemberShipCardScreen from './src/screens/MemberShipCard';
 
 const MainStackNavigator = createNativeStackNavigator({
   initialRouteName: 'Splash',
@@ -29,7 +28,6 @@ const MainStackNavigator = createNativeStackNavigator({
     Splash: SplashScreen,
     Language: LanguageScreen,
     Register: RegisterScreen,
-    MemberShipCard: MemberShipCardScreen,
   },
 });
 

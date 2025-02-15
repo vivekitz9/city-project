@@ -139,5 +139,6 @@ export const MyTabs = createBottomTabNavigator({
     Member: MemberScreen,
     Events: EventsScreen,
     Connect: ConnectScreen,
+    MemberShipCard: MemberShipCardScreen,
   },
 });

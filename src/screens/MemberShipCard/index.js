@@ -22,6 +22,7 @@ import {useTranslation} from 'react-i18next';
 import {styles} from './index.style';
 import BackHeader from '../../components/backButton';
 import {useNavigation} from '@react-navigation/native';
+import HeaderComponent from '../../components/header';
 
 const MemberShipCardScreen = () => {
   const navigation = useNavigation();
@@ -39,7 +40,7 @@ const MemberShipCardScreen = () => {
           }}
           showsHorizontalScrollIndicator={false}
           keyboardShouldPersistTaps="handled">
-          <BackHeader onPress={() => navigation.goBack()} />
+          <HeaderComponent />
 
           <View style={styles.mainContainer}>
             <View style={styles.headingContainer}>

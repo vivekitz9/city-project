@@ -269,16 +269,16 @@ const MemberScreen = () => {
                     />
                   </View>
                 </View>
-                <View style={styles.inputContainer}>
-                  <View style={{paddingTop: hp('10')}}>
-                    <Button
-                      // enable={!isFormValid}
-                      // disabled={!isFormValid}
-                      onPress={go_to_membership_card}
-                      title={t('go to membership card')}
-                    />
-                  </View>
+                {/* <View style={styles.inputContainer}>
+                <View style={{paddingTop: hp('10')}}>
+                  <Button
+                    // enable={!isFormValid}
+                    // disabled={!isFormValid}
+                    onPress={go_to_membership_card}
+                    title={t('go to membership card')}
+                  />
                 </View>
+              </View> */}
               </View>
             </View>
           </ScrollView>
