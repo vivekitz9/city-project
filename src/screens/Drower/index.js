@@ -31,6 +31,9 @@ function CustomDrawerContent(props) {
             console.error('Image Picker Error:', error);
         }
     };
+
+    console.log('props----->', JSON.stringify(props));
+    
     return (
         <DrawerContentScrollView {...props}>
 
@@ -68,17 +71,31 @@ function CustomDrawerContent(props) {
 
             </View>
 
-            <DrawerItemList {...props} />
-
+            <DrawerItem
+                label="Dashboard"
+                focused={true}
+                style={{ marginTop: 10 }}
+                onPress={() => props.navigation.navigate("Dashboard")}
+            />
 
             <DrawerItem
+                label="News"
+                focused={true}
+                style={{ marginTop: 10 }}
+                onPress={() => props.navigation.navigate("News")}
+            />
+
+            {/* <DrawerItemList {...props} activeTintColor='#2196f3' activeBackgroundColor='rgba(0, 0, 0, .04)' inactiveTintColor='rgba(0, 0, 0, .87)' inactiveBackgroundColor='transparent' style={{backgroundColor: '#000000'}} labelStyle={{color: '#ffffff'}}/> */}
+
+
+            {/* <DrawerItem
                 label="Close drawer"
                 onPress={() => props.navigation.closeDrawer()}
             />
             <DrawerItem
                 label="Toggle drawer"
                 onPress={() => props.navigation.toggleDrawer()}
-            />
+            /> */}
         </DrawerContentScrollView>
     );
 }

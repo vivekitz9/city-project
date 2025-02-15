@@ -1,7 +1,8 @@
 import axios from 'axios';
 import NetInfo from '@react-native-community/netinfo';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
-const baseURL = "http://shivdeeplande.com:8001/api/"
+const baseURL = "https://shivdeeplande.com:8001/api/"
 
 const api = axios.create({
     baseURL: baseURL,
@@ -19,7 +20,10 @@ api.interceptors.request.use(
             return Promise.reject({ message: 'No internet connection' });
         }
 
-        const token = ''; // Replace with your auth token logic
+        const data = await EncryptedStorage.getItem('token')
+        const userData = JSON.parse(data)
+        const token = userData?.data?.token // Replace with your auth token logic
+        console.log('token----->', token);
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }

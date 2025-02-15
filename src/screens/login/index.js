@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, SafeAreaView, View, Image, ImageBackground, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
+import { Text, SafeAreaView, View, Image, ImageBackground, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity, Alert } from 'react-native';
 import { COLORS, FONT, FONTS_SIZE, hp, wp } from '../../constant';
 import { Logo, BackgroundImage, FacebookIcon, GoogleIcon, AppleIcon } from './../../assets/icons/index';
 import InputTextField from '../../components/textfield';
@@ -17,18 +17,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loginFailure, loginSuccess, loginRequest } from '../../Redux/Actions/loginActions';
 import { ActivityIndicator } from 'react-native-paper';
 
-GoogleSignin.configure({
-  // webClientId: "855427964750-fh3k8drvc8urfgov7ganig08jblhh5kg.apps.googleusercontent.com",
-  androidClientId: '855427964750-fh3k8drvc8urfgov7ganig08jblhh5kg.apps.googleusercontent.com',
-  // iosClientId: GOOGLE_IOS_CLIENT_ID,
-  scopes: ['profile', 'email'],
-});
+// GoogleSignin.configure({
+//   // webClientId: "855427964750-fh3k8drvc8urfgov7ganig08jblhh5kg.apps.googleusercontent.com",
+//   androidClientId: '855427964750-fh3k8drvc8urfgov7ganig08jblhh5kg.apps.googleusercontent.com',
+//   // iosClientId: GOOGLE_IOS_CLIENT_ID,
+//   scopes: ['profile', 'email'],
+// });
 
-const GoogleLogin = async () => {
-  await GoogleSignin.hasPlayServices();
-  const userInfo = await GoogleSignin.signIn();
-  return userInfo;
-};
+// const GoogleLogin = async () => {
+//   await GoogleSignin.hasPlayServices();
+//   const userInfo = await GoogleSignin.signIn();
+//   return userInfo;
+// };
 
 const Login = () => {
   const navigation = useNavigation();
@@ -36,40 +36,37 @@ const Login = () => {
   const [mobileNumber, setMobileNumber] = useState('')
   const toast = useToast();
   const [isFormValid, setIsFormValid] = useState(false)
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
-  const { auth } = useSelector((state) => state); // Access state
   const [isLoading, setIsLoading] = useState(false)
 
 
-  useEffect(() => {
-    if (auth?.user?.data?.success) {
-      setIsLoading(false)
-      navigation.navigate("VerifyOtpScreen")
-    }
-  }, [auth])
+  // useEffect(() => {
+  //   if (auth?.user?.data?.success) {
+  //     setIsLoading(false)
+  //     navigation.navigate("VerifyOtpScreen")
+  //   }
+  // }, [auth])
 
   const handleGoogleLogin = async () => {
-    setLoading(true);
-    try {
-      const response = await GoogleLogin();
-      const { idToken, user } = response;
+    Alert.alert("Work in progress")
+    // setLoading(true);
+    // try {
+    //   const response = await GoogleLogin();
+    //   const { idToken, user } = response;
 
-      if (idToken) {
-        const resp = await authAPI.validateToken({
-          token: idToken,
-          email: user.email,
-        });
-        await handlePostLoginData(resp.data);
-      }
-    } catch (apiError) {
-      setError(
-        apiError?.response?.data?.error?.message || 'Something went wrong'
-      );
-    } finally {
-      setLoading(false);
-    }
+    //   if (idToken) {
+    //     const resp = await authAPI.validateToken({
+    //       token: idToken,
+    //       email: user.email,
+    //     });
+    //     await handlePostLoginData(resp.data);
+    //   }
+    // } catch (apiError) {
+    //   setError(
+    //     apiError?.response?.data?.error?.message || 'Something went wrong'
+    //   );
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   const handleRegister = () => {
@@ -92,16 +89,15 @@ const Login = () => {
     if (isFormValid) {
       setIsLoading(true)
       try {
-        dispatch(loginRequest())
         const payload = { "mobile": mobileNumber }
         const response = await ApiService.postData('v1/login', payload)
         console.log('response---->', response);
         if (response?.data?.success) {
-          dispatch(loginSuccess(response?.data))
-        } else {
-          dispatch(loginFailure(response?.data))
-          toast.show("User is not verified", { type: "waring" })
           setIsLoading(false)
+          navigation.navigate("VerifyOtp", { userDetails: response?.data?.data, pageType: 'login' })
+        } else {
+          toast.show("User is not verified", { type: "waring" })
+          // setIsLoading(false)
         }
       } catch (error) {
         setIsLoading(false)
@@ -146,10 +142,10 @@ const Login = () => {
                 <TouchableOpacity activeOpacity={0.6} onPress={handleGoogleLogin}>
                   <Image source={GoogleIcon} style={{ width: 50, height: 50 }} />
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.6}>
+                <TouchableOpacity activeOpacity={0.6} onPress={handleGoogleLogin}>
                   <Image source={AppleIcon} style={{ width: 50, height: 50 }} />
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.6}>
+                <TouchableOpacity activeOpacity={0.6} onPress={handleGoogleLogin}>
                   <Image source={FacebookIcon} style={{ width: 50, height: 50 }} />
                 </TouchableOpacity>
               </View>
@@ -160,17 +156,19 @@ const Login = () => {
               <Text style={styles.registerText}>{t("Donthaveaccount")} <Text onPress={() => handleRegister()} style={{ color: COLORS.Primary_2 }}>{t('RegisterNow')}</Text></Text>
             </View>
           </KeyboardAvoidingView>
-          {isLoading && <View style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <ActivityIndicator animating={true} size={50} color={COLORS.Primary_2} />
-          </View>}
+          {isLoading &&
+            <View style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <ActivityIndicator animating={true} size={50} color={COLORS.Primary_2} />
+            </View>
+          }
         </ScrollView>
       </ImageBackground>
     </SafeAreaView>
