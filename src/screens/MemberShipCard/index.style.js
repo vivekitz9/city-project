@@ -119,19 +119,19 @@ export const styles = StyleSheet.create({
     fontSize: FONTS_SIZE.smaller,
   },
   memberDetailsContainer: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     padding: 10,
     paddingTop: 20,
-    paddingLeft: 32,
     backgroundColor: COLORS.white,
     borderBottomEndRadius: 10,
     borderBottomStartRadius: 10,
     elevation: 5,
   },
   memberLeftContainer: {
-    flex: 0.8,
+    flex: 0.9,
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
@@ -142,15 +142,11 @@ export const styles = StyleSheet.create({
   },
 
   memberDetailsRightContainer: {
-    flex: 1.2,
+    flex: 1.6,
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
-  removeSpace: {
-    flex: 1,
-    width: wp(10),
-    backgroundColor: 'red',
-  },
+
   memberText: {
     marginBottom: 8,
     fontSize: FONTS_SIZE.smaller,
@@ -172,13 +168,11 @@ export const styles = StyleSheet.create({
   },
 
   avQRContainer: {
-    position: 'absolute',
-    flexGrow: 1,
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     gap: 6,
-    top: 36,
-    right: 15,
+    marginTop: -70,
   },
   avatarContainer: {
     width: wp(21),
