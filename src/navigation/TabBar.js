@@ -80,7 +80,6 @@ function MyTabBar({ state, descriptors, navigation }) {
                                     <Image source={EventsIcon} style={{ width: 20, height: 20 }} />
                                 }
                             </View>
-
                             <Text style={{ color: COLORS.white, fontSize: FONTS_SIZE.smaller, paddingTop: 2, fontFamily: FONT.MediumRoboto, textTransform: 'uppercase' }}>{label}</Text>
                         </View>
                     </PlatformPressable>
@@ -89,6 +88,20 @@ function MyTabBar({ state, descriptors, navigation }) {
         </View>
     );
 }
+
+const HomeStack = createNativeStackNavigator({
+    initialRouteName: 'Home',
+    screenOptions: {
+        headerShown: false,
+    },
+    screens: {
+        Home: DashboardScreen,
+        Gallery: GalleryScreen,
+        Blogs: BlogsScreen,
+        PrivacyPolicy: PrivacyPolicyScreen,
+        TermCondition: TermConditionScreen,
+    },
+});
 
 const MemberStack = createNativeStackNavigator({
     initialRouteName: 'Member',
@@ -101,7 +114,35 @@ const MemberStack = createNativeStackNavigator({
     },
 });
 
+const Newstack = createNativeStackNavigator({
+    initialRouteName: 'News',
+    screenOptions: {
+        headerShown: false,
+    },
+    screens: {
+        News: NewsScreen,
+    },
+});
 
+const Eventstack = createNativeStackNavigator({
+    initialRouteName: 'Events',
+    screenOptions: {
+        headerShown: false,
+    },
+    screens: {
+        Events: ConnectScreen,
+    },
+});
+
+const Connecttack = createNativeStackNavigator({
+    initialRouteName: 'Events',
+    screenOptions: {
+        headerShown: false,
+    },
+    screens: {
+        Connect: EventsScreen,
+    },
+});
 
 export const MyTabs = createBottomTabNavigator({
     tabBar: (props) => <MyTabBar {...props} />,
@@ -110,16 +151,10 @@ export const MyTabs = createBottomTabNavigator({
         headerShown: false,
     },
     screens: {
-        Home: DashboardScreen,
-        News: NewsScreen,
+        Home: HomeStack,
+        News: Newstack,
         Member: MemberStack,
-        Events: EventsScreen,
-        Connect: ConnectScreen,
-        Gallery: GalleryScreen,
-        Blogs: BlogsScreen,
-        PrivacyPolicy: PrivacyPolicyScreen,
-        TermCondition: TermConditionScreen,
-
-
+        Events: Eventstack,
+        Connect: Connecttack,
     },
 });

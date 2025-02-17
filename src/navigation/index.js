@@ -2,7 +2,7 @@ import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomDrawerContent from '../screens/Drower';
-import { MyTabs } from './tab';
+import { MyTabs } from './TabBar';
 import Login from '../screens/login';
 import SplashScreen from '../screens/splash';
 import LanguageScreen from '../screens/language';
@@ -15,6 +15,7 @@ import BlogsScreen from '../screens/Blogs';
 import PrivacyPolicyScreen from '../screens/PrivacyPolicy';
 import TermConditionScreen from '../screens/TermCondition';
 import ConnectScreen from '../screens/Connect';
+import DashboardScreen from '../screens/Dashboard';
 
 const LoginStackNavigator = createDrawerNavigator({
   drawerContent: (props) => <CustomDrawerContent {...props} />,
