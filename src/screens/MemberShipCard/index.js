@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Text,
   SafeAreaView,
@@ -11,7 +11,7 @@ import {
   Alert,
   PermissionsAndroid,
 } from 'react-native';
-import {COLORS, FONT, FONTS_SIZE, hp, wp} from '../../constant';
+import { COLORS, FONT, FONTS_SIZE, hp, wp } from '../../constant';
 import {
   BackgroundImage,
   UserAvatar,
@@ -20,19 +20,19 @@ import {
   QRCodeImg,
 } from './../../assets/icons/index';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useTranslation} from 'react-i18next';
-import {styles} from './index.style';
-import {useNavigation} from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+import { styles } from './index.style';
+import { useNavigation } from '@react-navigation/native';
 import HeaderComponent from '../../components/header';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import ApiService from '../../api/ApiService';
 import { jwtDecode } from "jwt-decode";
 import { ActivityIndicator } from 'react-native-paper';
-
+import moment from 'moment';
 import ViewShot from 'react-native-view-shot';
 import RNFS from 'react-native-fs';
-import {PDFDocument, rgb} from 'pdf-lib';
-import {Buffer} from 'buffer';
+import { PDFDocument, rgb } from 'pdf-lib';
+import { Buffer } from 'buffer';
 
 const MemberShipCardScreen = () => {
   const navigation = useNavigation();
@@ -54,13 +54,6 @@ const MemberShipCardScreen = () => {
         if (response?.data?.success) {
           setIsLoading(false)
           setMemberData(response?.data?.data?.Item)
-          // setFromData({
-          //   userName: response?.data?.data?.Item?.userName,
-          //   email: response?.data?.data?.Item?.email,
-          //   mobileNumber: response?.data?.data?.Item?.mobile,
-          //   dateOfBirth: response?.data?.data?.Item?.dob,
-          //   district: response?.data?.data?.Item?.district,
-          // })
         }
         setIsLoading(false)
         console.log('response----->', JSON.stringify(response));
@@ -73,16 +66,6 @@ const MemberShipCardScreen = () => {
   }, [])
   const viewRef = useRef(null);
 
-  // const captureView = async () => {
-  //   try {
-  //     const uri = await viewRef.current.capture();
-  //     console.log('Captured Image:', uri);
-  //     return uri;
-  //   } catch (error) {
-  //     console.error('Error capturing view:', error);
-  //     Alert.alert('Error', 'Failed to capture view.');
-  //   }
-  // };
 
   const downloadCard = async () => {
     try {
@@ -99,7 +82,7 @@ const MemberShipCardScreen = () => {
         : await pdfDoc.embedJpg(imageBytes);
 
       // const {width, height} = image.scale(1);
-      const {width, height} = image;
+      const { width, height } = image;
       const page = pdfDoc.addPage([width, height]);
 
       page.drawImage(image, {
@@ -121,6 +104,8 @@ const MemberShipCardScreen = () => {
     }
   };
 
+  console.log('memberdata?.dateOfJoining====>', memberdata?.dateOfJoining);
+
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -139,20 +124,22 @@ const MemberShipCardScreen = () => {
             <View style={styles.headingContainer}>
               <Text style={styles.mainHeading}>Membership Card</Text>
               <Text style={styles.subHeading}>
-                <Text style={{color: COLORS.Primary_2}}>
+                <Text style={{ color: COLORS.Primary_2 }}>
                   Membership Number :
                 </Text>
-                <Text style={{color: COLORS.black}}> 7015XX27XX</Text>
+                <Text style={{ color: COLORS.black }}>{memberdata && memberdata?.memberId && memberdata?.memberId}</Text>
               </Text>
-              <Text style={styles.subHeading}>
-                <Text style={{color: COLORS.Primary_2}}>Date of Joining :</Text>
-                <Text style={{color: COLORS.black}}> 09 Dec, 2024</Text>
-              </Text>
+              {memberdata && memberdata?.dateOfJoining &&
+                <Text style={styles.subHeading}>
+                  <Text style={{ color: COLORS.Primary_2 }}>Date of Joining :</Text>
+                  <Text style={{ color: COLORS.black }}>{memberdata && memberdata?.dateOfJoining ? moment(memberdata?.dateOfJoining).format('DD/MM/YYYY') : ""}</Text>
+                </Text>
+              }
             </View>
             <View style={styles.editButtonContainer}>
               <TouchableOpacity style={styles.editButton}>
                 <View style={styles.edit}>
-                  <Image source={PenIcon} style={{width: 25, height: 25}} />
+                  <Image source={PenIcon} style={{ width: 25, height: 25 }} />
                   <Text style={styles.editText}>Edit</Text>
                 </View>
               </TouchableOpacity>
@@ -160,19 +147,19 @@ const MemberShipCardScreen = () => {
 
             <ViewShot
               ref={viewRef}
-              options={{format: 'jpg', quality: 1.0}}
-              style={{backgroundColor: 'transparent', backgroundColor: '#fff'}}
+              options={{ format: 'jpg', quality: 1.0 }}
+              style={{ backgroundColor: 'transparent', backgroundColor: '#fff' }}
               collapsable={false}>
-              <View style={[styles.cardContainer, {position: 'relative'}]}>
+              <View style={[styles.cardContainer, { position: 'relative' }]}>
                 <View style={styles.cardHeadingContainer}>
                   <View style={styles.logoMainContainer}>
                     <View style={styles.logoContainer}>
-                      <Image source={Logo} style={{width: 70, height: 70}} />
+                      <Image source={Logo} style={{ width: 70, height: 70 }} />
                     </View>
                     <View style={styles.penIcon}>
                       <Image
                         source={PenIcon}
-                        style={{width: '100%', height: '100%'}}
+                        style={{ width: '100%', height: '100%' }}
                       />
                     </View>
                   </View>
@@ -200,24 +187,24 @@ const MemberShipCardScreen = () => {
                   </View>
                   <View style={styles.memberDetailsRightContainer}>
                     <Text style={styles.memberValue} numberOfLines={1}>
-                      Abhishek Kumar
+                      {memberdata && memberdata?.userName}
                     </Text>
-                    <Text style={styles.memberValue}>Darbhanga</Text>
+                    <Text style={styles.memberValue}>{memberdata && memberdata?.district ? memberdata?.district : ''}</Text>
                     <Text style={styles.memberValue}>Bihar</Text>
-                    <Text style={styles.memberValue}>XXX54XXX32</Text>
+                    <Text style={styles.memberValue}>{memberdata && memberdata?.memberId && memberdata?.memberId}</Text>
                   </View>
                   <View style={styles.avQRContainer}>
                     <View style={styles.avatarContainer}>
                       <Image
                         source={UserAvatar}
-                        style={{width: 66, height: 66}}
+                        style={{ width: 66, height: 66 }}
                         resizeMode="cover"
                       />
                     </View>
                     <View style={styles.QRContainer}>
                       <Image
                         source={QRCodeImg}
-                        style={{width: '100%', height: '100%'}}
+                        style={{ width: '100%', height: '100%' }}
                         resizeMode="cover"
                       />
                     </View>
@@ -243,10 +230,10 @@ const MemberShipCardScreen = () => {
             </View>
             <View style={styles.buttomContainer}>
               <Text style={styles.referralText}>
-                <Text style={{color: COLORS.Primary_2}}>
+                <Text style={{ color: COLORS.Primary_2 }}>
                   Your Referral Code :
                 </Text>
-                <Text style={{color: COLORS.black}}> 76XCDZD</Text>
+                <Text style={{ color: COLORS.black }}> 76XCDZD</Text>
               </Text>
               <TouchableOpacity style={styles.Button}>
                 <View style={styles.iconContainer}>
