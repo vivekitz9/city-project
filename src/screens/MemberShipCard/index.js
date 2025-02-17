@@ -24,6 +24,11 @@ import {useTranslation} from 'react-i18next';
 import {styles} from './index.style';
 import {useNavigation} from '@react-navigation/native';
 import HeaderComponent from '../../components/header';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import ApiService from '../../api/ApiService';
+import { jwtDecode } from "jwt-decode";
+import { ActivityIndicator } from 'react-native-paper';
+
 import ViewShot from 'react-native-view-shot';
 import RNFS from 'react-native-fs';
 import {PDFDocument, rgb} from 'pdf-lib';
@@ -32,6 +37,40 @@ import {Buffer} from 'buffer';
 const MemberShipCardScreen = () => {
   const navigation = useNavigation();
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 30;
+  const [isLoading, setIsLoading] = useState(false)
+  const [memberdata, setMemberData] = useState(null)
+
+
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        setIsLoading(true)
+        const data = await EncryptedStorage.getItem('token')
+        const userData = JSON.parse(data)
+        const token = userData?.data?.token;
+        const decoded = jwtDecode(token)
+        const response = await ApiService.fetchData('v1/users/' + decoded?.id);
+        console.log('response?.data?.data?.item===?', JSON.stringify(response));
+        if (response?.data?.success) {
+          setIsLoading(false)
+          setMemberData(response?.data?.data?.Item)
+          // setFromData({
+          //   userName: response?.data?.data?.Item?.userName,
+          //   email: response?.data?.data?.Item?.email,
+          //   mobileNumber: response?.data?.data?.Item?.mobile,
+          //   dateOfBirth: response?.data?.data?.Item?.dob,
+          //   district: response?.data?.data?.Item?.district,
+          // })
+        }
+        setIsLoading(false)
+        console.log('response----->', JSON.stringify(response));
+      } catch (error) {
+        setIsLoading(false)
+        console.log('error user get====>', error);
+      }
+    }
+    fetchUser()
+  }, [])
   const viewRef = useRef(null);
 
   // const captureView = async () => {
@@ -217,6 +256,17 @@ const MemberShipCardScreen = () => {
               </TouchableOpacity>
             </View>
           </View>
+          {isLoading && <View style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <ActivityIndicator animating={true} size={50} color={COLORS.Primary_2} />
+          </View>}
         </ScrollView>
       </ImageBackground>
     </SafeAreaView>

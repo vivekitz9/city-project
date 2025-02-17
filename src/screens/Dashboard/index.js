@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { styles } from './index.style';
 import HeaderComponent from '../../components/header';
 import Swiper from 'react-native-swiper'
-
 const data = [
     {
         title: "Aenean leo",

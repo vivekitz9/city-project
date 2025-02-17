@@ -8,7 +8,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import { styles } from './index.style';
 import HeaderComponent from '../../components/header';
-import { GiftedChat } from 'react-native-gifted-chat'
+import { GiftedChat, Bubble, InputToolbar, Send } from 'react-native-gifted-chat'
+import Icon from 'react-native-vector-icons/Feather';
 
 
 const ConnectScreen = () => {
@@ -22,6 +23,7 @@ const ConnectScreen = () => {
                 _id: 1,
                 text: 'Hello developer',
                 createdAt: new Date(),
+
                 user: {
                     _id: 2,
                     name: 'React Native',
@@ -42,18 +44,54 @@ const ConnectScreen = () => {
         <SafeAreaView style={styles.container}>
             <ImageBackground source={BackgroundImage} resizeMode="cover" style={styles.container}>
                 <HeaderComponent navigation={navigation} />
-                {/* <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}> */}
-
-                <View>
+                <View style={styles.container}>
                     <GiftedChat
                         messages={messages}
-                        onSend={messages => onSend(messages)}
-                        user={{
-                            _id: 1,
-                        }}
+                        onSend={(messages) => onSend(messages)}
+                        user={{ _id: 1 }}
+                        renderBubble={(props) => (
+                            <Bubble
+                                {...props}
+                                wrapperStyle={{
+                                    right: {
+                                        backgroundColor: "#0078FF", // Change sender bubble color
+                                        padding: 5,
+                                    },
+                                    left: {
+                                        backgroundColor: "#F0F0F0", // Change receiver bubble color
+                                    },
+                                }}
+                                textStyle={{
+                                    right: { color: "#fff" },
+                                    left: { color: "#000" },
+                                }}
+                            />
+                        )}
+                        renderInputToolbar={(props) => (
+                            <InputToolbar
+                                {...props}
+                                containerStyle={{
+                                    backgroundColor: COLORS.white, // Dark background
+                                    borderTopWidth: 0,
+                                    borderColor: "#444",
+                                    borderRadius: 20,
+                                    marginHorizontal: 15,
+                                    marginBottom: 20,
+                                    paddingVertical: 10,
+                                    elevation: 5,
+                                }}
+                            />
+                        )}
+
+                        renderSend={(props) => (
+                            <Send {...props} containerStyle={{ padding: 10, borderColor: COLORS.Primary_2 }}>
+                                <View style={{ justifyContent: 'center', alignItems: 'center', height: 30, width: 30, borderRadius: 15 }}>
+                                    <Icon name="send" size={24} color={COLORS.Primary_2} />
+                                </View>
+                            </Send>
+                        )}
                     />
                 </View>
-                {/* </ScrollView> */}
             </ImageBackground>
         </SafeAreaView>
     );

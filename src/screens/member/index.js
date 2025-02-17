@@ -53,21 +53,28 @@ const MemberScreen = () => {
 
   useEffect(() => {
     async function fetchUser() {
+      setIsLoading(true)
       try {
         const data = await EncryptedStorage.getItem('token')
         const userData = JSON.parse(data)
         const token = userData?.data?.token;
         const decoded = jwtDecode(token)
         const response = await ApiService.fetchData('v1/users/' + decoded?.id);
+       
         console.log('response?.data?.data?.item===?', response);
         if (response?.data?.success) {
-          setFromData({
-            userName: response?.data?.data?.Item?.userName,
-            email: response?.data?.data?.Item?.email,
-            mobileNumber: response?.data?.data?.Item?.mobile,
-            dateOfBirth: response?.data?.data?.Item?.dob,
-            district: response?.data?.data?.Item?.district,
-          })
+          setIsLoading(false)
+          if (response?.data?.data?.Item?.memberId) {
+              navigation.navigate('MemberCard')
+          } else {
+            setFromData({
+              userName: response?.data?.data?.Item?.userName,
+              email: response?.data?.data?.Item?.email,
+              mobileNumber: response?.data?.data?.Item?.mobile,
+              dateOfBirth: response?.data?.data?.Item?.dob,
+              district: response?.data?.data?.Item?.district,
+            })
+          }
         }
         setIsLoading(false)
         console.log('response----->', JSON.stringify(response));
@@ -140,7 +147,9 @@ const MemberScreen = () => {
           dob: newDate,
           district: district,
           state: "Bihar",
-          file: imageUri
+          file: imageUri,
+          dateOfJoining: new Date(),
+          isMember: true
         }
         const response = await ApiService.updateData('v1/users/' + decoded?.id, payload);
         console.log('response user update----->', response);
