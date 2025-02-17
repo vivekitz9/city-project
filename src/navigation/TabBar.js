@@ -1,9 +1,15 @@
-import { View, Platform, Image } from 'react-native';
-import { useLinkBuilder, useTheme } from '@react-navigation/native';
-import { Text, PlatformPressable } from '@react-navigation/elements';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { COLORS, FONT, FONTS_SIZE } from '../constant';
-import { HomeIcon, MemberIcon, NewsIcon, ConnectIcon, EventsIcon } from '../assets/icons';
+import {View, Platform, Image} from 'react-native';
+import {useLinkBuilder, useTheme} from '@react-navigation/native';
+import {Text, PlatformPressable} from '@react-navigation/elements';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {COLORS, FONT, FONTS_SIZE} from '../constant';
+import {
+  HomeIcon,
+  MemberIcon,
+  NewsIcon,
+  ConnectIcon,
+  EventsIcon,
+} from '../assets/icons';
 import MemberScreen from '../screens/member';
 import DashboardScreen from '../screens/Dashboard';
 import NewsScreen from '../screens/News';
@@ -14,43 +20,49 @@ import BlogsScreen from '../screens/Blogs';
 import PrivacyPolicyScreen from '../screens/PrivacyPolicy';
 import TermConditionScreen from '../screens/TermCondition';
 import MemberShipCardScreen from '../screens/MemberShipCard';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-function MyTabBar({ state, descriptors, navigation }) {
-    const { colors } = useTheme();
-    const { buildHref } = useLinkBuilder();
+function MyTabBar({state, descriptors, navigation}) {
+  const {colors} = useTheme();
+  const {buildHref} = useLinkBuilder();
 
-    return (
-        <View style={{ flexDirection: 'row', backgroundColor: COLORS.Primary_2, height: 60, paddingHorizontal: 10 }}>
-            {state.routes.map((route, index) => {
-                const { options } = descriptors[route.key];
-                const label =
-                    options.tabBarLabel !== undefined
-                        ? options.tabBarLabel
-                        : options.title !== undefined
-                            ? options.title
-                            : route.name;
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        backgroundColor: COLORS.Primary_2,
+        height: 60,
+        paddingHorizontal: 10,
+      }}>
+      {state.routes.map((route, index) => {
+        const {options} = descriptors[route.key];
+        const label =
+          options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+            ? options.title
+            : route.name;
 
-                const isFocused = state.index === index;
+        const isFocused = state.index === index;
 
-                const onPress = () => {
-                    const event = navigation.emit({
-                        type: 'tabPress',
-                        target: route.key,
-                        canPreventDefault: true,
-                    });
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
 
-                    if (!isFocused && !event.defaultPrevented) {
-                        navigation.navigate(route.name, route.params);
-                    }
-                };
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate(route.name, route.params);
+          }
+        };
 
-                const onLongPress = () => {
-                    navigation.emit({
-                        type: 'tabLongPress',
-                        target: route.key,
-                    });
-                };
+        const onLongPress = () => {
+          navigation.emit({
+            type: 'tabLongPress',
+            target: route.key,
+          });
+        };
 
                 return (
                     <PlatformPressable
@@ -104,14 +116,14 @@ const HomeStack = createNativeStackNavigator({
 });
 
 const MemberStack = createNativeStackNavigator({
-    initialRouteName: 'Member',
-    screenOptions: {
-        headerShown: false,
-    },
-    screens: {
-        Member: MemberScreen,
-        MemberCard: MemberShipCardScreen,
-    },
+  initialRouteName: 'Member',
+  screenOptions: {
+    headerShown: false,
+  },
+  screens: {
+    Member: MemberScreen,
+    MemberCard: MemberShipCardScreen,
+  },
 });
 
 const Newstack = createNativeStackNavigator({
