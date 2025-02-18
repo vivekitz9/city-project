@@ -1,39 +1,112 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-    createDrawerNavigator,
     DrawerContentScrollView,
-    DrawerItemList,
-    DrawerItem,
 } from '@react-navigation/drawer';
-import { View, Image, TouchableOpacity } from 'react-native';
-import { UserAvatar, PenIcon } from '../../assets/icons';
-import { hp, COLORS } from '../../constant';
+import {
+    UserAvatar,
+    PenIcon,
+    MenuHomeIcon,
+    MenuMissionIcon,
+    MenuMemberIcon,
+    MenuEventsIcon,
+    MenuNewsIcon,
+    MenuBlogsIcon,
+    MenuGalleryIcon,
+    MenuConnectIcon,
+    MenuHelpIcon,
+    LogoutIcon,
+    PrivacyPolicy,
+    TermCondition
+} from '../../assets/icons';
+import { hp, COLORS, FONT, FONTS_SIZE } from '../../constant';
 import { styles } from './index.style';
 import { launchImageLibrary } from 'react-native-image-picker'
+import {
+    Text,
+    View,
+    Image,
+    TouchableOpacity,
+} from 'react-native';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import ListScreen from './list';
+
+const menuData = [
+    {
+        image: MenuHomeIcon,
+        name: "Dashboard",
+        navigation: "Dashboard"
+    },
+    {
+        image: MenuMissionIcon,
+        name: "Mission & Vision",
+        navigation: "MissionVision"
+    },
+    {
+        image: MenuMemberIcon,
+        name: "Member",
+        navigation: "Member"
+    },
+    {
+        image: MenuEventsIcon,
+        name: "Events",
+        navigation: "Events"
+    },
+    {
+        image: MenuGalleryIcon,
+        name: "Gallery",
+        navigation: "Gallery"
+    },
+    {
+        image: MenuBlogsIcon,
+        name: "Blogs",
+        navigation: "Blogs"
+    },
+    {
+        image: MenuNewsIcon,
+        name: "News",
+        navigation: "News"
+    },
+    {
+        image: MenuConnectIcon,
+        name: "Connect with Me",
+        navigation: "Connect"
+    },
+    {
+        image: MenuHelpIcon,
+        name: "Help & Support",
+        navigation: "HelpCenter"
+    },
+    {
+        image: PrivacyPolicy,
+        name: "Privacy Policy",
+        navigation: "PrivacyPolicy"
+    },
+    {
+        image: TermCondition,
+        name: "Term & Condition",
+        navigation: "TermCondition"
+    },
+]
 
 function CustomDrawerContent(props) {
     const [imageUri, setImageUri] = useState("");
 
-
     const handleImagePicker = async () => {
         console.log('Opening Image Picker...');
-
-        try {
-            const result = await launchImageLibrary({ mediaType: 'photo' });
-            if (result.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (result.errorMessage) {
-                console.log(result.errorMessage);
-            } else {
-                setImageUri(result?.assets[0]?.uri)
-            }
-        } catch (error) {
-            console.error('Image Picker Error:', error);
-        }
+        props.navigation.navigate('Profile');
     };
 
-    console.log('props----->', JSON.stringify(props));
-    
+    const handleLogout = async () => {
+        try {
+            await EncryptedStorage.removeItem('token')
+            setTimeout(() => {
+                props.navigation.navigate('Login')
+            }, 100)
+        } catch (error) {
+            console.log('err--->', error);
+        }
+    }
+
     return (
         <DrawerContentScrollView {...props}>
 
@@ -71,31 +144,18 @@ function CustomDrawerContent(props) {
 
             </View>
 
-            <DrawerItem
-                label="Dashboard"
-                focused={true}
-                style={{ marginTop: 10 }}
-                onPress={() => props.navigation.navigate("Dashboard")}
+            <ListScreen
+                data={menuData}
+                navigation={props?.navigation}
             />
 
-            <DrawerItem
-                label="News"
-                focused={true}
-                style={{ marginTop: 10 }}
-                onPress={() => props.navigation.navigate("News")}
-            />
-
-            {/* <DrawerItemList {...props} activeTintColor='#2196f3' activeBackgroundColor='rgba(0, 0, 0, .04)' inactiveTintColor='rgba(0, 0, 0, .87)' inactiveBackgroundColor='transparent' style={{backgroundColor: '#000000'}} labelStyle={{color: '#ffffff'}}/> */}
+            <TouchableOpacity onPress={handleLogout} style={{ flexDirection: 'row', alignItems: 'center', margin: 10, marginTop: 10 }}>
+                <Image resizeMode='contain' source={LogoutIcon} style={{ width: 30, height: 30 }} />
+                <Text style={{ paddingLeft: 10, fontFamily: FONT.Bold, fontSize: FONTS_SIZE.xsmall2, color: COLORS.black, fontWeight: '600' }}>Logout</Text>
+            </TouchableOpacity>
 
 
-            {/* <DrawerItem
-                label="Close drawer"
-                onPress={() => props.navigation.closeDrawer()}
-            />
-            <DrawerItem
-                label="Toggle drawer"
-                onPress={() => props.navigation.toggleDrawer()}
-            /> */}
+
         </DrawerContentScrollView>
     );
 }

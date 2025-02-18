@@ -32,7 +32,7 @@ import { ActivityIndicator } from 'react-native-paper';
 import { Dropdown } from 'react-native-element-dropdown';
 
 
-const MemberScreen = () => {
+const ProfileScreen = () => {
   const navigation = useNavigation();
   const [t] = useTranslation('translation');
   const [formData, setFromData] = useState({
@@ -61,12 +61,9 @@ const MemberScreen = () => {
         const decoded = jwtDecode(token)
         const response = await ApiService.fetchData('v1/users/' + decoded?.id);
 
-        console.log('response?.data?.data?.item===?', response);
+        console.log('response?.data?.data?.item===>', response);
         if (response?.data?.success) {
           setIsLoading(false)
-          if (response?.data?.data?.Item?.memberId) {
-            navigation.navigate('MemberCard')
-          } else {
             setFromData({
               userName: response?.data?.data?.Item?.userName,
               email: response?.data?.data?.Item?.email,
@@ -74,13 +71,10 @@ const MemberScreen = () => {
               dateOfBirth: response?.data?.data?.Item?.dob,
               district: response?.data?.data?.Item?.district,
             })
-
-            console.log('response?.data?.data?.Item?.dob---->', response?.data?.data?.Item?.dob);
+            setImageUri(response?.data?.data?.Item?.image)
             setDate(new Date(response?.data?.data?.Item?.dob))
           }
-        }
         setIsLoading(false)
-        console.log('response----->', JSON.stringify(response));
       } catch (error) {
         setIsLoading(false)
         console.log('error user get====>', error);
@@ -169,11 +163,9 @@ const MemberScreen = () => {
         }).then(response => {
           return response.json();
         }).then(res => {
-          console.log(res, 'res')
           if (res?.success) {
             setIsLoading(false)
             toast.show("Successfully", { type: 'success' })
-            navigation.navigate("MemberCard")
           } else {
             setIsLoading(false);
             toast.show("Invaild user details", { type: 'waring' })
@@ -215,6 +207,7 @@ const MemberScreen = () => {
     return null;
   };
 
+  console.log('district----->', district);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -231,7 +224,7 @@ const MemberScreen = () => {
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled">
             <View style={{ marginBottom: hp('5') }}>
-              <HeaderComponent />
+              <HeaderComponent title={"Profile"} />
 
               {imageUri == "" ?
                 <View style={styles.logoContainer}>
@@ -268,17 +261,6 @@ const MemberScreen = () => {
                 </View>
               }
 
-              <View style={{ alignItems: 'center', marginBottom: 10, top: -15 }}>
-                <Text
-                  style={{
-                    fontFamily: FONT.Bold,
-                    fontSize: FONTS_SIZE.xsmall2,
-                    color: COLORS.Secondary,
-                  }}>
-                  {t('MEMBER')}
-                </Text>
-              </View>
-
               <View style={styles.formContainer}>
                 <View style={styles.inputContainer}>
                   <InputTextField
@@ -301,7 +283,6 @@ const MemberScreen = () => {
                     style={styles.inputText}
                     keyboardType="number-pad"
                     value={mobileNumber}
-                    disabled={true}
                     onChangeText={value =>
                       handleInputChange('mobileNumber', value)
                     }
@@ -340,7 +321,7 @@ const MemberScreen = () => {
                       valueField="label"
                       placeholder={!isFocus ? 'Select Districts' : ''}
                       searchPlaceholder="Search Districts"
-                      value={formData?.district}
+                      value={district}
                       onFocus={() => setIsFocus(true)}
                       onBlur={() => setIsFocus(false)}
                       onChange={item => {
@@ -404,4 +385,4 @@ const MemberScreen = () => {
     </SafeAreaView>
   );
 };
-export default MemberScreen;
+export default ProfileScreen;

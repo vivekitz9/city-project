@@ -96,6 +96,7 @@ const GalleryScreen = () => {
                             keyExtractor={(item, index) => String(index)}
                             renderItem={ListItem}
                             numColumns={2}
+                            removeClippedSubviews={false}
                         />
                     </View>
 
