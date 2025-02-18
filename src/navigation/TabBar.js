@@ -33,7 +33,7 @@ function MyTabBar({ state, descriptors, navigation }) {
                 // height: 60,
                 paddingHorizontal: 10,
                 // width: wp('100'),
-                justifyContent: 'center',
+                justifyContent: 'space-between',
                 alignItems: 'center'
             }}>
             {state.routes.map((route, index) => {

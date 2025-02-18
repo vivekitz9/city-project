@@ -136,14 +136,14 @@ const MemberShipCardScreen = () => {
                 </Text>
               }
             </View>
-            <View style={styles.editButtonContainer}>
+            {/* <View style={styles.editButtonContainer}>
               <TouchableOpacity style={styles.editButton}>
                 <View style={styles.edit}>
                   <Image source={PenIcon} style={{ width: 25, height: 25 }} />
                   <Text style={styles.editText}>Edit</Text>
                 </View>
               </TouchableOpacity>
-            </View>
+            </View> */}
 
             <ViewShot
               ref={viewRef}
@@ -156,12 +156,12 @@ const MemberShipCardScreen = () => {
                     <View style={styles.logoContainer}>
                       <Image source={Logo} style={{ width: 70, height: 70 }} />
                     </View>
-                    <View style={styles.penIcon}>
+                    {/* <View style={styles.penIcon}>
                       <Image
                         source={PenIcon}
                         style={{ width: '100%', height: '100%' }}
                       />
-                    </View>
+                    </View> */}
                   </View>
                   <View style={styles.headingTextContainer}>
                     <Text style={styles.headingText}>Connect with</Text>
@@ -194,12 +194,20 @@ const MemberShipCardScreen = () => {
                     <Text style={styles.memberValue}>{memberdata && memberdata?.memberId && memberdata?.memberId}</Text>
                   </View>
                   <View style={styles.avQRContainer}>
-                    <View style={styles.avatarContainer}>
-                      <Image
-                        source={UserAvatar}
-                        style={{ width: 66, height: 66 }}
-                        resizeMode="cover"
-                      />
+                    <View style={[styles.avatarContainer, { backgroundColor: memberdata && memberdata?.image ? '' : COLORS.Primary_2 }]}>
+                      {memberdata && memberdata?.image ?
+                        <Image
+                          source={{ uri: memberdata?.image }}
+                          style={{ width: 66, height: 66, borderRadius: 10 }}
+                          resizeMode="cover"
+                        />
+                        :
+                        <Image
+                          source={UserAvatar}
+                          style={{ width: 66, height: 66 }}
+                          resizeMode="cover"
+                        />
+                      }
                     </View>
                     <View style={styles.QRContainer}>
                       <Image
@@ -215,7 +223,7 @@ const MemberShipCardScreen = () => {
 
             <View style={styles.buttonContianer}>
               <TouchableOpacity style={styles.commonButton}>
-                <Icon name="share" size={35} color={COLORS.Primary_2} />
+                <Icon name="share" size={25} color={COLORS.Primary_2} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => downloadCard()}
@@ -225,7 +233,7 @@ const MemberShipCardScreen = () => {
                   ...styles.commonButton,
                   backgroundColor: COLORS.Primary_2,
                 }}>
-                <Icon name="file-download" size={35} color={COLORS.white} />
+                <Icon name="file-download" size={25} color={COLORS.white} />
               </TouchableOpacity>
             </View>
             <View style={styles.buttomContainer}>
@@ -235,9 +243,9 @@ const MemberShipCardScreen = () => {
                 </Text>
                 <Text style={{ color: COLORS.black }}> 76XCDZD</Text>
               </Text>
-              <TouchableOpacity style={styles.Button}>
+              <TouchableOpacity style={styles.Button} activeOpacity={0.6}>
                 <View style={styles.iconContainer}>
-                  <Icon name="share" size={35} color={COLORS.white} />
+                  <Icon name="share" size={25} color={COLORS.white} />
                   <Text style={styles.shareText}>Share</Text>
                 </View>
               </TouchableOpacity>

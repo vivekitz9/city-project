@@ -85,6 +85,7 @@ const EventsScreen = () => {
                             data={data}
                             keyExtractor={(item, index) => String(index)}
                             renderItem={ListItem}
+                            removeClippedSubviews={false}
                         />
 
 
