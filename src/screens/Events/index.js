@@ -45,29 +45,31 @@ const EventsScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
 
-  useEffect(async () => {
+  const fetchData = async () => {
     try {
       setIsLoading(true);
       const response = await ApiService.fetchData('v1/events');
       if (response?.data?.success) {
         setIsLoading(false);
         const eventData = response?.data?.data;
-        // const todayDate = () => moment().format('YYYY-MM-DD');
-        // const todayDate = () =>
-        //   moment().subtract(10, 'days').format('YYYY-MM-DD');
-        // const data = eventData.filter(event => {
-        //   if (!tabviewValue) {
-        //     return moment(event.eventDate).isSame(todayDate, 'day');
-        //   } else {
-        //     return moment(event.eventDate).isAfter(todayDate, 'day');
-        //   }
-        // });
-        setData(eventData);
+        const todayDate = moment().format('YYYY-MM-DD');
+        const data = eventData.filter(event => {
+          if (tabviewValue) {
+            return moment(event.eventDate).isSame(todayDate, 'day');
+          } else {
+            return moment(event.eventDate).isAfter(todayDate, 'day');
+          }
+        });
+        setData(data);
       }
     } catch (error) {
       setIsLoading(false);
-      console.log('error user get====>', error);
+      console.log('error events --------->', error);
     }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [tabviewValue]);
 
   const ListItem = ({item, index}) => {
@@ -98,7 +100,7 @@ const EventsScreen = () => {
                 fontWeight: '400',
                 paddingTop: 2,
               }}>
-              {item.eventStartTime} {item.eventEndTime}
+              {`${item.eventStartTime} - ${item.eventEndTime}`}
             </Text>
           </View>
           <View style={{width: '68%', justifyContent: 'center'}}>
@@ -133,7 +135,11 @@ const EventsScreen = () => {
             marginTop: 10,
           }}>
           <View style={{padding: 5}}>
-            <Image source={EventsBanner} />
+            {item.image ? (
+              <Image source={{uri: item.image}} />
+            ) : (
+              <Image source={EventsBanner} />
+            )}
           </View>
 
           <View
@@ -161,7 +167,7 @@ const EventsScreen = () => {
                   marginLeft: 10,
                 }}>
                 <Text style={{color: COLORS.white, padding: 5}}>
-                  {item.totalJoined}K
+                  {`${item.totalJoined} K`}
                 </Text>
               </View>
             </View>
@@ -206,16 +212,14 @@ const EventsScreen = () => {
                 scrollEnabled={false}
               />
             ) : null}
-
             {isLoading && (
               <View
                 style={{
-                  flex: 1,
                   position: 'absolute',
-                  //   left: 0,
-                  //   right: 0,
-                  //   top: 0,
-                  //   bottom: 0,
+                  left: 0,
+                  right: 0,
+                  top: tabviewValue ? 0 : 200,
+                  bottom: 0,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
