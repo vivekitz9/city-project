@@ -11,5 +11,11 @@ export const styles = StyleSheet.create({
         flex: 1, 
         // alignItems: 'center'
     },
+    inputText: {
+      width: wp('85'),
+      height: hp('7'),
+      fontSize: FONTS_SIZE.xsmall2,
+      fontFamily: FONT.Regular,
+    },
     
   });

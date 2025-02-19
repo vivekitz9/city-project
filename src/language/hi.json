@@ -19,5 +19,8 @@
   "Female": "महिला",
   "Other": "अन्य",
   "SUBMIT": "सबमिट करें",
-  "MEMBER": "संगठन का सदस्य"
+  "MEMBER": "संगठन का सदस्य",
+  "NAME": "नाम",
+  "EMAIL": "ईमेल",
+  "DESCRIPTION ": "Description "
 }
