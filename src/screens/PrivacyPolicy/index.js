@@ -24,8 +24,34 @@ const PrivacyPolicyScreen = () => {
 
                         <View style={{ paddingHorizontal: 10 }}>
                             <Text style={{ fontFamily: FONT.Regular, fontSize: FONTS_SIZE.xsmall2, color: COLORS.black, lineHeight: 25.5 }}>
-                                The Lorem ipsum text is derived from sections 1.10.32 and 1.10.33 of Cicero's De finibus bonorum et malorum.[6][7] The physical source may have been the 1914 Loeb Classical Library edition of De finibus, where the Latin text, presented on the left-hand (even) pages, breaks off on page 34 with "Neque porro quisquam est qui do-" and continues on page 36 with "lorem ipsum ...", suggesting that the galley type of that page was mixed up to make the dummy text seen today.
-                                Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit amet consectetur adipisci[ng] velit, sed quia non numquam [do] eius modi tempora inci[di]dunt, ut labore et dolore ...
+                                1. Introduction
+                                This Privacy Policy explains how Connect with Shivdeep collects, uses, and protects
+                                user information when using our services.
+                                2. Information We Collect
+                                 Personal Information: Name, mobile number, email (if provided), membership
+                                details.
+                                 Login Information: OTP verification details or social media authentication data.
+                                 Usage Data: App interactions, event registrations, messages sent, and support
+                                requests.
+                                 Device Information: IP address, device type, and app version.
+                                3. How We Use Your Information
+                                 To provide a seamless user experience and access to all app features.
+                                 To generate and manage digital membership cards.
+                                 To facilitate one-to-one chat and, in the future, group communication.
+                                 To send event notifications, news updates, and blog content.
+                                 To ensure user security and prevent unauthorized access.
+                                4. Data Sharing & Protection
+                                 We do not sell or share your personal data with third parties for marketing
+                                purposes.
+                                 Data is encrypted and stored securely to prevent unauthorized access.
+                                 User information may be shared with legal authorities if required by law.
+                                5. User Rights & Controls
+                                 Users can update or delete their personal information from their profile settings.
+                                 Users can opt out of non-essential notifications.
+                                 Requests for account deletion can be made via shivdeeplande20@gmail.com.
+                                6. Third-Party Services
+                                 Social media login (Google, Apple, Facebook) follows their respective privacy
+                                policies.
                             </Text>
                         </View>
                     </View>

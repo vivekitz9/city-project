@@ -35,7 +35,7 @@ const MemberStack = createNativeStackNavigator({
 
 const LoginStackNavigator = createDrawerNavigator({
   drawerContent: (props) => <CustomDrawerContent {...props} />,
-  initialRouteName: 'HelpCenter',
+  initialRouteName: 'Dashboard',
   screenOptions: {
     headerShown: false,
   },

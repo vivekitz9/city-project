@@ -16,5 +16,8 @@
   "DOYOUHAVEANACCOUNT": "Do you have an account?",
   "GENDER": "Gender",
   "SUBMIT": "SUBMIT",
-  "MEMBER": "MEMBER"
+  "MEMBER": "MEMBER",
+  "NAME": "Name",
+  "EMAIL": "Email",
+  "DESCRIPTION ": "Description "
 }

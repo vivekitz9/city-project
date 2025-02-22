@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {TextInput} from 'react-native-paper';
-import {COLORS} from '../constant';
+import { TextInput } from 'react-native-paper';
+import { COLORS } from '../constant';
 
 const InputTextField = ({
   placeholder,
@@ -13,7 +13,9 @@ const InputTextField = ({
   keyboardType,
   onFocus,
   right,
-  disabled
+  disabled,
+  numberOfLines = 1,
+  multiline
 }) => {
   return (
     <TextInput
@@ -24,7 +26,7 @@ const InputTextField = ({
       onChangeText={onChangeText}
       outlineColor={COLORS.gray}
       activeOutlineColor={COLORS.Primary_2}
-      numberOfLines={1}
+      numberOfLines={numberOfLines}
       textColor="#000"
       disabled={disabled}
       maxLength={maxLength}
@@ -32,6 +34,7 @@ const InputTextField = ({
       keyboardType={keyboardType}
       onFocus={onFocus}
       right={right}
+      multiline={multiline}
     />
   );
 };
