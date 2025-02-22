@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, SafeAreaView, View, Image, ImageBackground, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 import { COLORS, FONT, FONTS_SIZE, hp, wp } from '../../constant';
 import { BackgroundImage, Banner } from './../../assets/icons/index';
@@ -8,13 +8,41 @@ import {
 import { useTranslation } from 'react-i18next';
 import { styles } from './index.style';
 import HeaderComponent from '../../components/header';
-
+import ApiService from '../../api/ApiService';
+import { ActivityIndicator } from 'react-native-paper';
+import RenderHtml from 'react-native-render-html';
 
 const PrivacyPolicyScreen = () => {
     const [t] = useTranslation('translation');
     const navigation = useNavigation();
+    const [data, setData] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
 
+    useEffect(() => {
+        async function fetchUser() {
+            setIsLoading(true)
+            try {
+                const response = await ApiService.fetchData('v1/privacyPolicy');
 
+                console.log('response=====>', response?.data?.data[0]?.content);
+                if (response?.data?.success) {
+                    setIsLoading(false)
+                    setData(response?.data?.data[0]?.content)
+                }
+                setIsLoading(false)
+            } catch (error) {
+                setIsLoading(false)
+                console.log('error user get====>', error);
+            }
+        }
+        fetchUser()
+    }, [])
+
+    const source = {
+        html: data
+    };
+
+    
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground source={BackgroundImage} resizeMode="cover" style={styles.container}>
@@ -23,38 +51,29 @@ const PrivacyPolicyScreen = () => {
                     <View style={styles.subContainer}>
 
                         <View style={{ paddingHorizontal: 10 }}>
-                            <Text style={{ fontFamily: FONT.Regular, fontSize: FONTS_SIZE.xsmall2, color: COLORS.black, lineHeight: 25.5 }}>
-                                1. Introduction
-                                This Privacy Policy explains how Connect with Shivdeep collects, uses, and protects
-                                user information when using our services.
-                                2. Information We Collect
-                                 Personal Information: Name, mobile number, email (if provided), membership
-                                details.
-                                 Login Information: OTP verification details or social media authentication data.
-                                 Usage Data: App interactions, event registrations, messages sent, and support
-                                requests.
-                                 Device Information: IP address, device type, and app version.
-                                3. How We Use Your Information
-                                 To provide a seamless user experience and access to all app features.
-                                 To generate and manage digital membership cards.
-                                 To facilitate one-to-one chat and, in the future, group communication.
-                                 To send event notifications, news updates, and blog content.
-                                 To ensure user security and prevent unauthorized access.
-                                4. Data Sharing & Protection
-                                 We do not sell or share your personal data with third parties for marketing
-                                purposes.
-                                 Data is encrypted and stored securely to prevent unauthorized access.
-                                 User information may be shared with legal authorities if required by law.
-                                5. User Rights & Controls
-                                 Users can update or delete their personal information from their profile settings.
-                                 Users can opt out of non-essential notifications.
-                                 Requests for account deletion can be made via shivdeeplande20@gmail.com.
-                                6. Third-Party Services
-                                 Social media login (Google, Apple, Facebook) follows their respective privacy
-                                policies.
-                            </Text>
+                            {data ? <RenderHtml
+                                contentWidth={wp('95')}
+                                source={source}
+                            />
+                                :
+                                <Text style={{ fontFamily: FONT.Regular, fontSize: FONTS_SIZE.xsmall2, color: COLORS.black, lineHeight: 25.5 }}> No Data</Text>
+                            }
+                            {/* <Text style={{ fontFamily: FONT.Regular, fontSize: FONTS_SIZE.xsmall2, color: COLORS.black, lineHeight: 25.5 }}>
+                               
+                            </Text> */}
                         </View>
                     </View>
+                    {isLoading && <View style={{
+                        position: 'absolute',
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        bottom: 0,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <ActivityIndicator animating={true} size={50} color={COLORS.Primary_2} />
+                    </View>}
                 </ScrollView>
             </ImageBackground>
         </SafeAreaView>

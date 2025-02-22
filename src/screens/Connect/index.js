@@ -10,10 +10,9 @@ import { styles } from './index.style';
 import HeaderComponent from '../../components/header';
 import { GiftedChat, Bubble, InputToolbar, Send } from 'react-native-gifted-chat'
 import Icon from 'react-native-vector-icons/Feather';
-
 import { io } from "socket.io-client";
 
-export const socket = io("http://192.168.0.10:3000");
+export const socket = io("https://shivdeeplande.com:8001/");
 
 
 
