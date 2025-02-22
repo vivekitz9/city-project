@@ -46,8 +46,8 @@ const VerifyOtpScreen = ({ route }) => {
                     "otp": value
                 }
                 const response = await ApiService.postData('v1/verifyOtp', payload)
+                console.log("response verfy----->", response);
                 if (response?.data?.success) {
-                    console.log("response verfy----->", response);
                     if (route?.params?.pageType === "register") {
                         handleCreateUser()
                     } else if (route?.params?.pageType === "login") {
@@ -59,7 +59,7 @@ const VerifyOtpScreen = ({ route }) => {
                     }
                 } else {
                     setIsLoading(false)
-                    toast.show("User login success", { type: 'warning' })
+                    toast.show("Your OTP is invalid please try again", { type: 'waring' })
                     dispatch(loginFailure(response?.data))
                 }
             } catch (error) {

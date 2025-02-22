@@ -2,7 +2,7 @@ import {View, Platform, Image} from 'react-native';
 import {useLinkBuilder, useTheme} from '@react-navigation/native';
 import {Text, PlatformPressable} from '@react-navigation/elements';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {COLORS, FONT, FONTS_SIZE} from '../constant';
+import {COLORS, FONT, FONTS_SIZE, wp} from '../constant';
 import {
   HomeIcon,
   MemberIcon,
@@ -23,7 +23,6 @@ import MemberShipCardScreen from '../screens/MemberShipCard';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 function MyTabBar({state, descriptors, navigation}) {
-  const {colors} = useTheme();
   const {buildHref} = useLinkBuilder();
 
   return (
@@ -31,8 +30,11 @@ function MyTabBar({state, descriptors, navigation}) {
       style={{
         flexDirection: 'row',
         backgroundColor: COLORS.Primary_2,
-        height: 60,
+        // height: 60,
         paddingHorizontal: 10,
+        // width: wp('100'),
+        justifyContent: 'space-between',
+        alignItems: 'center',
       }}>
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
@@ -73,7 +75,7 @@ function MyTabBar({state, descriptors, navigation}) {
             onPress={onPress}
             onLongPress={onLongPress}
             style={{
-              width: 70,
+              width: 60,
               height: 60,
               borderRadius: 10,
               justifyContent: 'center',
@@ -83,7 +85,7 @@ function MyTabBar({state, descriptors, navigation}) {
             }}>
             <View
               style={{
-                width: 70,
+                width: 60,
                 height: 60,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -172,18 +174,17 @@ const Eventstack = createNativeStackNavigator({
     headerShown: false,
   },
   screens: {
-    // Events: ConnectScreen,
     Events: EventsScreen,
   },
 });
 
-const Connecttack = createNativeStackNavigator({
-  initialRouteName: 'Events',
+const Connectstack = createNativeStackNavigator({
+  initialRouteName: 'Connect',
   screenOptions: {
     headerShown: false,
   },
   screens: {
-    Connect: EventsScreen,
+    Connect: ConnectScreen,
   },
 });
 
@@ -198,6 +199,6 @@ export const MyTabs = createBottomTabNavigator({
     News: Newstack,
     Member: MemberStack,
     Events: Eventstack,
-    Connect: Connecttack,
+    Connect: Connectstack,
   },
 });

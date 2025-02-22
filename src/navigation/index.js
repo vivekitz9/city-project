@@ -15,11 +15,27 @@ import BlogsScreen from '../screens/Blogs';
 import PrivacyPolicyScreen from '../screens/PrivacyPolicy';
 import TermConditionScreen from '../screens/TermCondition';
 import ConnectScreen from '../screens/Connect';
-import DashboardScreen from '../screens/Dashboard';
+import MemberShipCardScreen from '../screens/MemberShipCard';
+import MemberScreen from '../screens/member';
+import MissionVisionScreen from '../screens/MissionVision';
+import ProfileScreen from '../screens/Profile';
+import HelpCenterScreen from '../screens/HelpCenter';
+
+const MemberStack = createNativeStackNavigator({
+  initialRouteName: 'Member',
+  screenOptions: {
+      headerShown: false,
+  },
+  screens: {
+      Member: MemberScreen,
+      MemberCard: MemberShipCardScreen,
+  },
+});
+
 
 const LoginStackNavigator = createDrawerNavigator({
   drawerContent: (props) => <CustomDrawerContent {...props} />,
-  initialRouteName: 'Dashboard',
+  initialRouteName: 'HelpCenter',
   screenOptions: {
     headerShown: false,
   },
@@ -32,6 +48,10 @@ const LoginStackNavigator = createDrawerNavigator({
     PrivacyPolicy: PrivacyPolicyScreen,
     TermCondition: TermConditionScreen,
     Connect: ConnectScreen,
+    Member: MemberStack,
+    MissionVision: MissionVisionScreen,
+    Profile: ProfileScreen,
+    HelpCenter: HelpCenterScreen
   },
 });
 

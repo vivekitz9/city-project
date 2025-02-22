@@ -24,8 +24,8 @@ export const styles = StyleSheet.create({
       borderWidth: 2,
     },
     pinCodeContainer:{
-      width: 60,
-      height: 60,
+      width: 50,
+      height: 50,
       borderColor: COLORS.Primary_2,
       borderWidth: 2,
     },

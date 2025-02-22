@@ -26,19 +26,10 @@ const data = [
         imgUrl: "https://picsum.photos/id/12/200/300",
     },
 ];
+
 const DashboardScreen = () => {
     const [t] = useTranslation('translation');
     const navigation = useNavigation();
-    const isCarousel = React.useRef(null)
-
-    const handleChange = (value) => {
-        console.log('value----->', value.length);
-
-        if (value.length === 4) {
-            navigation.navigate("VerifyOtp")
-        }
-    }
-
 
     return (
         <SafeAreaView style={styles.container}>
@@ -48,7 +39,7 @@ const DashboardScreen = () => {
                     <View style={{ margin: 20, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
 
                         {/* Swiper */}
-                        <View style={{ height: hp('40'), width: wp('90'), borderColor: COLORS.gray, borderRadius: 20, elevation: 10, backgroundColor: '#fff' }} >
+                        <View style={{ height: hp('40'), width: wp('90'), borderColor: COLORS.gray, elevation: 10, borderRadius: 5, backgroundColor: '#fff' }} >
                             <Swiper
                                 autoplay={true}
                                 showsButtons={true}
@@ -59,7 +50,7 @@ const DashboardScreen = () => {
                                 {data?.map((item) => {
                                     return (
                                         <>
-                                            <Image source={BannerOne} style={{ height: 250, width: wp('90'), borderTopLeftRadius: 20, borderTopRightRadius: 20 }} />
+                                            <Image source={BannerOne} style={{ height: 250, width: wp('90') }} />
                                             <Text style={styles.text}>Beautiful</Text>
                                         </>
                                     )
@@ -68,30 +59,29 @@ const DashboardScreen = () => {
                         </View>
                         {/* Swiper End */}
 
-                        <View style={{ width: wp('90'), marginTop: 16, borderColor: COLORS.gray, borderRadius: 20, elevation: 10, backgroundColor: '#fff' }}>
+                        <View style={{ width: wp('90'), marginTop: 16, borderColor: COLORS.gray, borderRadius: 10, elevation: 10, backgroundColor: '#fff' }}>
 
                             <View>
                                 <Text style={{ paddingHorizontal: 20, paddingVertical: 15, fontFamily: FONT.BoldRoboto, fontSize: FONTS_SIZE.xsmall2 }}>UPCOMING EVENTS</Text>
-                                <Image source={BannerOne} style={{ width: wp('90'), height: hp('30'), borderRadius: 20 }} />
+                                <Image source={BannerOne} style={{ width: wp('90'), height: hp('30'), borderRadius: 10 }} />
                             </View>
 
                         </View>
 
-                        <View style={{ width: wp('90'), marginTop: 16, borderColor: COLORS.gray, borderRadius: 20, elevation: 10, backgroundColor: '#fff' }}>
+                        <View style={{ width: wp('90'), marginTop: 16, borderColor: COLORS.gray, borderRadius: 10, elevation: 10, backgroundColor: '#fff' }}>
 
                             <View>
                                 <Text style={{ paddingHorizontal: 20, paddingTop: 15, paddingBottom: 10, fontFamily: FONT.BoldRoboto, fontSize: FONTS_SIZE.xsmall2 }}>Television news screen layout</Text>
                                 <Text style={{ paddingHorizontal: 20, paddingBottom: 15, fontFamily: FONT.Regular, fontSize: FONTS_SIZE.xsmall }}>Television news screen layout</Text>
 
 
-                                <Image source={BannerOne} style={{ width: wp('90'), height: hp('30'), borderRadius: 20 }} />
+                                <Image source={BannerOne} style={{ width: wp('90'), height: hp('30'), borderRadius: 10 }} />
 
                             </View>
 
                         </View>
 
                     </View>
-                    <Text>Dashboard</Text>
                 </ScrollView>
             </ImageBackground>
         </SafeAreaView>
