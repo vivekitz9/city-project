@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, SafeAreaView, View, Image, ImageBackground, FlatList, ScrollView, TouchableOpacity } from 'react-native';
 import { COLORS, FONT, FONTS_SIZE, hp, wp } from '../../constant';
 import { ShareIcon, BackgroundImage, CommentIcon, NewsTest } from './../../assets/icons/index';
@@ -9,6 +9,11 @@ import { useTranslation } from 'react-i18next';
 import { styles } from './index.style';
 import HeaderComponent from '../../components/header';
 import Icon from 'react-native-vector-icons/AntDesign';
+import CommentModal from '../../components/News/CommentModal';
+import ApiService from '../../api/ApiService';
+import { ActivityIndicator } from 'react-native-paper';
+import { useToast } from "react-native-toast-notifications";
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 const data = [
     {
@@ -32,6 +37,24 @@ const NewsScreen = () => {
     const [t] = useTranslation('translation');
     const navigation = useNavigation()
     const [textShown, setTextShown] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+
+    useEffect(() => {
+        fetchNewsApi()
+    }, [])
+
+    const fetchNewsApi = async () => {
+        try {
+            setIsLoading(true)
+            const response = await ApiService.fetchData('v1/news');
+            console.log('response----->', response);
+            if (response?.data?.success) {
+                setIsLoading(false)
+            }
+        } catch (error) {
+
+        }
+    }
 
 
     const ListItem = ({ item, index }) => {
@@ -91,6 +114,7 @@ const NewsScreen = () => {
             <ImageBackground source={BackgroundImage} resizeMode="cover" style={styles.container}>
                 <HeaderComponent navigation={navigation} />
                 <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+
                     <FlatList
                         data={data}
                         keyExtractor={(item, index) => String(index)}
@@ -98,8 +122,22 @@ const NewsScreen = () => {
                         removeClippedSubviews={false}
                     />
 
+                    {/* <CommentModal showModal={showModal} setShowModal={setShowModal} /> */}
 
                 </ScrollView>
+                {isLoading &&
+                    <View style={{
+                        position: 'absolute',
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        bottom: 0,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <ActivityIndicator animating={true} size={50} color={COLORS.Primary_2} />
+                    </View>
+                }
             </ImageBackground>
         </SafeAreaView>
     );

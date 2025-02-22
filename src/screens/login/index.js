@@ -111,9 +111,9 @@ const Login = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground source={BackgroundImage} resizeMode="cover" style={styles.container}>
-        <ScrollView>
-          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={keyboardVerticalOffset}>
 
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={keyboardVerticalOffset}>
+          <ScrollView>
             <BackHeader onPress={() => navigation.goBack()} />
 
             <View style={styles.logoContainer}>
@@ -155,21 +155,21 @@ const Login = () => {
             <View style={styles.registerContainer}>
               <Text style={styles.registerText}>{t("Donthaveaccount")} <Text onPress={() => handleRegister()} style={{ color: COLORS.Primary_2 }}>{t('RegisterNow')}</Text></Text>
             </View>
-          </KeyboardAvoidingView>
-          {isLoading &&
-            <View style={{
-              position: 'absolute',
-              left: 0,
-              right: 0,
-              top: 0,
-              bottom: 0,
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <ActivityIndicator animating={true} size={50} color={COLORS.Primary_2} />
-            </View>
-          }
-        </ScrollView>
+          </ScrollView>
+        </KeyboardAvoidingView>
+        {isLoading &&
+          <View style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <ActivityIndicator animating={true} size={50} color={COLORS.Primary_2} />
+          </View>
+        }
       </ImageBackground>
     </SafeAreaView>
   );

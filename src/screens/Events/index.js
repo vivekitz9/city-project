@@ -36,7 +36,7 @@ const EventsScreen = () => {
     const ListItem = ({ item, index }) => {
         return (
             <>
-                <View style={{ flexDirection: 'row', width: wp('90'), backgroundColor: '#fff', padding: 10, borderRadius: 10, marginTop: 20 }}>
+                <View key={index} style={{ flexDirection: 'row', width: wp('90'), backgroundColor: '#fff', padding: 10, borderRadius: 10, marginTop: 20 }}>
                     <View style={{ width: '32%', justifyContent: 'center' }}>
                         <Text style={{ color: COLORS.Primary_2, fontFamily: FONT.Regular, fontWeight: '400' }}>05 Dec 2024</Text>
                         <Text style={{ color: COLORS.Primary_2, fontFamily: FONT.Regular, fontWeight: '400', paddingTop: 2 }}>02 PM - 03 PM</Text>
