@@ -10,12 +10,32 @@ import { styles } from './index.style';
 import HeaderComponent from '../../components/header';
 import { GiftedChat, Bubble, InputToolbar, Send } from 'react-native-gifted-chat'
 import Icon from 'react-native-vector-icons/Feather';
+import { io } from "socket.io-client";
+
+export const socket = io("https://shivdeeplande.com:8001/");
+
 
 
 const ConnectScreen = () => {
     const [t] = useTranslation('translation');
     const navigation = useNavigation();
     const [messages, setMessages] = useState([])
+
+
+    useEffect(() => {
+        async function connectSocket() {
+            socket.on("connect", () => {
+                console.log("connected");
+                socket.emit("hello", "world");
+            });
+
+            socket.on("connect_error", (err) => {
+                console.log(err instanceof Error);
+                console.log(err.message);
+            });
+        }
+        connectSocket()
+    }, [])
 
     useEffect(() => {
         setMessages([

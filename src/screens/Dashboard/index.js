@@ -47,12 +47,12 @@ const DashboardScreen = () => {
                                 prevButton={<Text style={{ fontSize: 40, color: COLORS.Primary_2 }}>‹</Text>}
                                 activeDot={<View style={{ backgroundColor: COLORS.Primary_2, width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3, }} />}
                             >
-                                {data?.map((item) => {
+                                {data?.map((item, index) => {
                                     return (
-                                        <>
+                                        <View key={index}>
                                             <Image source={BannerOne} style={{ height: 250, width: wp('90') }} />
                                             <Text style={styles.text}>Beautiful</Text>
-                                        </>
+                                        </View>
                                     )
                                 })}
                             </Swiper>
