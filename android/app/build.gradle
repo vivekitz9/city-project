@@ -81,13 +81,13 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.citydevelopment"
+    namespace "com.connectWithShivdeepTML"
     defaultConfig {
-        applicationId "com.citydevelopment"
+        applicationId "com.connectWithShivdeepTML"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
     }
     signingConfigs {
         debug {
