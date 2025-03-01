@@ -72,27 +72,22 @@ const MemberShipCardScreen = () => {
 
   const downloadCard = async () => {
     try {
-      // PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)
+      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)
       const imageUri = await viewRef.current.capture();
       if (!imageUri) return;
-
       const pdfDoc = await PDFDocument.create();
       const imageBytes = await RNFS.readFile(imageUri, 'base64');
-
       const image = imageUri.endsWith('.png')
         ? await pdfDoc.embedPng(imageBytes)
         : await pdfDoc.embedJpg(imageBytes);
       const { width, height } = image;
       const page = pdfDoc.addPage([width, height]);
-
       page.drawImage(image, {
         x: 0,
         y: 0,
         width: width,
         height: height,
       });
-      console.log('imageUri----->', page);
-
       const pdfBytes = await pdfDoc.save();
       const base64PDF = Buffer.from(pdfBytes).toString('base64');
 
@@ -101,7 +96,7 @@ const MemberShipCardScreen = () => {
 
       Alert.alert('Success', `PDF saved to: ${pdfFilePath}`);
     } catch (error) {
-      // Alert.alert('Error', 'Failed to Download.');
+      Alert.alert('Error', 'Failed to Download.');
       console.log('error download---->', error);
     }
   };
@@ -224,10 +219,10 @@ const MemberShipCardScreen = () => {
                 <Icon name="share" size={25} color={COLORS.Primary_2} />
               </TouchableOpacity>
               <TouchableOpacity
-                // onPress={() => downloadCard()}
+                onPress={() => downloadCard()}
                 // onPress={() => captureView()}
                 // onPress={() => captureAndSave()}
-                onPress={() => Alert.alert("WIP")}
+                // onPress={() => Alert.alert("WIP")}
                 style={{
                   ...styles.commonButton,
                   backgroundColor: COLORS.Primary_2,
