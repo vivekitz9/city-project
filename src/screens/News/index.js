@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   SafeAreaView,
@@ -9,21 +9,21 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {COLORS, FONT, FONTS_SIZE, hp, wp} from '../../constant';
+import { COLORS, FONT, FONTS_SIZE, hp, wp } from '../../constant';
 import {
   ShareIcon,
   BackgroundImage,
   CommentIcon,
   NewsTest,
 } from './../../assets/icons/index';
-import {useNavigation} from '@react-navigation/native';
-import {useTranslation} from 'react-i18next';
-import {styles} from './index.style';
+import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+import { styles } from './index.style';
 import HeaderComponent from '../../components/header';
 import Icon from 'react-native-vector-icons/AntDesign';
 import ApiService from '../../api/ApiService';
 import moment from 'moment';
-import {ActivityIndicator} from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
 
 const NewsScreen = () => {
   const [t] = useTranslation('translation');
@@ -56,7 +56,7 @@ const NewsScreen = () => {
     fetchNewsData();
   }, []);
 
-  const ListItem = ({item}) => {
+  const ListItem = ({ item }) => {
     return (
       <View
         key={item.id}
@@ -88,7 +88,7 @@ const NewsScreen = () => {
           Layout image displayed during a television news program broadcast
         </Text>
 
-        <View style={{paddingVertical: 10}}>
+        <View style={{ paddingVertical: 10 }}>
           <Text
             style={{
               fontFamily: FONT.Regular,
@@ -105,7 +105,7 @@ const NewsScreen = () => {
 
           {item.image ? (
             <Image
-              source={{uri: item.image}}
+              source={{ uri: item.image }}
               resizeMode="cover"
               style={{
                 width: wp('90'),
@@ -138,7 +138,7 @@ const NewsScreen = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <TouchableOpacity
                 activeOpacity={0.6}
                 style={{
@@ -152,17 +152,17 @@ const NewsScreen = () => {
                 <Icon name="heart" color={COLORS.white} size={25} />
               </TouchableOpacity>
 
-              <Text style={{paddingLeft: 5}}>{item?.like?.length}</Text>
+              <Text style={{ paddingLeft: 5 }}>{item?.like?.length}</Text>
             </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image source={CommentIcon} style={{width: 40, height: 40}} />
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Image source={CommentIcon} style={{ width: 40, height: 40 }} />
 
-              <Text Style={{paddingLeft: 5}}> {item?.comment?.length}</Text>
+              <Text Style={{ paddingLeft: 5 }}> {item?.comment?.length}</Text>
             </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image source={ShareIcon} style={{width: 40, height: 40}} />
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Image source={ShareIcon} style={{ width: 40, height: 40 }} />
 
-              <Text style={{paddingLeft: '5'}}> {item?.share?.length} </Text>
+              <Text style={{ paddingLeft: '5' }}> {item?.share?.length} </Text>
             </View>
           </View>
           <View>
@@ -216,12 +216,14 @@ const NewsScreen = () => {
         resizeMode="cover"
         style={styles.container}>
         <HeaderComponent navigation={navigation} />
-        <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true}>
+        {/* <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true} style={{ flex: 1 }}> */}
           <View
             style={{
               flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
-            {newsData.length > 0 ? (
+            {/* {newsData.length > 0 ? (
               <FlatList
                 data={newsData}
                 keyExtractor={item => item.id}
@@ -233,8 +235,10 @@ const NewsScreen = () => {
               <View>
                 <Text>Data Not Found</Text>
               </View>
-            )}
-            {isLoading && (
+            )} */}
+            <Text style={{ color: COLORS.Primary_2, fontSize: 24, fontFamily: FONT.Bold, fontWeight: '800' }}>Coming soon</Text>
+
+            {/* {isLoading && (
               <View
                 style={{
                   position: 'absolute',
@@ -251,9 +255,9 @@ const NewsScreen = () => {
                   color={COLORS.Primary_2}
                 />
               </View>
-            )}
+            )} */}
           </View>
-        </ScrollView>
+        {/* </ScrollView> */}
       </ImageBackground>
     </SafeAreaView>
   );

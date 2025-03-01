@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     DrawerContentScrollView,
 } from '@react-navigation/drawer';
@@ -20,7 +20,7 @@ import {
 } from '../../assets/icons';
 import { hp, COLORS, FONT, FONTS_SIZE } from '../../constant';
 import { styles } from './index.style';
-import { launchImageLibrary } from 'react-native-image-picker'
+import { jwtDecode } from "jwt-decode";
 import {
     Text,
     View,
@@ -29,6 +29,7 @@ import {
 } from 'react-native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import ListScreen from './list';
+import ApiService from '../../api/ApiService';
 
 const menuData = [
     {
@@ -100,12 +101,30 @@ function CustomDrawerContent(props) {
         try {
             await EncryptedStorage.removeItem('token')
             setTimeout(() => {
-                props.navigation.navigate('Login')
+                props.navigation.push('Login')
             }, 100)
         } catch (error) {
             console.log('err--->', error);
         }
     }
+
+    useEffect(()=>{
+        async function fetchUser(params) {
+            try {
+                const data = await EncryptedStorage.getItem('token')
+                const userData = JSON.parse(data)
+                const token = userData?.data?.token;
+                const decoded = jwtDecode(token)
+                const response = await ApiService.fetchData('v1/users/' + decoded?.id);
+                if (response?.data?.success) {
+                    setImageUri(response?.data?.data?.Item?.image)
+                }
+            } catch (error) {
+                console.log('error---->', error);
+            }
+        }
+        fetchUser()
+    }, [])
 
     return (
         <DrawerContentScrollView {...props}>

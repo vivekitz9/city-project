@@ -19,14 +19,14 @@ const BlogsScreen = () => {
         <SafeAreaView style={styles.container}>
             <ImageBackground source={BackgroundImage} resizeMode="cover" style={styles.container}>
                 <HeaderComponent navigation={navigation} title={'Blogs'} />
-                <ScrollView showsVerticalScrollIndicator={false}>
+                {/* <ScrollView showsVerticalScrollIndicator={false}> */}
                     <View style={styles.subContainer}>
-                        <View style={{ width: wp('90'), height: hp('26'), borderRadius: 20, backgroundColor: COLORS.white }}>
+                        {/* <View style={{ width: wp('90'), height: hp('26'), borderRadius: 20, backgroundColor: COLORS.white }}>
                             <Image source={Banner} resizeMode='contain' />
-                        </View>
+                        </View> */}
 
                         <View style={{ padding: 10 }}>
-                            <Text style={{ fontFamily: FONT.Regular, fontSize: FONTS_SIZE.xsmall2, color: COLORS.black, lineHeight: 25.5 }}>
+                            {/* <Text style={{ fontFamily: FONT.Regular, fontSize: FONTS_SIZE.xsmall2, color: COLORS.black, lineHeight: 25.5 }}>
                                 This project is a comprehensive digital platform designed to enhance user engagement
                                 and streamline interactions. It provides a seamless user experience with features such
                                 as secure login, event management, membership registration, real-time communication,
@@ -41,10 +41,13 @@ const BlogsScreen = () => {
                                 the future, a group chat feature will be added to enhance community engagement. A
                                 dedicated Help & Support section ensures that users can easily submit queries and
                                 receive prompt assistance.
-                            </Text>
+                            </Text> */}
+
+                            <Text style={{ color: COLORS.Primary_2, fontSize: 24, fontFamily: FONT.Bold, fontWeight: '800' }}>Coming soon</Text>
+
                         </View>
                     </View>
-                </ScrollView>
+                {/* </ScrollView> */}
             </ImageBackground>
         </SafeAreaView>
     );

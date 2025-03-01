@@ -1,4 +1,4 @@
-package com.citydevelopment
+package com.connectWithShivdeep
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

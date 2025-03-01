@@ -34,5 +34,24 @@ export const styles = StyleSheet.create({
       fontWeight: '600',
       paddingVertical: 10,
       paddingHorizontal: 15
-    }
+    },
+    messageType: {
+      display: 'flex',
+      minHeight: 56,
+      borderWidth: 1,
+      borderColor: COLORS.Primary_2,
+      borderRadius: 12,
+      flexDirection: 'row',
+      backgroundColor: COLORS.white,
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginHorizontal: 15,
+      marginBottom: 10
+    },
+    inputText: {
+      width: wp('72'),
+      // height: hp('7'),
+      fontSize: FONTS_SIZE.xsmall2,
+      fontFamily: FONT.Regular,
+    },
   });

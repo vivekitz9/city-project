@@ -22,7 +22,7 @@ const TermConditionScreen = () => {
         async function fetchUser() {
             setIsLoading(true)
             try {
-                const response = await ApiService.fetchData('v1/privacyPolicy');
+                const response = await ApiService.fetchData('v1/termCondition');
 
                 console.log('response=====>', response?.data?.data[0]?.content);
                 if (response?.data?.success) {

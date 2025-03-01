@@ -28,7 +28,7 @@ const SplashScreen = () => {
                     }, 2000);
                 } else {
                     setTimeout(() => {
-                        navigation.push("Language")
+                        navigation.push("Login")
                     }, 3000);
                 }
             } catch (error) {

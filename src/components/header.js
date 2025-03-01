@@ -34,9 +34,9 @@ const HeaderComponent = ({
 
                 <View style={{ height: 55, flexDirection: 'row', alignItems: 'center' }} >
                     <View>
-                        <TouchableOpacity activeOpacity={0.6}>
+                        {/* <TouchableOpacity activeOpacity={0.6}>
                             <Image source={LanguageIcon} style={{ marginRight: 10 }} resizeMode='contain' />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                         {/* <View style={{ flexDirection: 'row',  zIndex: 1, backgroundColor: COLORS.white }}>
                             <Text>Hindi</Text>
                         </View> */}
@@ -53,7 +53,9 @@ const HeaderComponent = ({
 
                         </View> */}
                     </View>
+                    <TouchableOpacity onPress={() => Alert.alert("WIP")}>
                     <Image source={Notification} style={{ width: 35, height: 35 }} />
+                    </TouchableOpacity>
                 </View>
 
             </View>

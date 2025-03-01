@@ -116,11 +116,12 @@ const HelpCenterScreen = () => {
                         {
                             tabView === "faq" ?
                                 <View style={{ marginVertical: 20 }}>
-                                    {
+                                    {/* {
                                         data.map((item, index) => {
                                             return <FaqViewScreen data={item} key={index} />
                                         })
-                                    }
+                                    } */}
+                                    <Text style={{ color: COLORS.Primary_2, fontSize: 20, fontFamily: FONT.Bold, fontWeight: '800' }}>Coming soon</Text>
 
                                 </View>
                                 :
