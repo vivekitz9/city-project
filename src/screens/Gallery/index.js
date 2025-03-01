@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Image, ImageBackground, ScrollView, FlatList } from 'react-native';
+import { SafeAreaView, View, Image, ImageBackground, ScrollView, FlatList, Text } from 'react-native';
 import { COLORS, FONT, FONTS_SIZE, hp, wp } from '../../constant';
 import { BackgroundImage, GalleryIcon } from './../../assets/icons/index';
 import {
@@ -78,8 +78,8 @@ const GalleryScreen = () => {
 
     const ListItem = ({ item, index }) => {
         return (
-            <View style={{ margin: 5 }} key={index}>
-                <Image source={GalleryIcon} style={{ width: wp('43'), height: hp('16'), borderRadius: 10, borderColor: COLORS.black, borderWidth: 1 }} />
+            <View style={{ margin: 5, width: wp('42'), height: hp('15'), borderRadius: 10  }} key={index}>
+                <Image source={GalleryIcon} resizeMode='cover' style={{ width: wp('42'), height: hp('15'), borderRadius: 10, borderColor: COLORS.black, borderWidth: 1 }} />
             </View>
         )
     }
@@ -88,19 +88,21 @@ const GalleryScreen = () => {
         <SafeAreaView style={styles.container}>
             <ImageBackground source={BackgroundImage} resizeMode="cover" style={styles.container}>
                 <HeaderComponent navigation={navigation} title={'Gallery'} />
-                <ScrollView showsVerticalScrollIndicator={false}>
+                {/* <ScrollView showsVerticalScrollIndicator={false}> */}
 
-                    <View style={{ marginHorizontal: 20, marginVertical: 20, flex: 1, alignItems: 'center' }}>
-                        <FlatList
+                    <View style={{ margin: 20, flex: 1, alignItems: 'center', justifyContent: 'center', width: wp("90") }}>
+                        {/* <FlatList
                             data={data}
                             keyExtractor={(item, index) => String(index)}
                             renderItem={ListItem}
                             numColumns={2}
                             removeClippedSubviews={false}
-                        />
+                        /> */}
+
+                        <Text style={{ color: COLORS.Primary_2, fontSize: 24, fontFamily: FONT.Bold, fontWeight: '800' }}>Coming soon</Text>
                     </View>
 
-                </ScrollView>
+                {/* </ScrollView> */}
             </ImageBackground>
         </SafeAreaView>
     );

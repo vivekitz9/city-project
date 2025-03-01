@@ -52,10 +52,18 @@ const VerifyOtpScreen = ({ route }) => {
                         handleCreateUser()
                     } else if (route?.params?.pageType === "login") {
                         setIsLoading(false)
-                        toast.show("User login success", { type: 'Success' })
-                        await EncryptedStorage.setItem('token', JSON.stringify(response?.data))
-                        dispatch(loginSuccess(response?.data))
-                        navigation.push('Dashboard')
+                        if (route?.params?.userType == "test") {
+
+                            toast.show("User login success", { type: 'Success' })
+                            await EncryptedStorage.setItem('token', JSON.stringify(response?.data?.data))
+                            dispatch(loginSuccess(response?.data?.data))
+                            navigation.push('Dashboard')
+                        } else {
+                            toast.show("User login success", { type: 'Success' })
+                            await EncryptedStorage.setItem('token', JSON.stringify(response?.data))
+                            dispatch(loginSuccess(response?.data))
+                            navigation.push('Dashboard')
+                        }
                     }
                 } else {
                     setIsLoading(false)

@@ -395,11 +395,11 @@ const RegisterScreen = () => {
                       fontSize: FONTS_SIZE.regular,
                       color: COLORS.black,
                     }}>
-                    OR
+                    {/* OR */}
                   </Text>
                 </View>
 
-                <View
+                {/* <View
                   style={{
                     flexDirection: 'row',
                     width: wp('60'),
@@ -428,7 +428,7 @@ const RegisterScreen = () => {
                       style={{ width: 50, height: 50 }}
                     />
                   </TouchableOpacity>
-                </View>
+                </View> */}
               </View>
             </View>
             {/* <View> */}

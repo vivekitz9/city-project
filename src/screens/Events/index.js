@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   SafeAreaView,
@@ -9,15 +9,15 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import {COLORS, FONT, FONTS_SIZE, hp, wp} from '../../constant';
-import {Logo, BackgroundImage, EventsBanner} from './../../assets/icons/index';
-import {useNavigation} from '@react-navigation/native';
-import {useTranslation} from 'react-i18next';
-import {styles} from './index.style';
+import { COLORS, FONT, FONTS_SIZE, hp, wp } from '../../constant';
+import { Logo, BackgroundImage, EventsBanner } from './../../assets/icons/index';
+import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+import { styles } from './index.style';
 import HeaderComponent from '../../components/header';
 import TabViewScreen from './TabView';
 import ApiService from '../../api/ApiService';
-import {ActivityIndicator} from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
 import moment from 'moment';
 
 const data = [
@@ -72,7 +72,7 @@ const EventsScreen = () => {
     fetchData();
   }, [tabviewValue]);
 
-  const ListItem = ({item, index}) => {
+  const ListItem = ({ item, index }) => {
     return (
       <>
         <View
@@ -84,7 +84,7 @@ const EventsScreen = () => {
             borderRadius: 10,
             marginTop: 20,
           }}>
-          <View style={{width: '32%', justifyContent: 'center'}}>
+          <View style={{ width: '32%', justifyContent: 'center' }}>
             <Text
               style={{
                 color: COLORS.Primary_2,
@@ -103,7 +103,7 @@ const EventsScreen = () => {
               {`${item.eventStartTime} - ${item.eventEndTime}`}
             </Text>
           </View>
-          <View style={{width: '68%', justifyContent: 'center'}}>
+          <View style={{ width: '68%', justifyContent: 'center' }}>
             <Text
               style={{
                 color: COLORS.Primary_2,
@@ -134,9 +134,9 @@ const EventsScreen = () => {
             backgroundColor: COLORS.white,
             marginTop: 10,
           }}>
-          <View style={{padding: 5}}>
+          <View style={{ padding: 5 }}>
             {item.image ? (
-              <Image source={{uri: item.image}} />
+              <Image source={{ uri: item.image }} />
             ) : (
               <Image source={EventsBanner} />
             )}
@@ -151,7 +151,7 @@ const EventsScreen = () => {
               paddingHorizontal: 20,
               paddingVertical: 15,
             }}>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <Text
                 style={{
                   fontFamily: FONT.Medium,
@@ -166,7 +166,7 @@ const EventsScreen = () => {
                   borderRadius: 5,
                   marginLeft: 10,
                 }}>
-                <Text style={{color: COLORS.white, padding: 5}}>
+                <Text style={{ color: COLORS.white, padding: 5 }}>
                   {`${item.totalJoined} K`}
                 </Text>
               </View>
@@ -174,8 +174,8 @@ const EventsScreen = () => {
 
             <TouchableOpacity
               activeOpacity={0.6}
-              style={{backgroundColor: COLORS.Primary_2, borderRadius: 5}}>
-              <Text style={{color: COLORS.white, padding: 5}}>
+              style={{ backgroundColor: COLORS.Primary_2, borderRadius: 5 }}>
+              <Text style={{ color: COLORS.white, padding: 5 }}>
                 Register Now
               </Text>
             </TouchableOpacity>
@@ -192,15 +192,18 @@ const EventsScreen = () => {
         resizeMode="cover"
         style={styles.container}>
         <HeaderComponent navigation={navigation} />
-        <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true}>
+        {/* <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true}> */}
           <View
             style={{
               marginHorizontal: 20,
               marginVertical: 20,
               flex: 1,
               alignItems: 'center',
+              justifyContent: 'center'
             }}>
-            <TabViewScreen
+            <Text style={{ color: COLORS.Primary_2, fontSize: 24, fontFamily: FONT.Bold, fontWeight: '800' }}>Coming soon</Text>
+
+            {/* <TabViewScreen
               onPress={value => setTabviewValue(value)}
               toggle={tabviewValue}
             />
@@ -211,7 +214,7 @@ const EventsScreen = () => {
                 renderItem={ListItem}
                 scrollEnabled={false}
               />
-            ) : null}
+            ) : null} */}
             {isLoading && (
               <View
                 style={{
@@ -231,7 +234,7 @@ const EventsScreen = () => {
               </View>
             )}
           </View>
-        </ScrollView>
+        {/* </ScrollView> */}
       </ImageBackground>
     </SafeAreaView>
   );

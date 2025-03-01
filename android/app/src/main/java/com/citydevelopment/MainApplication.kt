@@ -1,4 +1,4 @@
-package com.connectWithShivdeepTML
+package com.connectWithShivdeep
 
 import android.app.Application
 import com.facebook.react.PackageList

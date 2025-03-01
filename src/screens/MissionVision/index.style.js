@@ -9,7 +9,8 @@ export const styles = StyleSheet.create({
         marginHorizontal: 20, 
         marginVertical: 20, 
         flex: 1, 
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent:'center'
     },
     
   });

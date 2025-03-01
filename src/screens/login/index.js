@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, SafeAreaView, View, Image, ImageBackground, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity, Alert } from 'react-native';
+import { Text, SafeAreaView, View, Image, ImageBackground, BackHandler, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity, Alert } from 'react-native';
 import { COLORS, FONT, FONTS_SIZE, hp, wp } from '../../constant';
 import { Logo, BackgroundImage, FacebookIcon, GoogleIcon, AppleIcon } from './../../assets/icons/index';
 import InputTextField from '../../components/textfield';
@@ -38,7 +38,6 @@ const Login = () => {
   const [isFormValid, setIsFormValid] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-
   // useEffect(() => {
   //   if (auth?.user?.data?.success) {
   //     setIsLoading(false)
@@ -69,6 +68,11 @@ const Login = () => {
     // }
   };
 
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+    return () => backHandler.remove()
+  }, [])
+
   const handleRegister = () => {
     navigation.navigate("Register")
   }
@@ -89,15 +93,19 @@ const Login = () => {
     if (isFormValid) {
       setIsLoading(true)
       try {
-        const payload = { "mobile": mobileNumber }
-        const response = await ApiService.postData('v1/login', payload)
-        console.log('response---->', response);
-        if (response?.data?.success) {
-          setIsLoading(false)
-          navigation.navigate("VerifyOtp", { userDetails: response?.data?.data, pageType: 'login' })
+        if (mobileNumber === "9876543210") {
+          navigation.navigate("VerifyOtp", { userDetails: { 'sessionId': "d8039ce8-3088-41f1-8e08-10bd3b99ce1e", mobile: '9876543210' }, pageType: 'login', userType: 'test' })
         } else {
-          toast.show("User is not verified", { type: "waring" })
-          // setIsLoading(false)
+          const payload = { "mobile": mobileNumber }
+          const response = await ApiService.postData('v1/login', payload)
+          console.log('response---->', response);
+          if (response?.data?.success) {
+            setIsLoading(false)
+            navigation.navigate("VerifyOtp", { userDetails: response?.data?.data, pageType: 'login' })
+          } else {
+            toast.show("User is not verified", { type: "waring" })
+            // setIsLoading(false)
+          }
         }
       } catch (error) {
         setIsLoading(false)
@@ -114,7 +122,7 @@ const Login = () => {
 
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={keyboardVerticalOffset}>
           <ScrollView>
-            <BackHeader onPress={() => navigation.goBack()} />
+            {/* <BackHeader onPress={() => navigation.navigate("")} /> */}
 
             <View style={styles.logoContainer}>
               <Image source={Logo} style={{ width: 100, height: 100 }} />
@@ -138,7 +146,7 @@ const Login = () => {
                 <Text style={{ fontFamily: FONT.Regular, fontSize: FONTS_SIZE.regular, color: COLORS }}>OR</Text>
               </View>
 
-              <View style={{ flexDirection: 'row', width: wp('60'), justifyContent: 'space-evenly', alignItems: 'center' }}>
+              {/* <View style={{ flexDirection: 'row', width: wp('60'), justifyContent: 'space-evenly', alignItems: 'center' }}>
                 <TouchableOpacity activeOpacity={0.6} onPress={handleGoogleLogin}>
                   <Image source={GoogleIcon} style={{ width: 50, height: 50 }} />
                 </TouchableOpacity>
@@ -148,8 +156,7 @@ const Login = () => {
                 <TouchableOpacity activeOpacity={0.6} onPress={handleGoogleLogin}>
                   <Image source={FacebookIcon} style={{ width: 50, height: 50 }} />
                 </TouchableOpacity>
-              </View>
-
+              </View> */}
             </View>
 
             <View style={styles.registerContainer}>

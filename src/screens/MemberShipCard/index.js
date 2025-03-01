@@ -33,12 +33,15 @@ import ViewShot from 'react-native-view-shot';
 import RNFS from 'react-native-fs';
 import { PDFDocument, rgb } from 'pdf-lib';
 import { Buffer } from 'buffer';
+import { request, PERMISSIONS } from 'react-native-permissions';
+
 
 const MemberShipCardScreen = () => {
   const navigation = useNavigation();
   const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 30;
   const [isLoading, setIsLoading] = useState(false)
   const [memberdata, setMemberData] = useState(null)
+
 
 
   useEffect(() => {
@@ -69,19 +72,16 @@ const MemberShipCardScreen = () => {
 
   const downloadCard = async () => {
     try {
+      // PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)
       const imageUri = await viewRef.current.capture();
       if (!imageUri) return;
 
       const pdfDoc = await PDFDocument.create();
-      // const page = pdfDoc.addPage([595.28, 841.89]);
-
       const imageBytes = await RNFS.readFile(imageUri, 'base64');
 
       const image = imageUri.endsWith('.png')
         ? await pdfDoc.embedPng(imageBytes)
         : await pdfDoc.embedJpg(imageBytes);
-
-      // const {width, height} = image.scale(1);
       const { width, height } = image;
       const page = pdfDoc.addPage([width, height]);
 
@@ -91,6 +91,7 @@ const MemberShipCardScreen = () => {
         width: width,
         height: height,
       });
+      console.log('imageUri----->', page);
 
       const pdfBytes = await pdfDoc.save();
       const base64PDF = Buffer.from(pdfBytes).toString('base64');
@@ -100,7 +101,8 @@ const MemberShipCardScreen = () => {
 
       Alert.alert('Success', `PDF saved to: ${pdfFilePath}`);
     } catch (error) {
-      Alert.alert('Error', 'Failed to Download.');
+      // Alert.alert('Error', 'Failed to Download.');
+      console.log('error download---->', error);
     }
   };
 
@@ -148,28 +150,24 @@ const MemberShipCardScreen = () => {
             <ViewShot
               ref={viewRef}
               options={{ format: 'jpg', quality: 1.0 }}
-              style={{ backgroundColor: 'transparent', backgroundColor: '#fff' }}
+              style={{ backgroundColor: 'transparent' }}
               collapsable={false}>
               <View style={[styles.cardContainer, { position: 'relative' }]}>
                 <View style={styles.cardHeadingContainer}>
                   <View style={styles.logoMainContainer}>
                     <View style={styles.logoContainer}>
-                      <Image source={Logo} style={{ width: 70, height: 70 }} />
+                      <Image source={Logo} style={{ width: hp(8), height: hp(8) }} resizeMode='contain' />
                     </View>
-                    {/* <View style={styles.penIcon}>
-                      <Image
-                        source={PenIcon}
-                        style={{ width: '100%', height: '100%' }}
-                      />
-                    </View> */}
                   </View>
                   <View style={styles.headingTextContainer}>
                     <Text style={styles.headingText}>Connect with</Text>
                     <Text style={styles.headingText}>Shivdeep</Text>
                     <View style={styles.divider} />
-                    <Text style={styles.addressText}>
-                      D/3, PC Colony, Sector-89, Delhi
-                    </Text>
+                    <View>
+                      <Text style={[styles.addressText, { paddingBottom: 5 }]}>
+                        D/3, PC Colony, Sector-89, Delhi
+                      </Text>
+                    </View>
                   </View>
                 </View>
                 <View style={styles.memberDetailsContainer}>
@@ -186,8 +184,8 @@ const MemberShipCardScreen = () => {
                     <Text style={styles.colonText}>:</Text>
                   </View>
                   <View style={styles.memberDetailsRightContainer}>
-                    <Text style={styles.memberValue} numberOfLines={1}>
-                      {memberdata && memberdata?.userName}
+                    <Text style={[styles.memberValue, {textTransform: 'capitalize'}]} >
+                      {memberdata && memberdata?.fullName}
                     </Text>
                     <Text style={styles.memberValue}>{memberdata && memberdata?.district ? memberdata?.district : ''}</Text>
                     <Text style={styles.memberValue}>Bihar</Text>
@@ -197,7 +195,7 @@ const MemberShipCardScreen = () => {
                     <View style={[styles.avatarContainer, { backgroundColor: memberdata && memberdata?.image ? '' : COLORS.Primary_2 }]}>
                       {memberdata && memberdata?.image ?
                         <Image
-                          source={{ uri: memberdata?.image }}
+                          source={{ uri: String(memberdata?.image) }}
                           style={{ width: 66, height: 66, borderRadius: 10 }}
                           resizeMode="cover"
                         />
@@ -222,13 +220,14 @@ const MemberShipCardScreen = () => {
             </ViewShot>
 
             <View style={styles.buttonContianer}>
-              <TouchableOpacity style={styles.commonButton}>
+              <TouchableOpacity style={styles.commonButton} onPress={() => Alert.alert("WIP")}>
                 <Icon name="share" size={25} color={COLORS.Primary_2} />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => downloadCard()}
+                // onPress={() => downloadCard()}
                 // onPress={() => captureView()}
                 // onPress={() => captureAndSave()}
+                onPress={() => Alert.alert("WIP")}
                 style={{
                   ...styles.commonButton,
                   backgroundColor: COLORS.Primary_2,
@@ -241,9 +240,9 @@ const MemberShipCardScreen = () => {
                 <Text style={{ color: COLORS.Primary_2 }}>
                   Your Referral Code :
                 </Text>
-                <Text style={{ color: COLORS.black }}> 76XCDZD</Text>
+                <Text style={{ color: COLORS.black, textTransform: 'uppercase' }}>{" " + memberdata ? memberdata?.referralCode : ''}</Text>
               </Text>
-              <TouchableOpacity style={styles.Button} activeOpacity={0.6}>
+              <TouchableOpacity style={styles.Button} activeOpacity={0.6} onPress={() => Alert.alert("WIP")}>
                 <View style={styles.iconContainer}>
                   <Icon name="share" size={25} color={COLORS.white} />
                   <Text style={styles.shareText}>Share</Text>
