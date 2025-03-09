@@ -61,21 +61,21 @@ const MemberScreen = () => {
         const decoded = jwtDecode(token)
         const response = await ApiService.fetchData('v1/users/' + decoded?.id);
 
-        console.log('response?.data?.data?.item===?', response);
+       
         if (response?.data?.success) {
           setIsLoading(false)
-          if (response?.data?.data?.Item?.memberId) {
+          if (response?.data?.data?.Item?.isMember == "true") {
             navigation.navigate('MemberCard')
           } else {
             setFromData({
-              userName: response?.data?.data?.Item?.userName,
+              userName: response?.data?.data?.Item?.fullName,
               email: response?.data?.data?.Item?.email,
               mobileNumber: response?.data?.data?.Item?.mobile,
               dateOfBirth: response?.data?.data?.Item?.dob,
               district: response?.data?.data?.Item?.district,
             })
-
-            console.log('response?.data?.data?.Item?.dob---->', response?.data?.data?.Item?.dob);
+            setImageUri(response?.data?.data?.Item?.image)
+            console.log('response?.data?.data?.Item?.dob---->', response?.data?.data?.Item);
             setDate(new Date(response?.data?.data?.Item?.dob))
           }
         }
@@ -145,7 +145,7 @@ const MemberScreen = () => {
         const photo = {
           uri: imageUri,
           type: 'image/jpeg',
-          name: userName + '1.jpg',
+          name: 'test.jpg',
         };
         const payload = new FormData();
         payload.append('fullName', userName);
@@ -154,17 +154,19 @@ const MemberScreen = () => {
         payload.append('dob', newDate);
         payload.append('district', district);
         payload.append('state', 'Bihar');
-        payload.append('file', photo);
-        payload.append('dateOfJoining', new Date());
+        if(imageUri){
+          payload.append('file', photo);
+        }
+        payload.append('dateOfJoining', moment(new Date()).format('YYYY-MM-DD'));
         payload.append('isMember', true);
-
-        console.log('payload----------->', payload);
 
         await fetch("https://shivdeeplande.com:8001/api/v1/users/" + decoded?.id, {
           method: "put",
-          body: JSON.stringify(payload),
+          body: payload,
           headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token}`,
+            Accept: "*",
+            "Content-Type": "multipart/form-data"
           },
         }).then(response => {
           return response.json();
@@ -180,6 +182,7 @@ const MemberScreen = () => {
           }
         })
       } catch (error) {
+        setIsLoading(false);
         console.log('error----->', error);
       }
 

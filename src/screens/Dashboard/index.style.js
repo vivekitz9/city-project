@@ -29,10 +29,10 @@ export const styles = StyleSheet.create({
       backgroundColor: '#92BBD9'
     },
     text: {
-      color: '#000',
+      color: COLORS.Primary_2,
       fontSize: 16,
       fontWeight: '600',
-      paddingVertical: 10,
-      paddingHorizontal: 15
+      paddingVertical: 15,
+      // paddingHorizontal: 15
     }
   });

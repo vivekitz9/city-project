@@ -192,7 +192,7 @@ const RegisterScreen = () => {
   }, [mobileNumber, email, dateOfBirth, gender, userName]);
 
   const handleGoogleLogin = async () => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       const response = await GoogleLogin();
       const { idToken, user } = response;
@@ -209,7 +209,7 @@ const RegisterScreen = () => {
         apiError?.response?.data?.error?.message || 'Something went wrong',
       );
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -223,6 +223,8 @@ const RegisterScreen = () => {
     }
     return null;
   };
+
+
 
 
   return (
@@ -286,6 +288,9 @@ const RegisterScreen = () => {
                 />
 
                 <View style={{ width: wp('85'), paddingTop: 10 }}>
+                  {formData?.dateOfBirth && <Text style={[styles.droplabel, { color: COLORS.black, marginTop: 10 }]}>
+                   {t('DATEOFBIRTH')}
+                  </Text>}
                   <TouchableOpacity
                     activeOpacity={0.6}
                     onPress={() => setOpen(true)}
@@ -296,7 +301,7 @@ const RegisterScreen = () => {
                         fontFamily: FONT.RegularRoboto,
                         color: COLORS.gray,
                       }}>
-                      {date
+                      {formData?.dateOfBirth 
                         ? moment(date).format('DD/MM/YYYY')
                         : t('DATEOFBIRTH')}
                     </Text>
@@ -395,11 +400,11 @@ const RegisterScreen = () => {
                       fontSize: FONTS_SIZE.regular,
                       color: COLORS.black,
                     }}>
-                    OR
+                    {/* OR */}
                   </Text>
                 </View>
 
-                <View
+                {/* <View
                   style={{
                     flexDirection: 'row',
                     width: wp('60'),
@@ -428,7 +433,7 @@ const RegisterScreen = () => {
                       style={{ width: 50, height: 50 }}
                     />
                   </TouchableOpacity>
-                </View>
+                </View> */}
               </View>
             </View>
             {/* <View> */}
@@ -438,7 +443,7 @@ const RegisterScreen = () => {
                 {' '}
                 <Text
                   onPress={() => handleLoginToRedirect()}
-                  style={{ color: COLORS.Primary_2 }}>
+                  style={{ color: COLORS.Primary_2, fontSize: 16, fontWeight: '800' }}>
                   {t('LOGIN')}
                 </Text>
               </Text>

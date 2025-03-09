@@ -50,6 +50,8 @@ const ProfileScreen = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isFocus, setIsFocus] = useState(false);
   const [districtsData, setDistrictsData] = useState([]);
+  const [success, setSuccess] = useState(false)
+ 
 
   useEffect(() => {
     async function fetchUser() {
@@ -64,16 +66,16 @@ const ProfileScreen = () => {
         console.log('response?.data?.data?.item===>', response);
         if (response?.data?.success) {
           setIsLoading(false)
-            setFromData({
-              userName: response?.data?.data?.Item?.userName,
-              email: response?.data?.data?.Item?.email,
-              mobileNumber: response?.data?.data?.Item?.mobile,
-              dateOfBirth: response?.data?.data?.Item?.dob,
-              district: response?.data?.data?.Item?.district,
-            })
-            setImageUri(response?.data?.data?.Item?.image)
-            setDate(new Date(response?.data?.data?.Item?.dob))
-          }
+          setFromData({
+            userName: response?.data?.data?.Item?.fullName,
+            email: response?.data?.data?.Item?.email,
+            mobileNumber: response?.data?.data?.Item?.mobile,
+            dateOfBirth: response?.data?.data?.Item?.dob,
+            district: response?.data?.data?.Item?.district,
+          })
+          setImageUri(response?.data?.data?.Item?.image)
+          setDate(new Date(response?.data?.data?.Item?.dob))
+        }
         setIsLoading(false)
       } catch (error) {
         setIsLoading(false)
@@ -82,7 +84,7 @@ const ProfileScreen = () => {
     }
     fetchUser()
     fetchDistrictsApi();
-  }, [])
+  }, [success])
 
   //This useEffect for districts
   const fetchDistrictsApi = async () => {
@@ -139,7 +141,7 @@ const ProfileScreen = () => {
         const photo = {
           uri: imageUri,
           type: 'image/jpeg',
-          name: userName + '1.jpg',
+          name: 'test.jpg',
         };
         const payload = new FormData();
         payload.append('fullName', userName);
@@ -149,21 +151,24 @@ const ProfileScreen = () => {
         payload.append('district', district);
         payload.append('state', 'Bihar');
         payload.append('file', photo);
-        payload.append('dateOfJoining', new Date());
-        payload.append('isMember', true);
 
         console.log('payload----------->', payload);
 
         await fetch("https://shivdeeplande.com:8001/api/v1/users/" + decoded?.id, {
           method: "put",
-          body: JSON.stringify(payload),
+          body: payload,
           headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token}`,
+            Accept: "*",
+            "Content-Type": "multipart/form-data"
           },
         }).then(response => {
+          console.log('res----->', response);
           return response.json();
         }).then(res => {
+          console.log('res----->', res);
           if (res?.success) {
+            setSuccess(true)
             setIsLoading(false)
             toast.show("Successfully", { type: 'success' })
           } else {
@@ -179,7 +184,6 @@ const ProfileScreen = () => {
   };
 
   const handleImagePicker = async () => {
-
     try {
       const result = await launchImageLibrary({ mediaType: 'photo' });
       if (result.didCancel) {
@@ -207,8 +211,7 @@ const ProfileScreen = () => {
     return null;
   };
 
-  console.log('district----->', district);
-
+  
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground

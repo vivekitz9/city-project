@@ -74,7 +74,7 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     elevation: 5,
     gap: 10,
-    height: hp(11),
+    height: hp(12),
   },
   logoMainContainer: {
     position: 'relative',
@@ -165,6 +165,7 @@ export const styles = StyleSheet.create({
     fontFamily: FONT.Bold,
     color: COLORS.black,
     flexWrap: 'wrap',
+    
   },
 
   avQRContainer: {

@@ -21,6 +21,7 @@ import PrivacyPolicyScreen from '../screens/PrivacyPolicy';
 import TermConditionScreen from '../screens/TermCondition';
 import MemberShipCardScreen from '../screens/MemberShipCard';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import NewsDetailsScreen from '../screens/News/newsDetails';
 
 function MyTabBar({state, descriptors, navigation}) {
   const {buildHref} = useLinkBuilder();
@@ -165,6 +166,7 @@ const Newstack = createNativeStackNavigator({
   },
   screens: {
     News: NewsScreen,
+    NewsDetails: NewsDetailsScreen,
   },
 });
 
