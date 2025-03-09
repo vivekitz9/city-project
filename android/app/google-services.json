@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "820543835149",
+    "project_id": "connect-with-shivdeep",
+    "storage_bucket": "connect-with-shivdeep.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820543835149:android:db361c819b3e1991f6d944",
+        "android_client_info": {
+          "package_name": "com.connectWithShivdeep"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBokgo8W03Wl6fhrMu9n5CFrTHCTM35sbw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

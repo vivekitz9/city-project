@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
       fontFamily: FONT.Regular
     },
     registerContainer:{ 
-        height: hp('10'), 
+        height: hp('20'),
         justifyContent: 'center', 
         alignItems: 'center' 
     },

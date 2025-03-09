@@ -154,9 +154,12 @@ const MemberScreen = () => {
         payload.append('dob', newDate);
         payload.append('district', district);
         payload.append('state', 'Bihar');
-        payload.append('file', photo);
+        if(imageUri){
+          payload.append('file', photo);
+        }
         payload.append('dateOfJoining', moment(new Date()).format('YYYY-MM-DD'));
         payload.append('isMember', true);
+
         await fetch("https://shivdeeplande.com:8001/api/v1/users/" + decoded?.id, {
           method: "put",
           body: payload,
@@ -179,6 +182,7 @@ const MemberScreen = () => {
           }
         })
       } catch (error) {
+        setIsLoading(false);
         console.log('error----->', error);
       }
 

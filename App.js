@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
-import { StatusBar, View, Text } from 'react-native';
+import { StatusBar, View, Text, Alert, Platform } from 'react-native';
 import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { COLORS, FONT } from './src/constant';
@@ -16,9 +16,54 @@ import { store } from './src/Redux/store';
 import { Provider, useSelector } from 'react-redux';
 import { NetworkProvider } from './src/api/NetInfo';
 import NavigationScreen from './src/navigation';
+import messaging from '@react-native-firebase/messaging';
+import firebase from '@react-native-firebase/app';
 
+const firebaseConfig = {
+  apiKey: "1b7bbc30678cf1f7a5ac2ce9ec50bc4707148667",
+  authDomain: "https://accounts.google.com/o/oauth2/auth",
+  projectId: "connect-with-shivdeep",
+  storageBucket: "connect-with-shivdeep.firebasestorage.app",
+  messagingSenderId: "820543835149",
+  appId: "1:820543835149:android:db361c819b3e1991f6d944",
+};
 
 const App = () => {
+  useEffect(() => {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    requestUserPermission();
+    createNotificationListeners();
+  }, []);
+
+  const requestUserPermission = async () => {
+    let status = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    );
+    console.log('status............', status);
+  };
+
+  const createNotificationListeners = () => {
+    messaging().onNotificationOpenedApp(remoteMessage => {
+    });
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        if (remoteMessage) {
+          console.log('remoteMessage---->', remoteMessage);
+        }
+      });
+    messaging().onMessage(async remoteMessage => {
+      Alert.alert(
+        remoteMessage?.notification?.title,
+        remoteMessage?.notification?.body,
+        Platform.OS == "android" ? remoteMessage?.notification?.android?.imageUrl : ''
+      )
+    });
+  };
+
+
   return (
     <Provider store={store}>
       <ToastProvider

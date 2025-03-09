@@ -20,6 +20,8 @@ import MemberScreen from '../screens/member';
 import MissionVisionScreen from '../screens/MissionVision';
 import ProfileScreen from '../screens/Profile';
 import HelpCenterScreen from '../screens/HelpCenter';
+import NewsDetailsScreen from '../screens/News/newsDetails';
+
 
 const MemberStack = createNativeStackNavigator({
   initialRouteName: 'Member',
@@ -44,6 +46,7 @@ const LoginStackNavigator = createDrawerNavigator({
     Gallery: GalleryScreen,
     Blogs: BlogsScreen,
     News: NewsScreen,
+    NewsDetails: NewsDetailsScreen,
     Events: EventsScreen,
     PrivacyPolicy: PrivacyPolicyScreen,
     TermCondition: TermConditionScreen,
@@ -66,8 +69,6 @@ const MainStackNavigator = createNativeStackNavigator({
     Splash: SplashScreen,
     Language: LanguageScreen,
     Register: RegisterScreen,
-    News: NewsScreen,
-    Events: EventsScreen,
     Dashboard: LoginStackNavigator,
   },
 });
@@ -75,7 +76,7 @@ const MainStackNavigator = createNativeStackNavigator({
 const NavigationScreen = () => {
   const Navigation = createStaticNavigation(MainStackNavigator)
   return (
-    <Navigation />
+    <Navigation/>
   )
 }
 export default NavigationScreen;

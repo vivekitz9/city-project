@@ -54,7 +54,7 @@ const VerifyOtpScreen = ({ route }) => {
                         setIsLoading(false)
                         if (route?.params?.userType == "test") {
 
-                            toast.show("User login success", { type: 'Success' })
+                            toast.show("User logged in successful!", { type: 'Success' })
                             await EncryptedStorage.setItem('token', JSON.stringify(response?.data?.data))
                             dispatch(loginSuccess(response?.data?.data))
                             navigation.push('Dashboard')
@@ -88,7 +88,7 @@ const VerifyOtpScreen = ({ route }) => {
             console.log('response---->', response);
             if (response?.data?.success) {
                 setIsLoading(false)
-                toast.show("User registered successfuly.", { type: 'Success', duration: 5000 })
+                toast.show("Registration successful! You can now log in.", { type: 'Success', duration: 5000 })
                 navigation.navigate('Login');
             } else {
                 setIsLoading(false)

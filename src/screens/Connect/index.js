@@ -8,7 +8,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { styles } from './index.style';
 import HeaderComponent from '../../components/header';
-import { GiftedChat, Bubble, InputToolbar, Send } from 'react-native-gifted-chat'
 import Icon from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ApiService from '../../api/ApiService';
@@ -18,7 +17,7 @@ import { jwtDecode } from "jwt-decode";
 import moment from 'moment';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Feather from 'react-native-vector-icons/Feather';
-import { launchImageLibrary } from 'react-native-image-picker';
+import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { WebView } from "react-native-webview";
 import DocumentPicker from "react-native-document-picker";
@@ -122,7 +121,6 @@ const ConnectScreen = () => {
             payload.append('senderId', String(decoded?.id));
             payload.append('receiverId', "2768fdf8-afae-4ae6-a401-5789ee92b53b");
             payload.append('message', messageText);
-            // let photo = {}
             if (media?.length > 0) {
                 if (media[0]?.type == "image/jpeg") {
                     const photo = {
@@ -183,6 +181,25 @@ const ConnectScreen = () => {
             mediaType: 'mixed', // 'photo' | 'video' | 'mixed'
         };
         launchImageLibrary(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled picker');
+            } else if (response.errorMessage) {
+                console.log('Error:', response.errorMessage);
+            } else {
+                setMedia(response.assets);
+            }
+        });
+    }
+
+    
+
+
+    const handleCamera = async (type) => {
+        console.log('response---------->');
+        let options = {
+            mediaType: type, // 'photo' | 'video' | 'mixed'
+        };
+        launchCamera(options, (response) => {
             if (response.didCancel) {
                 console.log('User cancelled picker');
             } else if (response.errorMessage) {
@@ -300,14 +317,17 @@ const ConnectScreen = () => {
                 </View>
 
                 {visible && <View style={{ width: '20%', left: 20 }}>
-                    <View style={{ alignItems: 'center', paddingTop: 10, paddingBottom: 10, justifyContent: 'space-between', backgroundColor: COLORS.white, width: 50, height: 140, borderWidth: 0.5, borderColor: COLORS.Primary_2, borderTopLeftRadius: 5, borderTopEndRadius: 5 }} >
+                    <View style={{ alignItems: 'center', paddingTop: 10, paddingBottom: 10, justifyContent: 'space-between', backgroundColor: COLORS.white, width: 50, height: 160, borderWidth: 0.5, borderColor: COLORS.Primary_2, borderTopLeftRadius: 5, borderTopEndRadius: 5 }} >
                         <TouchableOpacity activeOpacity={0.6} onPress={() => { setVisible(false); pickDocument() }}>
                             <Ionicons name="document-attach" size={25} color={COLORS.Primary_2} />
                         </TouchableOpacity>
                         <TouchableOpacity activeOpacity={0.6} onPress={() => { setVisible(false); handleAttachment() }}>
                             <EvilIcons name="image" size={25} color={COLORS.Primary_2} />
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={0.6} onPress={() => { setVisible(false); handleAttachment() }}>
+                        <TouchableOpacity activeOpacity={0.6} onPress={() => { setVisible(false); handleCamera("photo") }}>
+                            <AntDesign name="camerao" size={25} color={COLORS.Primary_2} />
+                        </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={0.6} onPress={() => { setVisible(false); handleCamera("video") }}>
                             <Feather name="video" size={25} color={COLORS.Primary_2} />
                         </TouchableOpacity>
                     </View>
@@ -318,9 +338,9 @@ const ConnectScreen = () => {
                         return (
                             <View style={{ width: '100%', alignItems: "center" }}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '92%', margin: 3, padding: 15, borderWidth: 0.5, borderColor: COLORS.Primary_2, borderRadius: 5 }}>
-                                    <View style={{ flexDirection: 'row' }}>
+                                    <View style={{ flexDirection: 'row', width: '80%', alignItems: 'center' }}>
                                         <EvilIcons name="image" size={25} color={COLORS.Primary_2} />
-                                        <Text style={{ fontSize: 16, color: COLORS.Primary_2 }}>{item.fileName}</Text>
+                                        <Text style={{ fontSize: 16, color: COLORS.Primary_2, paddingLeft: 10 }} numberOfLines={1}>{item.fileName}</Text>
                                     </View>
                                     <TouchableOpacity activeOpacity={0.6} onPress={() => handleRemove(item, index)}>
                                         <AntDesign name="close" size={25} color={COLORS.Primary_2} />
@@ -333,11 +353,11 @@ const ConnectScreen = () => {
 
                 {
                     file &&
-                    <View style={{ width: '100%', alignItems: "center" }}>
+                    <View style={{ width: '100%', alignItems: "center"}}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '92%', margin: 3, padding: 15, borderWidth: 0.5, borderColor: COLORS.Primary_2, borderRadius: 5 }}>
-                            <View style={{ flexDirection: 'row' }}>
+                            <View style={{ flexDirection: 'row', width: '80%', alignItems: 'center' }}>
                                 <AntDesign name="copy1" size={25} color={COLORS.Primary_2} />
-                                <Text style={{ fontSize: 16, color: COLORS.Primary_2 }}>{file.name}</Text>
+                                <Text style={{ fontSize: 16, color: COLORS.Primary_2 }} numberOfLines={1}>{file.name}</Text>
                             </View>
                             <TouchableOpacity activeOpacity={0.6} onPress={() => setFile("")}>
                                 <AntDesign name="close" size={25} color={COLORS.Primary_2} />
@@ -370,7 +390,7 @@ const ConnectScreen = () => {
                         </View>
 
 
-                        {!isSendLoading ? messageText.length > 0 && <TouchableOpacity style={{ padding: 10 }} activeOpacity={0.6} onPress={handleMessage}>
+                        {!isSendLoading ? (messageText.length > 0 || media.length > 0 ) && <TouchableOpacity style={{ padding: 10 }} activeOpacity={0.6} onPress={handleMessage}>
                             <Ionicons name="send" size={25} color={COLORS.Primary_2} />
                         </TouchableOpacity>
                             :

@@ -20,24 +20,6 @@ import ApiService from '../../api/ApiService';
 import { ActivityIndicator } from 'react-native-paper';
 import moment from 'moment';
 
-const data = [
-  {
-    title: 'Aenean leo',
-    body: 'Ut tincidunt tincidunt erat. Sed cursus turpis vitae tortor. Quisque malesuada placerat nisl. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.',
-    imgUrl: 'https://picsum.photos/id/11/200/300',
-  },
-  {
-    title: 'In turpis',
-    body: 'Aenean ut eros et nisl sagittis vestibulum. Donec posuere vulputate arcu. Proin faucibus arcu quis ante. Curabitur at lacus ac velit ornare lobortis. ',
-    imgUrl: 'https://picsum.photos/id/10/200/300',
-  },
-  {
-    title: 'Lorem Ipsum',
-    body: 'Phasellus ullamcorper ipsum rutrum nunc. Nullam quis ante. Etiam ultricies nisi vel augue. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc.',
-    imgUrl: 'https://picsum.photos/id/12/200/300',
-  },
-];
-
 const EventsScreen = () => {
   const [t] = useTranslation('translation');
   const navigation = useNavigation();
@@ -49,6 +31,8 @@ const EventsScreen = () => {
     try {
       setIsLoading(true);
       const response = await ApiService.fetchData('v1/events');
+
+      console.log('response----->', response);
       if (response?.data?.success) {
         setIsLoading(false);
         const eventData = response?.data?.data;
@@ -75,74 +59,81 @@ const EventsScreen = () => {
   const ListItem = ({ item, index }) => {
     return (
       <>
-        <View
-          style={{
-            flexDirection: 'row',
-            width: wp('90'),
-            backgroundColor: '#fff',
-            padding: 10,
-            borderRadius: 10,
-            marginTop: 20,
-          }}>
-          <View style={{ width: '32%', justifyContent: 'center' }}>
-            <Text
+        {item.toggle == "1" ?
+          <>
+            <View
               style={{
-                color: COLORS.Primary_2,
-                fontFamily: FONT.Regular,
-                fontWeight: '400',
+                flexDirection: 'row',
+                width: wp('90'),
+                backgroundColor: '#fff',
+                padding: 10,
+                // borderRadius: 10,
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                marginTop: 20,
               }}>
-              {item.eventDate}
-            </Text>
-            <Text
+              <View style={{ width: '32%', justifyContent: 'center' }}>
+                <Text
+                  style={{
+                    color: COLORS.black,
+                    fontFamily: FONT.Regular,
+                    fontWeight: '400',
+                  }}>
+                  {item.eventDate}
+                </Text>
+                <Text
+                  style={{
+                    color: COLORS.black,
+                    fontFamily: FONT.Regular,
+                    fontWeight: '400',
+                    paddingTop: 2,
+                  }}>
+                  {`${item.eventStartTime} - ${item.eventEndTime}`}
+                </Text>
+              </View>
+              <View style={{ width: '68%', justifyContent: 'center' }}>
+                <Text
+                  style={{
+                    color: COLORS.black,
+                    fontFamily: FONT.MediumRoboto,
+                    fontWeight: '800'
+                  }} numberOfLines={1}>
+                  {item.eventTitle}
+                </Text>
+                <Text
+                  style={{
+                    color: COLORS.black,
+                    fontFamily: FONT.MediumRoboto,
+                    fontWeight: '400',
+                    fontSize: 12,
+                    paddingTop: 2,
+                  }} numberOfLines={3}>
+                  {item.eventDescription}
+                </Text>
+              </View>
+            </View>
+            <View
+              key={index}
               style={{
-                color: COLORS.Primary_2,
-                fontFamily: FONT.Regular,
-                fontWeight: '400',
-                paddingTop: 2,
+                width: wp('90'),
+                // borderRadius: 10,
+                // height: hp('36'),
+                borderBottomRightRadius: 10,
+                borderBottomLeftRadius: 10,
+                height: hp('30'),
+                alignItems: 'center',
+                backgroundColor: COLORS.white,
+                // marginTop: 10,
               }}>
-              {`${item.eventStartTime} - ${item.eventEndTime}`}
-            </Text>
-          </View>
-          <View style={{ width: '68%', justifyContent: 'center' }}>
-            <Text
-              style={{
-                color: COLORS.Primary_2,
-                fontFamily: FONT.MediumRoboto,
-                fontWeight: '600',
-              }}>
-              {item.eventTitle}
-            </Text>
-            <Text
-              style={{
-                color: COLORS.Primary_2,
-                fontFamily: FONT.MediumRoboto,
-                fontWeight: '400',
-                fontSize: 12,
-                paddingTop: 2,
-              }}>
-              {item.eventDescription}
-            </Text>
-          </View>
-        </View>
-        <View
-          key={index}
-          style={{
-            width: wp('90'),
-            borderRadius: 10,
-            height: hp('36'),
-            alignItems: 'center',
-            backgroundColor: COLORS.white,
-            marginTop: 10,
-          }}>
-          <View style={{ padding: 5 }}>
-            {item.image ? (
-              <Image source={{ uri: item.image }} />
-            ) : (
-              <Image source={EventsBanner} />
-            )}
-          </View>
+              <View style={{ padding: 5 }}>
+                {item?.image ? (
+                  <Image resizeMode='stretch' source={{ uri: String(item?.image) }} style={{ width: wp('88'), height: hp('28'), borderRadius: 10 }} />
+                ) : (
+                  <Image source={EventsBanner} />
+                )}
+              </View>
 
-          <View
+              {/* <View
             style={{
               flexDirection: 'row',
               width: wp('90'),
@@ -150,8 +141,8 @@ const EventsScreen = () => {
               justifyContent: 'space-between',
               paddingHorizontal: 20,
               paddingVertical: 15,
-            }}>
-            <View style={{ flexDirection: 'row' }}>
+            }}> */}
+              {/* <View style={{ flexDirection: 'row' }}>
               <Text
                 style={{
                   fontFamily: FONT.Medium,
@@ -170,17 +161,19 @@ const EventsScreen = () => {
                   {`${item.totalJoined} K`}
                 </Text>
               </View>
-            </View>
+            </View> */}
 
-            <TouchableOpacity
+              {/* <TouchableOpacity
               activeOpacity={0.6}
               style={{ backgroundColor: COLORS.Primary_2, borderRadius: 5 }}>
               <Text style={{ color: COLORS.white, padding: 5 }}>
                 Register Now
               </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+            </TouchableOpacity> */}
+              {/* </View> */}
+            </View>
+          </>
+          : null}
       </>
     );
   };
@@ -192,18 +185,16 @@ const EventsScreen = () => {
         resizeMode="cover"
         style={styles.container}>
         <HeaderComponent navigation={navigation} />
-        {/* <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true}> */}
+        <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true}>
           <View
             style={{
               marginHorizontal: 20,
               marginVertical: 20,
               flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center'
             }}>
-            <Text style={{ color: COLORS.Primary_2, fontSize: 24, fontFamily: FONT.Bold, fontWeight: '800' }}>Coming soon</Text>
+            {/* <Text style={{ color: COLORS.Primary_2, fontSize: 24, fontFamily: FONT.Bold, fontWeight: '800' }}>Coming soon</Text> */}
 
-            {/* <TabViewScreen
+            <TabViewScreen
               onPress={value => setTabviewValue(value)}
               toggle={tabviewValue}
             />
@@ -214,7 +205,7 @@ const EventsScreen = () => {
                 renderItem={ListItem}
                 scrollEnabled={false}
               />
-            ) : null} */}
+            ) : null}
             {isLoading && (
               <View
                 style={{
@@ -234,7 +225,7 @@ const EventsScreen = () => {
               </View>
             )}
           </View>
-        {/* </ScrollView> */}
+        </ScrollView>
       </ImageBackground>
     </SafeAreaView>
   );
